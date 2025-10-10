@@ -4,3 +4,4 @@
 3.この時点で一度Discordに課題を提出。
 4.AIメンターからの回答をもとに、test.txtとREADME_Kadai16.mdを削除し、新たにREADME_Kadai16_2.mdを作成
 5.README_Kadai16_2.mdの中身として、手順の要約を記入。
+6.mergeを実行。
