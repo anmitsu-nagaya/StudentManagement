@@ -35,9 +35,9 @@ public class Application {
   }
 
   //以下いったん残している
-  @PostMapping("/updateStudentName")
-  public void  updateStudentName(String privateName){
-    this.privateName = privateName;
-  }
+  //@PostMapping("/updateStudentName")
+  //public void  updateStudentName(String privateName){
+  //  this.privateName = privateName;
+  //}
 
 }
