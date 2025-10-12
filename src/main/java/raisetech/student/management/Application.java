@@ -78,13 +78,13 @@ public class Application { //これがコントローラ(Controller)のこと、
     private String age;
 
     // デフォルトコンストラクタ
-    public StudentClassForJSON() { }
+    //public StudentClassForJSON() { }
 
     // getter / setter
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    //public void setName(String name) { this.name = name; }
     public String getAge() { return age; }
-    public void setAge(String age) { this.age = age; }
+    //public void setAge(String age) { this.age = age; }
 
   }
   //@RequestParam
