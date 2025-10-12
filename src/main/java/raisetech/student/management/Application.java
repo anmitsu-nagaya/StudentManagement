@@ -54,7 +54,6 @@ public class Application { //これがコントローラ(Controller)のこと、
 
   //課題
   //①複数の情報を登録したらどうなる？
-  //②Mapの中の一部の情報を更新したい場合（Keyに紐づく受講生の情報をアップデートしたい）として、Postするとどうなる？
   private final Map<String,String> studentMap = new ConcurrentHashMap<>();
 
 
@@ -63,9 +62,10 @@ public class Application { //これがコントローラ(Controller)のこと、
     SpringApplication.run(Application.class, args);
   }
 
+  //JSONでやるならmap自体をreturnでOK
   @GetMapping("/studentInfo")
-  public String getStudentInfo() {
-    return studentMap.toString();
+  public Map<String,String> getStudentInfo() {
+    return studentMap;
   }
 
   @PostMapping("/studentInfo")
@@ -82,11 +82,12 @@ public class Application { //これがコントローラ(Controller)のこと、
 
     // getter / setter
     public String getName() { return name; }
-    //public void setName(String name) { this.name = name; }
+    public void setName(String name) { this.name = name; }
     public String getAge() { return age; }
-    //public void setAge(String age) { this.age = age; }
+    public void setAge(String age) { this.age = age; }
 
   }
+
   //@RequestParam
   //使う場面：URLのパラメータやフォームの入力値を受け取るとき。
   //データ形式：クエリパラメータまたはフォームデータ（application/x-www-form-urlencoded）。
@@ -99,10 +100,10 @@ public class Application { //これがコントローラ(Controller)のこと、
   //使用場所：HTTPボディ
   //適している用途：複雑なデータ構造（オブジェクト・リスト）
 
-  //以下いったん残している
-  //@PostMapping("/updateStudentName")
-  //public void  updateStudentName(String privateName){
-  //  this.privateName = privateName;
-  //}
+  //②Mapの中の一部の情報を更新したい場合（Keyに紐づく受講生の情報をアップデートしたい）として、Postするとどうなる？
+  @PostMapping("/updateStudentName")
+  public void updateStudentName(@RequestBody List<StudentClassForJSON> students){
+    students.forEach(s -> studentMap.put(s.getName(), s.getAge()));
+  }
 
 }
