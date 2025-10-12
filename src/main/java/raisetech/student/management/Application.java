@@ -103,7 +103,11 @@ public class Application { //これがコントローラ(Controller)のこと、
   //②Mapの中の一部の情報を更新したい場合（Keyに紐づく受講生の情報をアップデートしたい）として、Postするとどうなる？
   @PostMapping("/updateStudentName")
   public void updateStudentName(@RequestBody List<StudentClassForJSON> students){
-    students.forEach(s -> studentMap.put(s.getName(), s.getAge()));
+    students.forEach(s -> {
+      if(studentMap.containsKey(s.getName())){
+        studentMap.put(s.getName(), s.getAge());
+      }
+    });
   }
 
 }
