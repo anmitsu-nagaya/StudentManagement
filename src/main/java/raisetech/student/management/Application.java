@@ -20,9 +20,10 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
+  //課題①複数の情報を登録したらどうなる？
   @GetMapping("/studentInfo")
-  public String getStudentInfo() {
-    return studentMap.toString();
+  public Map<String,String> getStudentInfo() {
+    return studentMap;
   }
 
   @PostMapping("/studentInfo")
@@ -35,6 +36,15 @@ public class Application {
     private String age;
 
     public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
     public String getAge() { return age; }
+    public void setAge(String age) { this.age = age; }
   }
+
+  //課題②Mapの中の一部の情報を更新したい場合（とある受講生の年齢の情報をアップデートしたい）として、Postするとどうなる？
+  @PostMapping("/updateStudentName")
+  public void updateStudentName(@RequestBody List<StudentClassForJSON> students) {
+    students.forEach(s -> studentMap.put(s.getName(), s.getAge()));
+  }
+
 }
