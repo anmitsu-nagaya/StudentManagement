@@ -43,8 +43,11 @@ public class Application {
 
   //課題②Mapの中の一部の情報を更新したい場合（とある受講生の年齢の情報をアップデートしたい）として、Postするとどうなる？
   @PostMapping("/updateStudentName")
-  public void updateStudentName(@RequestBody List<StudentClassForJSON> students) {
-    students.forEach(s -> studentMap.put(s.getName(), s.getAge()));
+  public void updateStudentName(@RequestBody List<StudentClassForJSON> students){
+    students.forEach(s -> {
+      if(studentMap.containsKey(s.getName())){
+        studentMap.put(s.getName(), s.getAge());
+      }
+    });
   }
-
 }
