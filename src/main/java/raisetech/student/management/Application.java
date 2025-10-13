@@ -21,7 +21,7 @@ public class Application {
   @GetMapping("/studentInfo")
   public String getStudentInfo() {
     Student student = repository.searchByName("TanakaKousuke");
-    return student.getName() + " " + student.getAge() + "歳";
+      return student.getName() + " " + student.getAge() + "歳";
   }
 
 }
