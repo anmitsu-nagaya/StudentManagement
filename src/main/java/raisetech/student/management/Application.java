@@ -1,14 +1,11 @@
 package raisetech.student.management;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
@@ -30,16 +27,17 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
-  @GetMapping("/studentInfo")
-  public String getStudentInfo() {
-    Student student = repository.searchByName("TanakaKousuke");
+  @GetMapping("/student")
+  public String getStudent(@RequestParam String name) {
+    RepositoryStudent student = repository.searchByName(name);
     return student.getName() + " " + student.getAge() + "歳";
   }
 
-  //@PostMapping("/studentInfo")
-  //public void setStudentInfo(@RequestBody List<StudentClassForJSON> students){
-  //  students.forEach(s -> studentMap.put(s.getName(), s.getAge()));
-  //}
+  @PostMapping("/student")
+  public void registerStudent(String name, int age){
+    repository.registerStudent(name, age);
+  }
+
 
   //public static class StudentClassForJSON {
   //  private String name;
