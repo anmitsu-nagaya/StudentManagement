@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# ローカル専用。平文DB認証情報をGitに上げない
+src/main/resources/application.properties
