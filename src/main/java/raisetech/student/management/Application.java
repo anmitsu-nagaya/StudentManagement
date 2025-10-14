@@ -1,5 +1,10 @@
 package raisetech.student.management;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,10 +39,16 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
+  //課題：生徒情報を一覧表示する
   @GetMapping("/student")
-  public String getStudent(@RequestParam String name) {
-    RepositoryStudent student = repository.searchByName(name);
-    return student.getName() + " " + student.getAge() + "歳";
+  public String getStudent() {
+    Printer printer = new Printer();
+    List<RepositoryStudent> student = repository.findAll();
+    List<String> studentList = new ArrayList<>();
+    for(RepositoryStudent s : student){
+      studentList.add(printer.printer(s.getName(), s.getAge()));
+    }
+    return studentList.toString();
   }
 
   @PostMapping("/student")
