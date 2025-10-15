@@ -6,6 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.student.management.domain.Student;
+import raisetech.student.management.domain.StudentsCourses;
+import raisetech.student.management.repository.StudentRepository;
 
 @SpringBootApplication
 @RestController
