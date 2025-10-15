@@ -4,11 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
@@ -23,8 +19,15 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
-  @GetMapping("/studentList")
+  @GetMapping("/AllStudentList")
   public List<Student> getStudentList() {
-    return repository.searchByName();
+    return repository.searchStudentListAll();
   }
+
+  @GetMapping("/AllStudentCourseList")
+  public List<StudentCourse> getStudentCourseList() {
+    return repository.searchStudentCourseListAll();
+  }
+
+
 }
