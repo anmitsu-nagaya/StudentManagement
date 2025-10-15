@@ -1,8 +1,6 @@
 package raisetech.student.management;
 
-//クラス名＝型名
-//コンストラクタ：クラス名と同じ名前を持ち、戻り値の型がないメソッド、new された瞬間に実行される初期化処理
-public class RepositoryStudent {
+public class Student {
 
   private String name;
   private int age;
