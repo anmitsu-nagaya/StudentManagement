@@ -21,12 +21,12 @@ public class Application {
 
   @GetMapping("/AllStudentList")
   public List<Student> getStudentList() {
-    return repository.searchStudentListAll();
+    return repository.searchAllStudent();
   }
 
-  @GetMapping("/AllStudentCourseList")
-  public List<StudentCourse> getStudentCourseList() {
-    return repository.searchStudentCourseListAll();
+  @GetMapping("/AllStudentsCoursesList")
+  public List<StudentsCourses> getStudentsCourseList() {
+    return repository.searchAllStudentsCourses();
   }
 
 
