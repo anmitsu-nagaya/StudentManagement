@@ -3,8 +3,8 @@ package raisetech.student.management.repository;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import raisetech.student.management.domain.Student;
-import raisetech.student.management.domain.StudentsCourses;
+import raisetech.student.management.data.Student;
+import raisetech.student.management.data.StudentsCourses;
 
 
 /**

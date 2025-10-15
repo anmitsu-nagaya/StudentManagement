@@ -1,11 +1,10 @@
 package raisetech.student.management.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import raisetech.student.management.domain.Student;
-import raisetech.student.management.domain.StudentsCourses;
+import raisetech.student.management.data.Student;
+import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.repository.StudentRepository;
 
 @Service
