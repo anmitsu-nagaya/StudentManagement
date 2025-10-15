@@ -2,6 +2,8 @@ package raisetech.student.management.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import raisetech.student.management.domain.Student;
@@ -38,5 +40,13 @@ public class StudentService {
 
   public List<StudentsCourses> searchStudentsCourseList() {
     return repository.searchStudentsCourses();
+  }
+
+  public List<StudentsCourses> searchJavaCourseList(){
+    List<StudentsCourses> studentsCoursesList = repository.searchStudentsCourses();
+    List<StudentsCourses> javaCourseList = studentsCoursesList.stream()
+        .filter(s -> Objects.equals(s.getCourseName(), "Javaコース"))
+        .collect(Collectors.toList());
+    return javaCourseList;
   }
 }
