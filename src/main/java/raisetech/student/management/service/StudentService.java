@@ -19,21 +19,7 @@ public class StudentService {
   }
 
   public List<Student> searchStudentList() {
-    //ドメイン処理とか業務処理
     return repository.searchStudent();
-  }
-
-  public List<Student> searchStudentsInThirtiesList(){
-    //検索処理
-    //絞り込みをする。年齢が30台の人のみを抽出する。
-    List<Student> studentsInThirties = new ArrayList<>();
-    List<Student> studentList = repository.searchStudent();
-    for(Student s : studentList){
-      if(s.getAge() >= 30 && s.getAge() < 40){
-        studentsInThirties.add(s);
-      }
-    }
-    return studentsInThirties;
   }
 
   public List<StudentsCourses> searchStudentsCourseList() {

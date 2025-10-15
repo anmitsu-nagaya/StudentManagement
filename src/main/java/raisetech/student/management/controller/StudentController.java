@@ -25,11 +25,6 @@ public class StudentController {
     return service.searchStudentList();
   }
 
-  @GetMapping("/students/age-30s")
-  public List<Student> getStudentsInThirtiesList(){
-    return service.searchStudentsInThirtiesList();
-  }
-
   @GetMapping("/student-courses")
   public List<StudentsCourses> getStudentsCourseList() {
     return service.searchStudentsCourseList();
