@@ -22,12 +22,12 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
-  @GetMapping("/AllStudentList")
+  @GetMapping("/students")
   public List<Student> getStudentList() {
     return repository.searchAllStudent();
   }
 
-  @GetMapping("/AllStudentsCoursesList")
+  @GetMapping("/student-courses")
   public List<StudentsCourses> getStudentsCourseList() {
     return repository.searchAllStudentsCourses();
   }
