@@ -16,7 +16,7 @@ public class Student {
   private String city;
   private int age;
   private String gender;
-
-
+  private String studentRemark; //備考欄
+  private Boolean studentIsDeleted; //論理削除 削除フラグ
 
 }
