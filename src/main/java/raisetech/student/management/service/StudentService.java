@@ -19,11 +19,11 @@ public class StudentService {
   }
 
   public List<Student> searchStudentList() {
-    //ドメイン処理とか業務処理
     return repository.searchStudent();
   }
 
   public List<Student> searchStudentsInThirtiesList(){
+    //課題１
     //検索処理
     //絞り込みをする。年齢が30台の人のみを抽出する。
     List<Student> studentsInThirties = new ArrayList<>();
