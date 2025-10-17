@@ -48,7 +48,7 @@ public interface StudentRepository {
    *
    * @return void
    */
-  @Insert("INSERT students_courses(course_id,student_id,course_name) VALUES (#{courseId},#{studentID},#{courseName})")
-  void insertStudentCourses(String courseId, String studentID, String courseName);
+  @Insert("INSERT students_courses VALUES (#{courseId}, #{studentID}, #{courseName}, #{courseStartAt}, #{courseEndAt})")
+  void registerStudentCourses(StudentsCourses studentsCourses);
 
 }

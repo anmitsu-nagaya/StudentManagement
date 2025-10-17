@@ -19,20 +19,11 @@ public class StudentConverter {
       StudentDetail studentDetail = new StudentDetail();
       studentDetail.setStudent(student);
 
-      //List<convertStudentCourses> = new ArrayList<>();
-      studentsCourses.forEach(courses -> {
-        if(Objects.equals(courses.getStudentId(), student.getId())){
-          studentDetail.setStudentsCoursesList(courses);
-        }
+      List<StudentsCourses> convertStudentCourses = studentsCourses.stream()
+          .filter(studentCourse -> student.getId().equals(studentCourse.getStudentId()))
+          .collect(Collectors.toList());
 
-      });
-
-      //StudentsCourses convertStudentCourses = studentsCourses.stream()
-      //    .filter(studentCourse -> student.getId().equals(studentCourse.getStudentId()))
-      //    .collectors(toList()))
-
-
-      //studentDetail.setStudentsCoursesList(convertStudentCourses);
+      studentDetail.setStudentsCoursesList(convertStudentCourses);
       studentDetails.add(studentDetail);
     });
     return studentDetails;

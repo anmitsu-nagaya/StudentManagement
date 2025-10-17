@@ -1,5 +1,6 @@
 package raisetech.student.management.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,9 @@ public class StudentController {
 
   @GetMapping("/new-student")
   public String newStudent(Model model){
-    model.addAttribute("studentDetail", new StudentDetail());//th:object="${studentDetail}に渡る
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudentsCoursesList(Arrays.asList(new StudentsCourses()));
+    model.addAttribute("studentDetail", studentDetail);//th:object="${studentDetail}に渡る
     return "registerStudent"; //registerStudent.htmlのこと
   }
 
