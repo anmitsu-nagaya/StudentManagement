@@ -83,9 +83,12 @@ public class StudentController {
   }
 
   @GetMapping("/students/{id}")
-  public Objects showStudentDetail(@PathVariable("id") String id){
+  public String showStudentDetail(@PathVariable("id") String id,Model model){
     Student studentById = service.findStudentById(id);
-    return null;
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(studentById);
+    model.addAttribute("studentDetail", studentDetail);//th:object="${studentDetail}に渡る
+    return "updateStudent";
   }
 
 
