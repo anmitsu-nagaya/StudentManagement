@@ -18,6 +18,7 @@ public class Student {
    * <ul>
    *   <li>DB カラム: id</li>
    *   <li>型: UUID を文字列で格納（例: "1a2b3c4d-0001"）</li>
+   *   <li>最大長: 36文字</li>
    *   <li>NOT NULL</li>
    * </ul>
    */
@@ -27,7 +28,7 @@ public class Student {
    * <ul>
    *   <li>DB カラム: student_full_name</li>
    *   <li>型: 文字列</li>
-   *   <li>最大長: 100 文字（例）</li>
+   *   <li>最大長: 100文字</li>
    *   <li>NOT NULL</li>
    * </ul>
    */
@@ -37,19 +38,21 @@ public class Student {
    * <ul>
    *   <li>DB カラム: student_furigana</li>
    *   <li>型: 文字列</li>
-   *   <li>最大長: 100 文字（例）</li>
+   *   <li>最大長: 100文字</li>
    *   <li>NOT NULL</li>
    * </ul>
    */
   private String studentFurigana;
+  private String studentNickname;
   /**
-   * ニックネーム。
+   * メールアドレス。
    * <ul>
-   *   <li>DB カラム: student_nickname</li>
+   *   <li>DB カラム: email</li>
    *   <li>型: 文字列</li>
+   *   <li>最大長:254文字</li>
+   *   <li>NOT NULL</li>
    * </ul>
    */
-  private String studentNickname;
   private String email;
   private String prefecture;
   private String city;
