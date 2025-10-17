@@ -46,9 +46,12 @@
   </div>
 
   <div th:each="course, stat : *{studentsCoursesList}">
-    <label for="courseName">受講コース名：</label>
-    <input type="text" id="courseName" th:id="studentCourse.__${stat.index}__.courseName" th.field="*{studentsCoursesList[__${stat.index}__].courseName}" />
+    <label th:for="studentCourse.__${stat.index}__.courseName">受講コース名：</label>
+    <input type="text"
+           th:id="studentCourse.__${stat.index}__.courseName"
+           th:field="*{studentsCoursesList[__${stat.index}__].courseName}" />
   </div>
+
 
   <div>
     <button type="submit">登録</button>
