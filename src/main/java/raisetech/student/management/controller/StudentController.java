@@ -65,7 +65,7 @@ public class StudentController {
 
     //System.out.println(studentDetail.getStudent().getStudentFullName() + "さんが新規受講生として登録されました。");
     //課題1：新規受講生情報を登録する処理を実装する。
-    String id = studentDetail.getStudent().getId();
+    // String id = studentDetail.getStudent().getId();
     String name = studentDetail.getStudent().getStudentFullName();
     String furigana = studentDetail.getStudent().getStudentFurigana();
     String email = studentDetail.getStudent().getEmail();
@@ -75,7 +75,7 @@ public class StudentController {
     String courseId = studentDetail.getStudentsCoursesList().getCourseId();
     String courseName=studentDetail.getStudentsCoursesList().getCourseName();
 
-    service.addStudentDetailList(id,name,furigana,email,courseId,courseName);
+    service.addStudentDetailList(name,furigana,email,courseId,courseName);
     return "redirect:/students";
   }
 

@@ -1,6 +1,7 @@
 package raisetech.student.management.service;
 
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import raisetech.student.management.data.Student;
@@ -43,8 +44,9 @@ public class StudentService {
    * 新規の受講生情報を登録します。
    * <p>StudentRepositoryを使用して、受講生DBに新しい学生レコードを追加します。</p>
    */
-  public void addStudentDetailList(String id, String name, String furigana,String email,String courseId, String courseName){
-    repository.addStudent(id, name,furigana,email);
-    repository.addStudentCourses(courseId,id,courseName);
+  public void addStudentDetailList(String name, String furigana,String email,String courseId, String courseName){
+    String studentID = UUID.randomUUID().toString();
+    repository.insertStudent(studentID, name,furigana,email);
+    repository.insertStudentCourses(courseId,studentID,courseName);
   }
 }

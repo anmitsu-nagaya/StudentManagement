@@ -7,10 +7,7 @@
 <h1>受講生登録</h1>
 <!-- th:object="${student}"のstudentはpublic String registerStudent(StudentDetail studentDetail){の引数のstudentのこと。 -->
 <form th:action="@{/register-student}" th:object="${studentDetail}" method="post">
-  <div>
-    <label for="id">ID：</label>
-    <input type="text" id="id" th:field="*{student.id}" required />
-  </div>
+
   <div>
     <label for="studentFullName">名前：</label>
     <input type="text" id="studentFullName" th:field="*{student.studentFullName}" required />
