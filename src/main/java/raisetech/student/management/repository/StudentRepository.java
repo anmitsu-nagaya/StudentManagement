@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
+import raisetech.student.management.domain.StudentDetail;
 
 
 /**
@@ -61,5 +62,8 @@ public interface StudentRepository {
   @Insert("INSERT INTO students_courses(course_id,student_id,course_name,course_start_at,course_end_at) VALUES (#{courseId}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt})")
   @Options(useGeneratedKeys = true, keyProperty = "courseId") //自動生成された項目を使うことを指定
   void registerStudentCourses(StudentsCourses studentsCourses);
+
+  @Select("SELECT * FROM students WHERE id = #{id}")
+  Student findStudentDetail(String id);
 
 }

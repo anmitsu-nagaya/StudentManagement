@@ -20,6 +20,7 @@ import raisetech.student.management.repository.StudentRepository;
 public class StudentService {
 
   private StudentRepository repository;
+
   @Autowired
   public StudentService(StudentRepository repository) {
     this.repository = repository;
@@ -48,7 +49,7 @@ public class StudentService {
    * <p>StudentRepositoryを使用して、受講生DBに新しい学生レコードを追加します。</p>
    */
   @Transactional
-  public void registerStudentDetailList(StudentDetail studentDetail){
+  public void registerStudentDetailList(StudentDetail studentDetail) {
     //String studentID = UUID.randomUUID().toString();
     //student.setId(UUID.randomUUID().toString());
     //student.setStudentFullName();
@@ -63,10 +64,11 @@ public class StudentService {
     String gender = studentDetail.getStudent().getGender();
     String studentRemark = studentDetail.getStudent().getStudentRemark();
 
-    repository.registerStudent(id,studentFullName,studentFurigana,studentNickname,email,prefecture,city,age,gender,studentRemark);
+    repository.registerStudent(id, studentFullName, studentFurigana, studentNickname, email,
+        prefecture, city, age, gender, studentRemark);
 
     List<StudentsCourses> studentsCourses = studentDetail.getStudentsCoursesList();
-    for(StudentsCourses course : studentsCourses){
+    for (StudentsCourses course : studentsCourses) {
       course.setStudentId(id);
       course.setCourseStartAt(LocalDateTime.now());
       course.setCourseEndAt(LocalDateTime.now().plusDays(300));
@@ -76,5 +78,10 @@ public class StudentService {
     //repository.insertStudentCourses(courseId,studentID,courseName);
     //List<StudentsCourses> studentsCourses = studentDetail.getStudentsCoursesList();
     //repository.registerStudentCourses(studentsCourses);
+
+  }
+
+  public Student findStudentById(String id) {
+    return repository.findStudentDetail(id);
   }
 }

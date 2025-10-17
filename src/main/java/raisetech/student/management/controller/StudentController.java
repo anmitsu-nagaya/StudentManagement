@@ -2,12 +2,14 @@ package raisetech.student.management.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import raisetech.student.management.controller.converter.StudentConverter;
 import raisetech.student.management.data.Student;
@@ -79,5 +81,19 @@ public class StudentController {
     service.registerStudentDetailList(studentDetail);
     return "redirect:/students";
   }
+
+  @GetMapping("/students/{id}")
+  public Objects showStudentDetail(@PathVariable("id") String id){
+    Student studentById = service.findStudentById(id);
+    return null;
+  }
+
+
+//  @GetMapping("/students/{id}")
+//  public String showStudentDetail(@PathVariable("id") String id, Model model){
+//    StudentDetail studentDetail = service.findStudentById(id);
+//    model.addAttribute("studentDetail", studentDetail);//th:object="${studentDetail}に渡る
+//    return "updateStudent"; //registerStudent.htmlのこと
+//  }
 
 }
