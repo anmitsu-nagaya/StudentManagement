@@ -22,8 +22,13 @@
   </tr>
   </thead>
   <tbody>
+  <!-- th:object=技術的には「どの列にリンクをつけても動作は同じ」 -->
   <tr th:each="studentDetail : ${studentList}">
-    <td th:text="${studentDetail.student.id}">1</td>
+    <td>
+      <a th:href="@{/students/{id}(id=${studentDetail.student.id})}"
+         th:text="${studentDetail.student.id}">
+      </a>
+    </td>
     <td th:text="${studentDetail.student.studentFullName}">山田太郎</td>
     <td th:text="${studentDetail.student.studentFurigana}">ヤマダタロウ</td>
     <td th:text="${studentDetail.student.studentNickname}">タロー</td>
