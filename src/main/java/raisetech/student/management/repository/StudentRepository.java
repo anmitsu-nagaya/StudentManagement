@@ -1,6 +1,7 @@
 package raisetech.student.management.repository;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import raisetech.student.management.data.Student;
@@ -17,20 +18,35 @@ import raisetech.student.management.data.StudentsCourses;
 public interface StudentRepository {
 
   /**
-   *受講生DBを検索します。
+   *受講生DBを全件検索します。
    *
-   * @return 受講生DBを検索した受講生情報の一覧
+   * @return 受講生DBを全件検索した受講生情報の一覧
    */
   @Select("SELECT * FROM students")
   List<Student> searchStudent();
 
   /**
-   * 受講生コースDBを検索します。
+   * 受講生コースDBを全件検索します。
    *
-   * @return 受講生コースDBを検索したコースの一覧
+   * @return 受講生コースDBを全件検索したコースの一覧
    */
   @Select("SELECT * FROM students_courses")
   List<StudentsCourses> searchStudentsCourses();
 
+  /**
+   * 受講生DBに受講生データを新規登録します。
+   *
+   * @return void
+   */
+  @Insert("INSERT students(id,student_full_name,student_furigana,email) VALUES (#{id},#{name},#{furigana},#{email})")
+  void addStudent(String id,String name,String furigana,String email);
+
+  /**
+   * 受講生コースDBに受講生コースデータを新規登録します。
+   *
+   * @return void
+   */
+  @Insert("INSERT students_courses(course_id,student_id,course_name) VALUES (#{courseId},#{studentID},#{courseName})")
+  void addStudentCourses(String courseId,String studentID, String courseName);
 
 }

@@ -18,6 +18,14 @@ import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.service.StudentService;
 
+/**
+ * 学生情報に関する Web API および画面表示を提供するコントローラクラス。
+ *
+ * <p>StudentService を呼び出して、学生データの取得・登録などを行います。
+ * 画面（Thymeleaf テンプレート）とのやり取りを担当し、Controller → Service → Repository の流れを実現します。</p>
+ *
+ * <p>このクラスでは、学生情報の登録・一覧取得・画面表示を担当します。</p>
+ */
 @Controller
 public class StudentController {
 
@@ -29,7 +37,6 @@ public class StudentController {
     this.service = service;
     this.converter = converter;
   }
-
 
   @GetMapping("/students")
   public String getStudentList(Model model) {
@@ -57,9 +64,18 @@ public class StudentController {
     }
 
     //System.out.println(studentDetail.getStudent().getStudentFullName() + "さんが新規受講生として登録されました。");
-    //新規受講生情報を登録する処理を実装する。
-    //コース情報も一緒に登録できるように実装する。コースは単体で良い。
+    //課題1：新規受講生情報を登録する処理を実装する。
+    String id = studentDetail.getStudent().getId();
+    String name = studentDetail.getStudent().getStudentFullName();
+    String furigana = studentDetail.getStudent().getStudentFurigana();
+    String email = studentDetail.getStudent().getEmail();
 
+    //課題2：コース情報も一緒に登録できるように実装する。コースは単体で良い。
+    //System.out.println(studentsCourses);
+    String courseId = studentDetail.getStudentsCoursesList().getCourseId();
+    String courseName=studentDetail.getStudentsCoursesList().getCourseName();
+
+    service.addStudentDetailList(id,name,furigana,email,courseId,courseName);
     return "redirect:/students";
   }
 

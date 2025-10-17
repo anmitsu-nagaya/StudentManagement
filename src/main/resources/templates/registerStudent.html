@@ -8,8 +8,28 @@
 <!-- th:object="${student}"のstudentはpublic String registerStudent(StudentDetail studentDetail){の引数のstudentのこと。 -->
 <form th:action="@{/register-student}" th:object="${studentDetail}" method="post">
   <div>
+    <label for="id">ID：</label>
+    <input type="text" id="id" th:field="*{student.id}" required />
+  </div>
+  <div>
     <label for="studentFullName">名前：</label>
     <input type="text" id="studentFullName" th:field="*{student.studentFullName}" required />
+  </div>
+  <div>
+    <label for="studentFurigana">フリガナ：</label>
+    <input type="text" id="studentFurigana" th:field="*{student.studentFurigana}" required />
+  </div>
+  <div>
+    <label for="email">メールアドレス：</label>
+    <input type="text" id="email" th:field="*{student.email}" required />
+  </div>
+  <div>
+    <label for="courseId">受講コースID：</label>
+    <input type="text" id="courseId" th:field="*{studentsCoursesList.courseId}" required />
+  </div>
+  <div>
+    <label for="email">受講コース名：</label>
+    <input type="text" id="courseName" th:field="*{studentsCoursesList.courseName}" required />
   </div>
   <div>
     <button type="submit">登録</button>

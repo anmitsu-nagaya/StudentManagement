@@ -18,6 +18,8 @@
     <th>年齢</th>
     <th>性別</th>
     <th>備考</th>
+    <th>コースID</th>
+    <th>コース名</th>
   </tr>
   </thead>
   <tbody>
@@ -32,6 +34,8 @@
     <td th:text="${studentDetail.student.age}">20</td>
     <td th:text="${studentDetail.student.gender}">男性</td>
     <td th:text="${studentDetail.student.studentRemark}">特になし</td>
+    <td th:text="${studentDetail.studentsCoursesList != null ? studentDetail.studentsCoursesList.courseId : ''}"></td>
+    <td th:text="${studentDetail.studentsCoursesList != null ? studentDetail.studentsCoursesList.courseName : ''}"></td>
   </tr>
   </tbody>
 </table>
