@@ -3,6 +3,7 @@ package raisetech.student.management.repository;
 import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
@@ -38,15 +39,21 @@ public interface StudentRepository {
    *
    * @return void
    */
-  @Insert("INSERT students(id,student_full_name,student_furigana,email) VALUES (#{id},#{name},#{furigana},#{email})")
-  void addStudent(String id,String name,String furigana,String email);
+  @Insert("INSERT INTO students(id,student_full_name,student_furigana,email) VALUES (#{id},#{name},#{furigana},#{email})")
+  void addStudent(
+      @Param("id") String id,
+      @Param("name") String name,
+      @Param("furigana") String furigana,
+      @Param("email") String email);
 
   /**
    * 受講生コースDBに受講生コースデータを新規登録します。
    *
    * @return void
    */
-  @Insert("INSERT students_courses(course_id,student_id,course_name) VALUES (#{courseId},#{studentID},#{courseName})")
-  void addStudentCourses(String courseId,String studentID, String courseName);
-
+  @Insert("INSERT INTO students_courses(course_id,student_id,course_name) VALUES (#{courseId},#{studentID},#{courseName})")
+  void addStudentCourses(
+      @Param("courseId") String courseId,
+      @Param("studentID") String studentID,
+      @Param("courseName") String courseName);
 }

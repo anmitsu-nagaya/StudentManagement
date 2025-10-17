@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.student.management.controller.converter.StudentConverter;
 import raisetech.student.management.data.Student;
@@ -43,10 +44,11 @@ public class StudentController {
     List<Student> students = service.searchStudentList();
     List<StudentsCourses> studentsCourses = service.searchStudentsCourseList();
     model.addAttribute("studentList",converter.convertStudentDetails(students,studentsCourses));
-    return "studentList";
+    return "StudentList";
   }
 
   @GetMapping("/student-courses")
+  @ResponseBody
   public List<StudentsCourses> getStudentsCourseList() {
     return service.searchStudentsCourseList();
   }
