@@ -1,5 +1,6 @@
 package raisetech.student.management.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,16 +40,26 @@ public interface StudentRepository {
    *
    * @return void
    */
-  @Insert("INSERT INTO students VALUES(UUID(), #{studentFullName}, #{studentFurigana}, #{studentNickname}, #{email}, #{prefecture}, #{city}, #{age}, #{gender}, #{studentRemark}, false)")
-  @Options(useGeneratedKeys = true, keyProperty = "id") //自動生成された項目を使うことを指定
-  void registerStudent(Student student);
+  @Insert("INSERT INTO students(id,student_full_name,student_furigana,student_nickname,email,prefecture, city,age,gender,student_remark,student_is_deleted) VALUES(#{id}, #{studentFullName}, #{studentFurigana}, #{studentNickname}, #{email}, #{prefecture}, #{city}, #{age}, #{gender}, #{studentRemark}, false)")
+  void registerStudent(
+      String id,
+      String studentFullName,
+      String studentFurigana,
+      String studentNickname,
+      String email,
+      String prefecture,
+      String city,
+      int age,
+      String gender,
+      String studentRemark);
 
   /**
    * 受講生コースDBに受講生コースデータを新規登録します。
    *
    * @return void
    */
-  @Insert("INSERT students_courses VALUES (#{courseId}, #{studentID}, #{courseName}, #{courseStartAt}, #{courseEndAt})")
+  @Insert("INSERT INTO students_courses(course_id,student_id,course_name,course_start_at,course_end_at) VALUES (#{courseId}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt})")
+  @Options(useGeneratedKeys = true, keyProperty = "courseId") //自動生成された項目を使うことを指定
   void registerStudentCourses(StudentsCourses studentsCourses);
 
 }
