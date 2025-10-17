@@ -1,17 +1,13 @@
 package raisetech.student.management.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import raisetech.student.management.controller.converter.StudentConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
@@ -66,16 +62,18 @@ public class StudentController {
     //System.out.println(studentDetail.getStudent().getStudentFullName() + "さんが新規受講生として登録されました。");
     //課題1：新規受講生情報を登録する処理を実装する。
     // String id = studentDetail.getStudent().getId();
-    String name = studentDetail.getStudent().getStudentFullName();
-    String furigana = studentDetail.getStudent().getStudentFurigana();
-    String email = studentDetail.getStudent().getEmail();
+
+    //String name = studentDetail.getStudent().getStudentFullName();
+    //String furigana = studentDetail.getStudent().getStudentFurigana();
+    //String email = studentDetail.getStudent().getEmail();
 
     //課題2：コース情報も一緒に登録できるように実装する。コースは単体で良い。
     //System.out.println(studentsCourses);
-    String courseId = studentDetail.getStudentsCoursesList().getCourseId();
-    String courseName=studentDetail.getStudentsCoursesList().getCourseName();
+    //String courseId = studentDetail.getStudentsCoursesList().getCourseId();
+    //String courseName=studentDetail.getStudentsCoursesList().getCourseName();
 
-    service.addStudentDetailList(name,furigana,email,courseId,courseName);
+    //service.registerStudentDetailList(name,furigana,email,courseId,courseName);
+    service.registerStudentDetailList(studentDetail);
     return "redirect:/students";
   }
 

@@ -1,9 +1,9 @@
 package raisetech.student.management.repository;
 
 import java.util.List;
-import java.util.UUID;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
@@ -39,8 +39,9 @@ public interface StudentRepository {
    *
    * @return void
    */
-  @Insert("INSERT INTO students(id,student_full_name,student_furigana,email) VALUES (#{uuid},#{name},#{furigana},#{email})")
-  void insertStudent(String uuid, String name,String furigana,String email);
+  @Insert("INSERT INTO students VALUES(UUID(), #{studentFullName}, #{studentFurigana}, #{studentNickname}, #{email}, #{prefecture}, #{city}, #{age}, #{gender}, #{studentRemark}, false)")
+  @Options(useGeneratedKeys = true, keyProperty = "id") //自動生成された項目を使うことを指定
+  void registerStudent(Student student);
 
   /**
    * 受講生コースDBに受講生コースデータを新規登録します。
@@ -48,6 +49,6 @@ public interface StudentRepository {
    * @return void
    */
   @Insert("INSERT students_courses(course_id,student_id,course_name) VALUES (#{courseId},#{studentID},#{courseName})")
-  void insertStudentCourses(String courseId,String studentID, String courseName);
+  void insertStudentCourses(String courseId, String studentID, String courseName);
 
 }

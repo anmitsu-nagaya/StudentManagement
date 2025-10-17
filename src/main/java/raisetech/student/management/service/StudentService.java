@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
+import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.repository.StudentRepository;
 /**
  * 学生情報に関するビジネスロジックを提供するサービスクラス。
@@ -44,9 +46,12 @@ public class StudentService {
    * 新規の受講生情報を登録します。
    * <p>StudentRepositoryを使用して、受講生DBに新しい学生レコードを追加します。</p>
    */
-  public void addStudentDetailList(String name, String furigana,String email,String courseId, String courseName){
-    String studentID = UUID.randomUUID().toString();
-    repository.insertStudent(studentID, name,furigana,email);
-    repository.insertStudentCourses(courseId,studentID,courseName);
+  @Transactional
+  public void registerStudentDetailList(StudentDetail studentDetail){
+    //String studentID = UUID.randomUUID().toString();
+    //student.setId(UUID.randomUUID().toString());
+    //student.setStudentFullName();
+    repository.registerStudent(studentDetail.getStudent());
+    //repository.insertStudentCourses(courseId,studentID,courseName);
   }
 }
