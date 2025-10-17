@@ -9,7 +9,6 @@ import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
 
-//これをつけるとbeanが見つかりません、というエラーが起きない、AutoWiredに管理させるためにこのアノテーションが必要
 @Component
 public class StudentConverter {
 
@@ -19,19 +18,12 @@ public class StudentConverter {
       StudentDetail studentDetail = new StudentDetail();
       studentDetail.setStudent(student);
 
-      //List<convertStudentCourses> = new ArrayList<>();
       studentsCourses.forEach(courses -> {
         if(Objects.equals(courses.getStudentId(), student.getId())){
           studentDetail.setStudentsCoursesList(courses);
         }
-
       });
 
-      //StudentsCourses convertStudentCourses = studentsCourses.stream()
-      //    .filter(studentCourse -> student.getId().equals(studentCourse.getStudentId()))
-
-
-      //studentDetail.setStudentsCoursesList(convertStudentCourses);
       studentDetails.add(studentDetail);
     });
     return studentDetails;

@@ -53,8 +53,8 @@ public class StudentController {
 
   @GetMapping("/new-student")
   public String newStudent(Model model){
-    model.addAttribute("studentDetail", new StudentDetail());//th:object="${studentDetail}に渡る
-    return "registerStudent"; //registerStudent.htmlのこと
+    model.addAttribute("studentDetail", new StudentDetail());
+    return "registerStudent";
   }
 
   @PostMapping("/register-student")
@@ -63,7 +63,6 @@ public class StudentController {
       return "registerStudent";
     }
 
-    //System.out.println(studentDetail.getStudent().getStudentFullName() + "さんが新規受講生として登録されました。");
     //課題1：新規受講生情報を登録する処理を実装する。
     String id = studentDetail.getStudent().getId();
     String name = studentDetail.getStudent().getStudentFullName();
@@ -71,7 +70,6 @@ public class StudentController {
     String email = studentDetail.getStudent().getEmail();
 
     //課題2：コース情報も一緒に登録できるように実装する。コースは単体で良い。
-    //System.out.println(studentsCourses);
     String courseId = studentDetail.getStudentsCoursesList().getCourseId();
     String courseName=studentDetail.getStudentsCoursesList().getCourseName();
 
