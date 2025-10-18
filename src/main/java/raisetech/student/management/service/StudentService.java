@@ -87,7 +87,6 @@ public class StudentService {
 
   @Transactional
   public void updateStudentDetailList(StudentDetail studentDetail){
-    repository.updateStudent(studentDetail.getStudent().getId());
-    repository.updateStudentCourses(studentDetail.getStudent().getId());
+    repository.updateStudent(studentDetail.getStudent());
   }
 }

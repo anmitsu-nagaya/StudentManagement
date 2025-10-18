@@ -80,6 +80,7 @@ public class StudentController {
     if (result.hasErrors()) {
       return "updateStudent";
     }
+
     service.updateStudentDetailList(studentDetail);
     return "redirect:/students";
   }

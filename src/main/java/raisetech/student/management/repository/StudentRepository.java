@@ -67,12 +67,21 @@ public interface StudentRepository {
   @Select("SELECT * FROM students WHERE id = #{id}")
   Student findStudentDetail(String id);
 
-  @Update("UPDATE student WHERE id= #{id}")
-  void updateStudent(String id);
-
-  @Update("UPDATE student_courses WHERE student_id= #{id}")
-  void updateStudentCourses(String id);
-
-
+  @Update("""
+    UPDATE students
+    SET
+        student_full_name = #{studentFullName},
+        student_furigana = #{studentFurigana},
+        student_nickname = #{studentNickname},
+        email = #{email},
+        prefecture = #{prefecture},
+        city = #{city},
+        age = #{age},
+        gender = #{gender},
+        student_remark = #{studentRemark},
+        student_is_deleted = false
+    WHERE id = #{id}
+""")
+  void updateStudent(Student student);
 
 }
