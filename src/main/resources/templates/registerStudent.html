@@ -5,7 +5,6 @@
 </head>
 <body>
 <h1>受講生登録</h1>
-<!-- th:object="${student}"のstudentはpublic String registerStudent(StudentDetail studentDetail){の引数のstudentのこと。 -->
 <form th:action="@{/register-student}" th:object="${studentDetail}" method="post">
 
   <div>

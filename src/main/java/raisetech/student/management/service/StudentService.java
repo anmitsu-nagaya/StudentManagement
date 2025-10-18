@@ -50,9 +50,6 @@ public class StudentService {
    */
   @Transactional
   public void registerStudentDetailList(StudentDetail studentDetail) {
-    //String studentID = UUID.randomUUID().toString();
-    //student.setId(UUID.randomUUID().toString());
-    //student.setStudentFullName();
     String id = UUID.randomUUID().toString();
     String studentFullName = studentDetail.getStudent().getStudentFullName();
     String studentFurigana = studentDetail.getStudent().getStudentFurigana();
@@ -74,11 +71,6 @@ public class StudentService {
       course.setCourseEndAt(LocalDateTime.now().plusDays(300));
       repository.registerStudentCourses(course);
     }
-
-    //repository.insertStudentCourses(courseId,studentID,courseName);
-    //List<StudentsCourses> studentsCourses = studentDetail.getStudentsCoursesList();
-    //repository.registerStudentCourses(studentsCourses);
-
   }
 
   public Student findStudentById(String id) {

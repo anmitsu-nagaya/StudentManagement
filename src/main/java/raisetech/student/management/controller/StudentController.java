@@ -53,8 +53,8 @@ public class StudentController {
   public String newStudent(Model model){
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudentsCoursesList(Arrays.asList(new StudentsCourses()));
-    model.addAttribute("studentDetail", studentDetail);//th:object="${studentDetail}に渡る
-    return "registerStudent"; //registerStudent.htmlのこと
+    model.addAttribute("studentDetail", studentDetail);
+    return "registerStudent";
   }
 
   @PostMapping("/register-student")
@@ -71,7 +71,7 @@ public class StudentController {
     Student studentById = service.findStudentById(id);
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(studentById);
-    model.addAttribute("studentDetail", studentDetail);//th:object="${studentDetail}に渡る
+    model.addAttribute("studentDetail", studentDetail);
     return "updateStudent";
   }
 
@@ -80,10 +80,8 @@ public class StudentController {
     if (result.hasErrors()) {
       return "updateStudent";
     }
-
     service.updateStudentDetailList(studentDetail);
     return "redirect:/students";
   }
-
 
 }

@@ -2,14 +2,12 @@ package raisetech.student.management.controller.converter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
 
-//これをつけるとbeanが見つかりません、というエラーが起きない、AutoWiredに管理させるためにこのアノテーションが必要
 @Component
 public class StudentConverter {
 
