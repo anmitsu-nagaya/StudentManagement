@@ -7,6 +7,10 @@
 <h1>受講生更新</h1>
 <!-- th:object="${student}"のstudentはpublic String registerStudent(StudentDetail studentDetail){の引数のstudentのこと。 -->
 <form th:action="@{/update-student}" th:object="${studentDetail}" method="post">
+  <div>
+    <label>受講生ID：</label>
+    <span th:text="*{student.id}"></span>
+  </div>
 
   <div>
     <label for="studentFullName">名前：</label>

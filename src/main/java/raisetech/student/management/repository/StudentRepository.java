@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
@@ -65,5 +66,13 @@ public interface StudentRepository {
 
   @Select("SELECT * FROM students WHERE id = #{id}")
   Student findStudentDetail(String id);
+
+  @Update("UPDATE student WHERE id= #{id}")
+  void updateStudent(String id);
+
+  @Update("UPDATE student_courses WHERE student_id= #{id}")
+  void updateStudentCourses(String id);
+
+
 
 }

@@ -2,7 +2,6 @@ package raisetech.student.management.controller;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,21 +62,6 @@ public class StudentController {
     if(result.hasErrors()){
       return "registerStudent";
     }
-
-    //System.out.println(studentDetail.getStudent().getStudentFullName() + "さんが新規受講生として登録されました。");
-    //課題1：新規受講生情報を登録する処理を実装する。
-    // String id = studentDetail.getStudent().getId();
-
-    //String name = studentDetail.getStudent().getStudentFullName();
-    //String furigana = studentDetail.getStudent().getStudentFurigana();
-    //String email = studentDetail.getStudent().getEmail();
-
-    //課題2：コース情報も一緒に登録できるように実装する。コースは単体で良い。
-    //System.out.println(studentsCourses);
-    //String courseId = studentDetail.getStudentsCoursesList().getCourseId();
-    //String courseName=studentDetail.getStudentsCoursesList().getCourseName();
-
-    //service.registerStudentDetailList(name,furigana,email,courseId,courseName);
     service.registerStudentDetailList(studentDetail);
     return "redirect:/students";
   }
@@ -91,12 +75,14 @@ public class StudentController {
     return "updateStudent";
   }
 
+  @PostMapping("/update-student")
+  public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+    if (result.hasErrors()) {
+      return "updateStudent";
+    }
+    service.updateStudentDetailList(studentDetail);
+    return "redirect:/students";
+  }
 
-//  @GetMapping("/students/{id}")
-//  public String showStudentDetail(@PathVariable("id") String id, Model model){
-//    StudentDetail studentDetail = service.findStudentById(id);
-//    model.addAttribute("studentDetail", studentDetail);//th:object="${studentDetail}に渡る
-//    return "updateStudent"; //registerStudent.htmlのこと
-//  }
 
 }

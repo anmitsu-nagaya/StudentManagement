@@ -84,4 +84,10 @@ public class StudentService {
   public Student findStudentById(String id) {
     return repository.findStudentDetail(id);
   }
+
+  @Transactional
+  public void updateStudentDetailList(StudentDetail studentDetail){
+    repository.updateStudent(studentDetail.getStudent().getId());
+    repository.updateStudentCourses(studentDetail.getStudent().getId());
+  }
 }
