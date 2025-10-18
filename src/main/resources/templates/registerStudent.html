@@ -49,7 +49,7 @@
     <label th:for="studentCourse.__${stat.index}__.courseName">受講コース名：</label>
     <input type="text"
            th:id="studentCourse.__${stat.index}__.courseName"
-           th:field="*{studentsCoursesList[__${stat.index}__].courseName}" />
+           th:field="*{studentsCoursesList[__${stat.index}__].courseName}" required />
   </div>
 
 
