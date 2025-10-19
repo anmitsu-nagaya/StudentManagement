@@ -1,6 +1,5 @@
 package raisetech.student.management.repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,12 +8,11 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
-import raisetech.student.management.domain.StudentDetail;
 
 
 /**
  * 受講生情報を扱うリポジトリ。
- *
+ * <p>
  * 全件検索や単一条件での検索、コース情報の検索が行えるクラスです。
  */
 
@@ -22,7 +20,7 @@ import raisetech.student.management.domain.StudentDetail;
 public interface StudentRepository {
 
   /**
-   *受講生DBを全件検索します。
+   * 受講生DBを全件検索します。
    *
    * @return 受講生DBを全件検索した受講生情報の一覧
    */
@@ -61,27 +59,41 @@ public interface StudentRepository {
    * @return void
    */
   @Insert("INSERT INTO students_courses(course_id,student_id,course_name,course_start_at,course_end_at) VALUES (#{courseId}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt})")
-  @Options(useGeneratedKeys = true, keyProperty = "courseId") //自動生成された項目を使うことを指定
+  @Options(useGeneratedKeys = true, keyProperty = "courseId")
+  //自動生成された項目を使うことを指定
   void registerStudentCourses(StudentsCourses studentsCourses);
 
   @Select("SELECT * FROM students WHERE id = #{id}")
   Student findStudentDetail(String id);
 
   @Update("""
-    UPDATE students
-    SET
-        student_full_name = #{studentFullName},
-        student_furigana = #{studentFurigana},
-        student_nickname = #{studentNickname},
-        email = #{email},
-        prefecture = #{prefecture},
-        city = #{city},
-        age = #{age},
-        gender = #{gender},
-        student_remark = #{studentRemark},
-        student_is_deleted = false
-    WHERE id = #{id}
-""")
+          UPDATE students
+          SET
+              student_full_name = #{studentFullName},
+              student_furigana = #{studentFurigana},
+              student_nickname = #{studentNickname},
+              email = #{email},
+              prefecture = #{prefecture},
+              city = #{city},
+              age = #{age},
+              gender = #{gender},
+              student_remark = #{studentRemark},
+              student_is_deleted = false
+          WHERE id = #{id}
+      """)
   void updateStudent(Student student);
+
+  @Update("""
+          UPDATE students_courses
+          SET
+              course_id = #{courseId},
+              student_id = #{studentId},
+              course_name = #{courseName},
+              course_start_at = #{courseStartAt},
+              course_end_at = #{courseEndAt}
+          WHERE student_id = #{studentId}
+      """)
+  void updateStudentCourses(StudentsCourses studentsCourses);
+
 
 }

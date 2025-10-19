@@ -10,6 +10,7 @@ import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.repository.StudentRepository;
+
 /**
  * 学生情報に関するビジネスロジックを提供するサービスクラス。
  *
@@ -78,7 +79,13 @@ public class StudentService {
   }
 
   @Transactional
-  public void updateStudentDetailList(StudentDetail studentDetail){
+  public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
+    List<StudentsCourses> studentsCourses = studentDetail.getStudentsCoursesList();
+    for (StudentsCourses courses : studentsCourses) {
+      courses.setStudentId(studentDetail.getStudent().getId());
+      repository.updateStudentCourses(courses);
+    }
+
   }
 }

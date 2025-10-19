@@ -1,5 +1,6 @@
 package raisetech.student.management.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class StudentController {
   private StudentConverter converter;
 
   @Autowired
-  public StudentController(StudentService service,StudentConverter converter) {
+  public StudentController(StudentService service, StudentConverter converter) {
     this.service = service;
     this.converter = converter;
   }
@@ -40,7 +41,7 @@ public class StudentController {
   public String getStudentList(Model model) {
     List<Student> students = service.searchStudentList();
     List<StudentsCourses> studentsCourses = service.searchStudentsCourseList();
-    model.addAttribute("studentList",converter.convertStudentDetails(students,studentsCourses));
+    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
     return "studentList";
   }
 
@@ -50,7 +51,7 @@ public class StudentController {
   }
 
   @GetMapping("/new-student")
-  public String newStudent(Model model){
+  public String newStudent(Model model) {
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudentsCoursesList(Arrays.asList(new StudentsCourses()));
     model.addAttribute("studentDetail", studentDetail);
@@ -58,8 +59,8 @@ public class StudentController {
   }
 
   @PostMapping("/register-student")
-  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result){
-    if(result.hasErrors()){
+  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+    if (result.hasErrors()) {
       return "registerStudent";
     }
     service.registerStudentDetailList(studentDetail);
@@ -67,10 +68,16 @@ public class StudentController {
   }
 
   @GetMapping("/students/{id}")
-  public String showStudentDetail(@PathVariable("id") String id,Model model){
+  public String showStudentDetail(@PathVariable("id") String id, Model model) {
     Student studentById = service.findStudentById(id);
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(studentById);
+
+    List<StudentsCourses> studentsCourses = new ArrayList<>();
+    StudentsCourses courses = new StudentsCourses();
+    courses.setStudentId(id);
+    studentsCourses.add(courses);
+    studentDetail.setStudentsCoursesList(studentsCourses);
     model.addAttribute("studentDetail", studentDetail);
     return "updateStudent";
   }
