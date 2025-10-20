@@ -73,7 +73,8 @@ public class StudentService {
       repository.registerStudentCourses(course);
     }
   }
-
+  
+  @Transactional
   public StudentDetail findStudentDetailById(String id) {
     Student student = repository.findStudent(id);
     List<StudentsCourses> studentsCoursesList = repository.findStudentCoursesList(student.getId());
