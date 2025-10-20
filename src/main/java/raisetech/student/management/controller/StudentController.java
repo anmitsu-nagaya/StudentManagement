@@ -70,6 +70,7 @@ public class StudentController {
   }
 
   @PostMapping("/update-student")
+  //差分に表示されるようコメント追加
   public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
     if (result.hasErrors()) {
       return "updateStudent";
