@@ -33,7 +33,7 @@ public class StudentService {
    * @return 検索されたすべての学生情報を格納したリスト
    */
   public List<Student> searchStudentList() {
-    return repository.searchStudent();
+    return repository.searchStudentList();
   }
 
   /**
@@ -42,7 +42,7 @@ public class StudentService {
    * @return 検索されたすべての受講コースを格納したリスト
    */
   public List<StudentsCourses> searchStudentsCourseList() {
-    return repository.searchStudentsCourses();
+    return repository.searchStudentsCoursesList();
   }
 
   /**
@@ -74,16 +74,22 @@ public class StudentService {
     }
   }
 
-  public Student findStudentById(String id) {
-    return repository.findStudentDetail(id);
+  public StudentDetail findStudentDetailById(String id) {
+    Student student = repository.findStudent(id);
+    List<StudentsCourses> studentsCoursesList = repository.findStudentCoursesList(student.getId());
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(student);
+    studentDetail.setStudentsCoursesList(studentsCoursesList);
+    return studentDetail;
   }
 
   @Transactional
   public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-    List<StudentsCourses> studentsCourses = studentDetail.getStudentsCoursesList();
-    for (StudentsCourses courses : studentsCourses) {
+    for (StudentsCourses courses : studentDetail.getStudentsCoursesList()) {
       courses.setStudentId(studentDetail.getStudent().getId());
+      courses.setCourseStartAt(LocalDateTime.now());
+      courses.setCourseEndAt(LocalDateTime.now().plusDays(300));
       repository.updateStudentCourses(courses);
     }
 

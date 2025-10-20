@@ -1,6 +1,5 @@
 package raisetech.student.management.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +44,6 @@ public class StudentController {
     return "studentList";
   }
 
-  @GetMapping("/student-courses")
-  public List<StudentsCourses> getStudentsCourseList() {
-    return service.searchStudentsCourseList();
-  }
 
   @GetMapping("/new-student")
   public String newStudent(Model model) {
@@ -67,17 +62,9 @@ public class StudentController {
     return "redirect:/students";
   }
 
-  @GetMapping("/students/{id}")
+  @GetMapping("/update-student/{id}")
   public String showStudentDetail(@PathVariable("id") String id, Model model) {
-    Student studentById = service.findStudentById(id);
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(studentById);
-
-    List<StudentsCourses> studentsCourses = new ArrayList<>();
-    StudentsCourses courses = new StudentsCourses();
-    courses.setStudentId(id);
-    studentsCourses.add(courses);
-    studentDetail.setStudentsCoursesList(studentsCourses);
+    StudentDetail studentDetail = service.findStudentDetailById(id);
     model.addAttribute("studentDetail", studentDetail);
     return "updateStudent";
   }
