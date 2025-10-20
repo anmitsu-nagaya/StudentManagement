@@ -70,10 +70,8 @@ public interface StudentRepository {
   @Update("""
           UPDATE students_courses
           SET
-              course_name = #{courseName},
-              course_start_at = #{courseStartAt},
-              course_end_at = #{courseEndAt}
-          WHERE student_id = #{studentId}
+              course_name = #{courseName}
+          WHERE student_id = #{studentId} AND course_id = #{courseId}
       """)
   void updateStudentCourses(StudentsCourses studentsCourses);
 

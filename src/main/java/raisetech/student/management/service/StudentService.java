@@ -87,9 +87,6 @@ public class StudentService {
   public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
     for (StudentsCourses courses : studentDetail.getStudentsCoursesList()) {
-      courses.setStudentId(studentDetail.getStudent().getId());
-      courses.setCourseStartAt(LocalDateTime.now());
-      courses.setCourseEndAt(LocalDateTime.now().plusDays(300));
       repository.updateStudentCourses(courses);
     }
 
