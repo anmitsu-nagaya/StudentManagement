@@ -73,7 +73,7 @@ public class StudentService {
       repository.registerStudentCourses(course);
     }
   }
-  
+
   @Transactional
   public StudentDetail findStudentDetailById(String id) {
     Student student = repository.findStudent(id);
@@ -88,6 +88,7 @@ public class StudentService {
   public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
     for (StudentsCourses courses : studentDetail.getStudentsCoursesList()) {
+      courses.setStudentId(studentDetail.getStudent().getId());
       repository.updateStudentCourses(courses);
     }
 
