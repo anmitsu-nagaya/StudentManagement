@@ -31,7 +31,7 @@ public class StudentController {
   private StudentConverter converter;
 
   @Autowired
-  public StudentController(StudentService service,StudentConverter converter) {
+  public StudentController(StudentService service, StudentConverter converter) {
     this.service = service;
     this.converter = converter;
   }
@@ -40,17 +40,13 @@ public class StudentController {
   public String getStudentList(Model model) {
     List<Student> students = service.searchStudentList();
     List<StudentsCourses> studentsCourses = service.searchStudentsCourseList();
-    model.addAttribute("studentList",converter.convertStudentDetails(students,studentsCourses));
+    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
     return "studentList";
   }
 
-  @GetMapping("/student-courses")
-  public List<StudentsCourses> getStudentsCourseList() {
-    return service.searchStudentsCourseList();
-  }
 
   @GetMapping("/new-student")
-  public String newStudent(Model model){
+  public String newStudent(Model model) {
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudentsCoursesList(Arrays.asList(new StudentsCourses()));
     model.addAttribute("studentDetail", studentDetail);
@@ -58,24 +54,23 @@ public class StudentController {
   }
 
   @PostMapping("/register-student")
-  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result){
-    if(result.hasErrors()){
+  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+    if (result.hasErrors()) {
       return "registerStudent";
     }
     service.registerStudentDetailList(studentDetail);
     return "redirect:/students";
   }
 
-  @GetMapping("/students/{id}")
-  public String showStudentDetail(@PathVariable("id") String id,Model model){
-    Student studentById = service.findStudentById(id);
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(studentById);
+  @GetMapping("/update-student/{id}")
+  public String showStudentDetail(@PathVariable("id") String id, Model model) {
+    StudentDetail studentDetail = service.findStudentDetailById(id);
     model.addAttribute("studentDetail", studentDetail);
     return "updateStudent";
   }
 
   @PostMapping("/update-student")
+  //差分に表示されるようコメント追加
   public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
     if (result.hasErrors()) {
       return "updateStudent";

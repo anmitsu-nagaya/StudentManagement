@@ -10,6 +10,7 @@ import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.repository.StudentRepository;
+
 /**
  * 学生情報に関するビジネスロジックを提供するサービスクラス。
  *
@@ -32,7 +33,7 @@ public class StudentService {
    * @return 検索されたすべての学生情報を格納したリスト
    */
   public List<Student> searchStudentList() {
-    return repository.searchStudent();
+    return repository.searchStudentList();
   }
 
   /**
@@ -41,7 +42,7 @@ public class StudentService {
    * @return 検索されたすべての受講コースを格納したリスト
    */
   public List<StudentsCourses> searchStudentsCourseList() {
-    return repository.searchStudentsCourses();
+    return repository.searchStudentsCoursesList();
   }
 
   /**
@@ -73,12 +74,23 @@ public class StudentService {
     }
   }
 
-  public Student findStudentById(String id) {
-    return repository.findStudentDetail(id);
+  @Transactional
+  public StudentDetail findStudentDetailById(String id) {
+    Student student = repository.findStudent(id);
+    List<StudentsCourses> studentsCoursesList = repository.findStudentCoursesList(student.getId());
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(student);
+    studentDetail.setStudentsCoursesList(studentsCoursesList);
+    return studentDetail;
   }
 
   @Transactional
-  public void updateStudentDetailList(StudentDetail studentDetail){
+  public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
+    for (StudentsCourses courses : studentDetail.getStudentsCoursesList()) {
+      courses.setStudentId(studentDetail.getStudent().getId());
+      repository.updateStudentCourses(courses);
+    }
+
   }
 }
