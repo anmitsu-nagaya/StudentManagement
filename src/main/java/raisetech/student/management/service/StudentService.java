@@ -28,7 +28,7 @@ public class StudentService {
   }
 
   /**
-   * StudentRepositoryで全件検索した結果を返します。
+   * StudentRepositoryで全件検索し、論理削除がfalseである結果を返します。
    *
    * @return 検索されたすべての学生情報を格納したリスト
    */
@@ -74,6 +74,12 @@ public class StudentService {
     }
   }
 
+  /**
+   * ボタンで選択した受講生情報を検索した結果を取得します。
+   *
+   * @param id
+   * @return ボタンで選んだ受講生情報のみ格納したデータ。StudentDetail型。
+   */
   @Transactional
   public StudentDetail findStudentDetailById(String id) {
     Student student = repository.findStudent(id);
@@ -84,6 +90,11 @@ public class StudentService {
     return studentDetail;
   }
 
+  /**
+   * ボタンで選択した受講生情報をDBで更新した結果を取得します。 キャンセルチェックボックスにより、論理削除フラグも更新されています。
+   *
+   * @param studentDetail
+   */
   @Transactional
   public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
