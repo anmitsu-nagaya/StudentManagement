@@ -16,14 +16,6 @@ import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.service.StudentService;
 
-/**
- * 学生情報に関する Web API および画面表示を提供するコントローラクラス。
- *
- * <p>StudentService を呼び出して、学生データの取得・登録などを行います。
- * 画面（Thymeleaf テンプレート）とのやり取りを担当し、Controller → Service → Repository の流れを実現します。</p>
- *
- * <p>このクラスでは、学生情報の登録・一覧取得・画面表示を担当します。</p>
- */
 @Controller
 public class StudentController {
 
@@ -36,6 +28,7 @@ public class StudentController {
     this.converter = converter;
   }
 
+  //全件表示「受講生情報一覧」
   @GetMapping("/students")
   public String getStudentList(Model model) {
     List<Student> students = service.searchStudentList();
@@ -44,7 +37,16 @@ public class StudentController {
     return "studentList";
   }
 
+  //論理削除された受講生以外の表示
+  @GetMapping("/students/not-deleted")
+  public String getNotDeletedStudentList(Model model) {
+    List<Student> students = service.searchNotDeletedStudentList();
+    List<StudentsCourses> studentsCourses = service.searchStudentsCourseList();
+    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
+    return "studentList";
+  }
 
+  //新規登録画面の表示
   @GetMapping("/new-student")
   public String newStudent(Model model) {
     StudentDetail studentDetail = new StudentDetail();
@@ -53,6 +55,7 @@ public class StudentController {
     return "registerStudent";
   }
 
+  //新規受講生情報をDBに登録
   @PostMapping("/register-student")
   public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
     if (result.hasErrors()) {
@@ -62,6 +65,7 @@ public class StudentController {
     return "redirect:/students";
   }
 
+  //ボタンで選択された受講生情報を表示「受講生詳細」
   @GetMapping("/update-student/{id}")
   public String showStudentDetail(@PathVariable("id") String id, Model model) {
     StudentDetail studentDetail = service.findStudentDetailById(id);
@@ -69,14 +73,13 @@ public class StudentController {
     return "updateStudent";
   }
 
+  //ボタンで選択された受講生情報をDBで更新
   @PostMapping("/update-student")
-  //差分に表示されるようコメント追加
   public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
     if (result.hasErrors()) {
       return "updateStudent";
     }
     service.updateStudentDetailList(studentDetail);
-    return "redirect:/students";
+    return "redirect:/students/not-deleted";
   }
-
 }

@@ -11,12 +11,6 @@ import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.repository.StudentRepository;
 
-/**
- * 学生情報に関するビジネスロジックを提供するサービスクラス。
- *
- * <p>StudentRepositoryを利用して、学生データの検索・追加・更新などを行います。
- * Controller層から呼び出され、DB操作の前後で必要な処理や変換を行う役割を持ちます。</p>
- */
 @Service
 public class StudentService {
 
@@ -37,9 +31,18 @@ public class StudentService {
   }
 
   /**
+   * StudentRepositoryで全件検索し、論理削除がfalseである結果を返します。
+   *
+   * @return 論理削除対象外の学生情報を格納したリスト。List型。
+   */
+  public List<Student> searchNotDeletedStudentList() {
+    return repository.searchNotDeletedStudentList();
+  }
+
+  /**
    * StudentRepositoryで全件検索した結果を返します。
    *
-   * @return 検索されたすべての受講コースを格納したリスト
+   * @return 検索されたすべての受講コースを格納したリスト。List型。
    */
   public List<StudentsCourses> searchStudentsCourseList() {
     return repository.searchStudentsCoursesList();
@@ -74,6 +77,12 @@ public class StudentService {
     }
   }
 
+  /**
+   * ボタンで選択した受講生情報を検索した結果を取得します。
+   *
+   * @param id
+   * @return ボタンで選んだ受講生情報のみ格納したデータ。StudentDetail型。
+   */
   @Transactional
   public StudentDetail findStudentDetailById(String id) {
     Student student = repository.findStudent(id);
@@ -84,6 +93,12 @@ public class StudentService {
     return studentDetail;
   }
 
+  /**
+   * ボタンで選択した受講生情報を更新します。 キャンセルチェックボックスにより、論理削除フラグも更新されています。
+   * <p>StudentRepositoryを使用して、ボタンで選択された受講生（一人）を対象に、受講生DB・受講生コースDBの学生レコードを更新します。</p>
+   *
+   * @param studentDetail
+   */
   @Transactional
   public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
