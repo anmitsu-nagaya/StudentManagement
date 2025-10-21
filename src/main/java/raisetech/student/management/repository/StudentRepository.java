@@ -19,7 +19,7 @@ import raisetech.student.management.data.StudentsCourses;
 @Mapper
 public interface StudentRepository {
 
-  @Select("SELECT * FROM students")
+  @Select("SELECT * FROM students WHERE student_is_deleted = false")
   List<Student> searchStudentList();
 
   @Select("SELECT * FROM students_courses")
@@ -62,7 +62,7 @@ public interface StudentRepository {
               age = #{age},
               gender = #{gender},
               student_remark = #{studentRemark},
-              student_is_deleted = false
+              student_is_deleted = #{studentIsDeleted}
           WHERE id = #{id}
       """)
   void updateStudent(Student student);
