@@ -28,12 +28,21 @@ public class StudentService {
   }
 
   /**
-   * StudentRepositoryで全件検索し、論理削除がfalseである結果を返します。
+   * StudentRepositoryで全件検索した結果を返します。
    *
    * @return 検索されたすべての学生情報を格納したリスト
    */
   public List<Student> searchStudentList() {
     return repository.searchStudentList();
+  }
+
+  /**
+   * StudentRepositoryで全件検索し、論理削除がfalseである結果を返します。
+   *
+   * @return 論理削除対象外の学生情報を格納したリスト
+   */
+  public List<Student> searchNotDeletedStudentList() {
+    return repository.searchNotDeletedStudentList();
   }
 
   /**
