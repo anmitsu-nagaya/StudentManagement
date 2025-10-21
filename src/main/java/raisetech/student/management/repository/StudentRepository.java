@@ -9,13 +9,6 @@ import org.apache.ibatis.annotations.Update;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
 
-
-/**
- * 受講生情報を扱うリポジトリ。
- * <p>
- * 全件検索や単一条件での検索、コース情報の検索が行えるクラスです。
- */
-
 @Mapper
 public interface StudentRepository {
 
@@ -44,7 +37,6 @@ public interface StudentRepository {
 
   @Insert("INSERT INTO students_courses(course_id,student_id,course_name,course_start_at,course_end_at) VALUES (#{courseId}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt})")
   @Options(useGeneratedKeys = true, keyProperty = "courseId")
-    //自動生成された項目を使うことを指定
   void registerStudentCourses(StudentsCourses studentsCourses);
 
   @Select("SELECT * FROM students WHERE id = #{id}")
