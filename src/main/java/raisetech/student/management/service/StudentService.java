@@ -53,8 +53,9 @@ public class StudentService {
    * <p>StudentRepositoryを使用して、受講生DBに新しい学生レコードを追加します。</p>
    */
   @Transactional
-  public void registerStudentDetailList(StudentDetail studentDetail) {
+  public StudentDetail registerStudentDetailList(StudentDetail studentDetail) {
     String id = UUID.randomUUID().toString();
+    studentDetail.getStudent().setId(id);
     String studentFullName = studentDetail.getStudent().getStudentFullName();
     String studentFurigana = studentDetail.getStudent().getStudentFurigana();
     String studentNickname = studentDetail.getStudent().getStudentNickname();
@@ -75,6 +76,7 @@ public class StudentService {
       course.setCourseEndAt(LocalDateTime.now().plusDays(300));
       repository.registerStudentCourses(course);
     }
+    return studentDetail;
   }
 
   /**
