@@ -37,15 +37,6 @@ public class StudentController {
     return "studentList";
   }
 
-  //論理削除された受講生以外の表示
-  @GetMapping("/students/not-deleted")
-  public String getNotDeletedStudentList(Model model) {
-    List<Student> students = service.searchNotDeletedStudentList();
-    List<StudentsCourses> studentsCourses = service.searchStudentsCourseList();
-    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
-    return "studentList";
-  }
-
   //新規登録画面の表示
   @GetMapping("/new-student")
   public String newStudent(Model model) {
@@ -80,6 +71,6 @@ public class StudentController {
       return "updateStudent";
     }
     service.updateStudentDetailList(studentDetail);
-    return "redirect:/students/not-deleted";
+    return "redirect:/students";
   }
 }

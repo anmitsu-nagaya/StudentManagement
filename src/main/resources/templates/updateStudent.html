@@ -47,6 +47,11 @@
     <input type="text" id="studentRemark" th:field="*{student.studentRemark}">
   </div>
 
+  <div>
+    <label for="studentIsDeleted">キャンセル：</label>
+    <input type="checkbox" id="studentIsDeleted" th:field="*{student.studentIsDeleted}">
+  </div>
+
   <div th:each="course, stat : *{studentsCoursesList}">
     <label th:for="studentCourse.__${stat.index}__.courseId">受講コースID：</label>
     <input type="text"
@@ -59,11 +64,6 @@
     <input type="text"
            th:id="studentCourse.__${stat.index}__.courseName"
            th:field="*{studentsCoursesList[__${stat.index}__].courseName}" required/>
-  </div>
-
-  <div>
-    <label for="studentIsDeleted">キャンセル：</label>
-    <input type="checkbox" id="studentIsDeleted" th:field="*{student.studentIsDeleted}">
   </div>
 
 
