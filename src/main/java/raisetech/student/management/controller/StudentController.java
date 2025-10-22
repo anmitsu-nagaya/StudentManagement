@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,14 @@ public class StudentController {
     }
     service.registerStudentDetailList(studentDetail);
     return "redirect:/students";
+  }
+
+  //ボタンで選択された受講生情報を表示「受講生詳細」
+  @GetMapping("/update-student/{id}")
+  public String showStudentDetail(@PathVariable("id") String id, Model model) {
+    StudentDetail studentDetail = service.findStudentDetailById(id);
+    model.addAttribute("studentDetail", studentDetail);
+    return "updateStudent";
   }
 
   //ボタンで選択された受講生情報をDBで更新
