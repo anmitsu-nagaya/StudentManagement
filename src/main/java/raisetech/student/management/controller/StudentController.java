@@ -30,12 +30,18 @@ public class StudentController {
     this.converter = converter;
   }
 
-  //全件表示「受講生情報一覧」
+  //全件検索
   @GetMapping("/students")
   public List<StudentDetail> getStudentList() {
     List<Student> students = service.searchStudentList();
     List<StudentsCourses> studentsCourses = service.searchStudentsCourseList();
     return converter.convertStudentDetails(students, studentsCourses);
+  }
+
+  //単一検索
+  @GetMapping("/student/{id}")
+  public StudentDetail showStudentDetail(@PathVariable("id") String id) {
+    return service.findStudentDetailById(id);
   }
 
   //新規登録画面の表示
@@ -57,13 +63,6 @@ public class StudentController {
     return "redirect:/students";
   }
 
-  //ボタンで選択された受講生情報を表示「受講生詳細」
-  @GetMapping("/update-student/{id}")
-  public String showStudentDetail(@PathVariable("id") String id, Model model) {
-    StudentDetail studentDetail = service.findStudentDetailById(id);
-    model.addAttribute("studentDetail", studentDetail);
-    return "updateStudent";
-  }
 
   //ボタンで選択された受講生情報をDBで更新
   @PostMapping("/update-student")
