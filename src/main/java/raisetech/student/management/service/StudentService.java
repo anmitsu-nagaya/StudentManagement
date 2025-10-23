@@ -82,7 +82,7 @@ public class StudentService {
   }
 
   /**
-   * 受講生コース情報を登録する際の初期情報を設定する。
+   * 受講生コース情報を登録する際の初期情報を設定します。
    *
    * @param studentCourses 受講生コース情報
    * @param id             UUIDで生成した受講生ID
@@ -97,17 +97,17 @@ public class StudentService {
 
 
   /**
-   * ボタンで選択した受講生情報を更新します。 キャンセルチェックボックスにより、論理削除フラグも更新されています。
-   * <p>StudentRepositoryを使用して、ボタンで選択された受講生（一人）を対象に、受講生DB・受講生コースDBの学生レコードを更新します。</p>
+   * 受講生詳細の更新を行います。 受講生と受講生コース情報をそれぞれ更新します。
    *
-   * @param studentDetail
+   * @param studentDetail 受講生詳細
    */
   @Transactional
   public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-    for (StudentCourse courses : studentDetail.getStudentCoursesList()) {
-      courses.setStudentId(studentDetail.getStudent().getId());
-      repository.updateStudentCourse(courses);
+    for (StudentCourse studentCourse : studentDetail.getStudentCoursesList()) {
+      studentCourse.setStudentId(studentDetail.getStudent().getId());
+      repository.updateStudentCourse(studentCourse.getStudentId(), studentCourse.getCourseId(),
+          studentCourse.getCourseName());
     }
 
   }

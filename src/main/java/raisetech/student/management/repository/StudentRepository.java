@@ -66,7 +66,11 @@ public interface StudentRepository {
   @Options(useGeneratedKeys = true, keyProperty = "courseId")
   void registerStudentCourse(StudentCourse studentCourse);
 
-
+  /**
+   * 受講生を更新します。
+   *
+   * @param student 受講生
+   */
   @Update("""
           UPDATE students
           SET
@@ -84,13 +88,20 @@ public interface StudentRepository {
       """)
   void updateStudent(Student student);
 
+  /**
+   * 受講生コース情報のコース名を更新します。
+   *
+   * @param studentId  受講生ID
+   * @param courseId   コースID
+   * @param courseName コース名
+   */
   @Update("""
           UPDATE students_courses
           SET
               course_name = #{courseName}
           WHERE student_id = #{studentId} AND course_id = #{courseId}
       """)
-  void updateStudentCourse(StudentCourse studentCourse);
+  void updateStudentCourse(String studentId, String courseId, String courseName);
 
 
 }
