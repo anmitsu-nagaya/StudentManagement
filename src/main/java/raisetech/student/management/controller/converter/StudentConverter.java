@@ -15,7 +15,7 @@ import raisetech.student.management.domain.StudentDetail;
 public class StudentConverter {
 
   /**
-   * 受講生に紐づく受講生コース情報をマッピングする。 受講生コース情報は受講生に対して複数存在するのでループを回して受講生詳細情報を組み立てる。
+   * 受講生に紐づく受講生コース情報をマッピングします。 受講生コース情報は受講生に対して複数存在するのでループを回して受講生詳細情報を組み立てます。
    *
    * @param studentList       受講生一覧
    * @param studentCourseList 受講生コース情報のリスト
@@ -38,5 +38,4 @@ public class StudentConverter {
     });
     return studentDetails;
   }
-
 }
