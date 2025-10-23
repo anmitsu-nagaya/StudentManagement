@@ -6,8 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import raisetech.student.management.data.Student;
-import raisetech.student.management.data.StudentsCourses;
+import raisetech.student.management.data.StudentCourse;
 
+/**
+ * 受講生と受講生コース情報を扱うオブジェクト。
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,6 +18,6 @@ import raisetech.student.management.data.StudentsCourses;
 public class StudentDetail {
 
   private Student student;
-  private List<StudentsCourses> studentsCoursesList;
+  private List<StudentCourse> studentCoursesList;
 
 }
