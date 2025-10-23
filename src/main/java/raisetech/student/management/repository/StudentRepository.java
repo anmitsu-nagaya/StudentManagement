@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import raisetech.student.management.data.Student;
-import raisetech.student.management.data.StudentsCourses;
+import raisetech.student.management.data.StudentCourse;
 
 /**
  * 受講生テーブルと受講生コース情報テーブルと紐づくリポジトリです。
@@ -30,7 +30,7 @@ public interface StudentRepository {
    * @return 受講生
    */
   @Select("SELECT * FROM students WHERE id = #{id}")
-  Student findStudent(String id);
+  Student searchStudent(String id);
 
   /**
    * 受講生のコース情報の全件検索を行います。
@@ -38,7 +38,7 @@ public interface StudentRepository {
    * @return　受講生のコース情報(全件)
    */
   @Select("SELECT * FROM students_courses")
-  List<StudentsCourses> searchStudentsCoursesList();
+  List<StudentCourse> searchStudentCourseList();
 
   /**
    * 受講生IDに紐づく受講生コース情報を検索します。
@@ -47,25 +47,24 @@ public interface StudentRepository {
    * @return 受講生IDに紐づく受講生コース情報
    */
   @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
-  List<StudentsCourses> findStudentCoursesList(String studentId);
+  List<StudentCourse> searchStudentCourse(String studentId);
 
-
+  /**
+   * 受講生を新規登録します。
+   *
+   * @param student 受講生
+   */
   @Insert("INSERT INTO students(id,student_full_name,student_furigana,student_nickname,email,prefecture, city,age,gender,student_remark,student_is_deleted) VALUES(#{id}, #{studentFullName}, #{studentFurigana}, #{studentNickname}, #{email}, #{prefecture}, #{city}, #{age}, #{gender}, #{studentRemark}, false)")
-  void registerStudent(
-      String id,
-      String studentFullName,
-      String studentFurigana,
-      String studentNickname,
-      String email,
-      String prefecture,
-      String city,
-      int age,
-      String gender,
-      String studentRemark);
+  void registerStudent(Student student);
 
+  /**
+   * 受講生コース情報を新規登録します。IDに関しては自動採番を行います。
+   *
+   * @param studentCourse 受講生コース情報
+   */
   @Insert("INSERT INTO students_courses(course_id,student_id,course_name,course_start_at,course_end_at) VALUES (#{courseId}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt})")
   @Options(useGeneratedKeys = true, keyProperty = "courseId")
-  void registerStudentCourses(StudentsCourses studentsCourses);
+  void registerStudentCourse(StudentCourse studentCourse);
 
 
   @Update("""
@@ -91,7 +90,7 @@ public interface StudentRepository {
               course_name = #{courseName}
           WHERE student_id = #{studentId} AND course_id = #{courseId}
       """)
-  void updateStudentCourses(StudentsCourses studentsCourses);
+  void updateStudentCourse(StudentCourse studentCourse);
 
 
 }

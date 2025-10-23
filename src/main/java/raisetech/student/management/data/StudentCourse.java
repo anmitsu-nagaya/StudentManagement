@@ -6,7 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StudentsCourses {
+public class StudentCourse {
+
   /**
    * コースID。PRIMARY KEY (`student_id`,`course_id`)。
    * <ul>
