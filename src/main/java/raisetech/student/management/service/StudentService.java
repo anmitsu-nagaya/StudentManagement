@@ -6,46 +6,55 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import raisetech.student.management.controller.converter.StudentConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentsCourses;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.repository.StudentRepository;
 
+/**
+ * 受講生情報を取り扱うサービスです。 受講生の検索や登録・更新処理を行います。
+ */
 @Service
 public class StudentService {
 
   private StudentRepository repository;
+  private StudentConverter converter;
 
+  /**
+   * コンストラクタ
+   *
+   * @param repository 受講生テーブルと受講生コース情報テーブルと紐づくリポジトリ
+   * @param converter  受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
+   */
   @Autowired
-  public StudentService(StudentRepository repository) {
+  public StudentService(StudentRepository repository, StudentConverter converter) {
     this.repository = repository;
+    this.converter = converter;
   }
 
   /**
-   * StudentRepositoryで全件検索した結果を返します。
+   * 受講生一覧検索です。 全件検索を行うので、条件指定は行いません。
    *
-   * @return 検索されたすべての学生情報を格納したリスト
+   * @return 受講生一覧(全件)
    */
-  public List<Student> searchStudentList() {
-    return repository.searchStudentList();
+  public List<StudentDetail> searchStudentList() {
+    List<Student> studentList = repository.searchStudentList();
+    List<StudentsCourses> studentsCoursesList = repository.searchStudentsCoursesList();
+    return converter.convertStudentDetails(studentList, studentsCoursesList);
   }
 
   /**
-   * StudentRepositoryで全件検索し、論理削除がfalseである結果を返します。
+   * 受講生検索です。 IDに紐づく受講生情報を取得した後、その受講生に紐づく受講生コース情報を取得して設定します。
    *
-   * @return 論理削除対象外の学生情報を格納したリスト。List型。
+   * @param id 受講生ID
+   * @return 受講生
    */
-  public List<Student> searchNotDeletedStudentList() {
-    return repository.searchNotDeletedStudentList();
-  }
-
-  /**
-   * StudentRepositoryで全件検索した結果を返します。
-   *
-   * @return 検索されたすべての受講コースを格納したリスト。List型。
-   */
-  public List<StudentsCourses> searchStudentsCourseList() {
-    return repository.searchStudentsCoursesList();
+  @Transactional
+  public StudentDetail findStudentDetailById(String id) {
+    Student student = repository.findStudent(id);
+    List<StudentsCourses> studentsCoursesList = repository.findStudentCoursesList(student.getId());
+    return new StudentDetail(student, studentsCoursesList);
   }
 
   /**
@@ -53,8 +62,9 @@ public class StudentService {
    * <p>StudentRepositoryを使用して、受講生DBに新しい学生レコードを追加します。</p>
    */
   @Transactional
-  public void registerStudentDetailList(StudentDetail studentDetail) {
+  public StudentDetail registerStudentDetailList(StudentDetail studentDetail) {
     String id = UUID.randomUUID().toString();
+    studentDetail.getStudent().setId(id);
     String studentFullName = studentDetail.getStudent().getStudentFullName();
     String studentFurigana = studentDetail.getStudent().getStudentFurigana();
     String studentNickname = studentDetail.getStudent().getStudentNickname();
@@ -75,23 +85,9 @@ public class StudentService {
       course.setCourseEndAt(LocalDateTime.now().plusDays(300));
       repository.registerStudentCourses(course);
     }
-  }
-
-  /**
-   * ボタンで選択した受講生情報を検索した結果を取得します。
-   *
-   * @param id
-   * @return ボタンで選んだ受講生情報のみ格納したデータ。StudentDetail型。
-   */
-  @Transactional
-  public StudentDetail findStudentDetailById(String id) {
-    Student student = repository.findStudent(id);
-    List<StudentsCourses> studentsCoursesList = repository.findStudentCoursesList(student.getId());
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(student);
-    studentDetail.setStudentsCoursesList(studentsCoursesList);
     return studentDetail;
   }
+
 
   /**
    * ボタンで選択した受講生情報を更新します。 キャンセルチェックボックスにより、論理削除フラグも更新されています。
