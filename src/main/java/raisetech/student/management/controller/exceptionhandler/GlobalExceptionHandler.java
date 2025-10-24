@@ -1,10 +1,10 @@
-package raisetech.student.management.controller.ExceptionHandler;
+package raisetech.student.management.controller.exceptionhandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import raisetech.student.management.Exception.TestException;
+import raisetech.student.management.exception.TestException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
