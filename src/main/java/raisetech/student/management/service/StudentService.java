@@ -10,6 +10,7 @@ import raisetech.student.management.controller.converter.StudentConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
+import raisetech.student.management.repository.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
 
 /**
@@ -106,8 +107,11 @@ public class StudentService {
     repository.updateStudent(studentDetail.getStudent());
     for (StudentCourse studentCourse : studentDetail.getStudentCoursesList()) {
       studentCourse.setStudentId(studentDetail.getStudent().getId());
-      repository.updateStudentCourse(studentCourse.getStudentId(), studentCourse.getCourseId(),
-          studentCourse.getCourseName());
+      StudentCourseDto studentCourseDto = new StudentCourseDto();
+      studentCourseDto.setStudentId(studentCourse.getStudentId());
+      studentCourseDto.setCourseId(studentCourse.getCourseId());
+      studentCourseDto.setCourseName(studentCourse.getCourseName());
+      repository.updateStudentCourse(studentCourseDto);
     }
 
   }
