@@ -45,7 +45,8 @@
 
   <!-- 受講生を更新 -->
   <update id="updateStudent"
-    parameterType="raisetech.student.management.data.Student">
+    parameterType="raisetech.student.management.data.Student" useGeneratedKeys="true"
+    keyProperty="courseId">
     UPDATE students SET student_full_name = #{studentFullName}, student_furigana =
     #{studentFurigana}, student_nickname = #{studentNickname}, email = #{email}, prefecture =
     #{prefecture}, city = #{city}, age = #{age}, gender = #{gender}, student_remark =
