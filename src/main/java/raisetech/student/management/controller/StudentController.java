@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.student.management.Exception.TestException;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.service.StudentService;
 
@@ -81,4 +82,11 @@ public class StudentController {
     service.updateStudentDetailList(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
   }
+
+
+  @GetMapping("/studentsError")
+  public List<StudentDetail> getStudentListError() throws TestException {
+    throw new TestException("エラーが発生しました。");
+  }
+
 }
