@@ -148,8 +148,8 @@ public class StudentController {
 
     List<RegisterStudentCourseData> formatstudentCoursesList = registerRequestFormat.getStudentCoursesList();
     List<StudentCourse> studentCourseList = new ArrayList<>();
-    StudentCourse studentCourse = new StudentCourse();
     for (RegisterStudentCourseData formatCourseData : formatstudentCoursesList) {
+      StudentCourse studentCourse = new StudentCourse();
       studentCourse.setCourseName(formatCourseData.getCourseName());
       studentCourseList.add(studentCourse);
     }
@@ -211,8 +211,8 @@ public class StudentController {
 
     List<UpdateStudentCourseData> formatstudentCoursesList = updateRequestFormat.getStudentCoursesList();
     List<StudentCourse> studentCourseList = new ArrayList<>();
-    StudentCourse studentCourse = new StudentCourse();
     for (UpdateStudentCourseData formatCourseData : formatstudentCoursesList) {
+      StudentCourse studentCourse = new StudentCourse();
       studentCourse.setCourseName(formatCourseData.getCourseName());
       studentCourseList.add(studentCourse);
     }
