@@ -5,8 +5,8 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import raisetech.student.management.controller.requestformat.updatadata.UpdateStudentCourseData;
-import raisetech.student.management.controller.requestformat.updatadata.UpdateStudentData;
+import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentCourseData;
+import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentData;
 
 @Schema(description = "受講生登録情報")
 @Getter

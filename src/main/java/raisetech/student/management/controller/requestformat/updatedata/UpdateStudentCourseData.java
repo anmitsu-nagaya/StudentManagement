@@ -1,4 +1,4 @@
-package raisetech.student.management.controller.requestformat.updatadata;
+package raisetech.student.management.controller.requestformat.updatedata;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
