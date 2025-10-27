@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.student.management.controller.requestformat.RegisterRequestFormat;
 import raisetech.student.management.controller.requestformat.UpdateRequestFormat;
+import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentCourseData;
+import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentData;
+import raisetech.student.management.controller.requestformat.updatadata.UpdateStudentCourseData;
+import raisetech.student.management.controller.requestformat.updatadata.UpdateStudentData;
+import raisetech.student.management.data.Student;
+import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.service.StudentService;
 
@@ -119,9 +126,38 @@ public class StudentController {
   )
   @PostMapping("/register-student")
   public ResponseEntity<StudentDetail> registerStudent(
-      @RequestBody @Valid StudentDetail studentDetail) {
+      @RequestBody @Valid RegisterRequestFormat registerRequestFormat) {
+    StudentDetail studentDetail = registerStudentDetail(registerRequestFormat);
     StudentDetail responseStudentDetail = service.registerStudentDetailList(studentDetail);
     return ResponseEntity.ok(responseStudentDetail);
+  }
+
+  private StudentDetail registerStudentDetail(RegisterRequestFormat registerRequestFormat) {
+
+    RegisterStudentData formatStudent = registerRequestFormat.getStudent();
+    Student student = new Student();
+    student.setStudentFullName(formatStudent.getStudentFullName());
+    student.setStudentFurigana(formatStudent.getStudentFurigana());
+    student.setStudentNickname(formatStudent.getStudentNickname());
+    student.setEmail(formatStudent.getEmail());
+    student.setPrefecture(formatStudent.getPrefecture());
+    student.setCity(formatStudent.getCity());
+    student.setAge(formatStudent.getAge());
+    student.setGender(formatStudent.getGender());
+    student.setStudentRemark(formatStudent.getStudentRemark());
+
+    List<RegisterStudentCourseData> formatstudentCoursesList = registerRequestFormat.getStudentCoursesList();
+    List<StudentCourse> studentCourseList = new ArrayList<>();
+    StudentCourse studentCourse = new StudentCourse();
+    for (RegisterStudentCourseData formatCourseData : formatstudentCoursesList) {
+      studentCourse.setCourseName(formatCourseData.getCourseName());
+      studentCourseList.add(studentCourse);
+    }
+
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(student);
+    studentDetail.setStudentCoursesList(studentCourseList);
+    return studentDetail;
   }
 
 
@@ -149,8 +185,43 @@ public class StudentController {
       }
   )
   @PutMapping("/update-student")
-  public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail) {
+  public ResponseEntity<String> updateStudent(
+      @RequestBody @Valid UpdateRequestFormat updateRequestFormat) {
+    StudentDetail studentDetail = updateStudentDetail(updateRequestFormat);
     service.updateStudentDetailList(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
   }
+
+
+  private StudentDetail updateStudentDetail(UpdateRequestFormat updateRequestFormat) {
+
+    UpdateStudentData formatStudent = updateRequestFormat.getStudent();
+    Student student = new Student();
+    student.setId(formatStudent.getId());
+    student.setStudentFullName(formatStudent.getStudentFullName());
+    student.setStudentFurigana(formatStudent.getStudentFurigana());
+    student.setStudentNickname(formatStudent.getStudentNickname());
+    student.setEmail(formatStudent.getEmail());
+    student.setPrefecture(formatStudent.getPrefecture());
+    student.setCity(formatStudent.getCity());
+    student.setAge(formatStudent.getAge());
+    student.setGender(formatStudent.getGender());
+    student.setStudentRemark(formatStudent.getStudentRemark());
+    student.setStudentIsDeleted(formatStudent.getStudentIsDeleted());
+
+    List<UpdateStudentCourseData> formatstudentCoursesList = updateRequestFormat.getStudentCoursesList();
+    List<StudentCourse> studentCourseList = new ArrayList<>();
+    StudentCourse studentCourse = new StudentCourse();
+    for (UpdateStudentCourseData formatCourseData : formatstudentCoursesList) {
+      studentCourse.setCourseName(formatCourseData.getCourseName());
+      studentCourseList.add(studentCourse);
+    }
+
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(student);
+    studentDetail.setStudentCoursesList(studentCourseList);
+    return studentDetail;
+  }
 }
+
+
