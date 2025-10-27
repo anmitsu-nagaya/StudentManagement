@@ -3,6 +3,7 @@ package raisetech.student.management.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,8 +24,8 @@ import raisetech.student.management.controller.requestformat.RegisterRequestForm
 import raisetech.student.management.controller.requestformat.UpdateRequestFormat;
 import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentCourseData;
 import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentData;
-import raisetech.student.management.controller.requestformat.updatadata.UpdateStudentCourseData;
-import raisetech.student.management.controller.requestformat.updatadata.UpdateStudentData;
+import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentCourseData;
+import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentData;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
