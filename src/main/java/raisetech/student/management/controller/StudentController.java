@@ -70,7 +70,7 @@ public class StudentController {
       operationId = "showStudentDetail",
       parameters = {
           @Parameter(
-              name = "studentId",
+              name = "id",
               description = "検索したい受講生の受講生ID",
               in = ParameterIn.PATH,
               required = true,
