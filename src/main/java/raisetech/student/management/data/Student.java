@@ -52,7 +52,7 @@ public class Student {
   /**
    * 地域（市区町村）。
    */
-  @Size(max = 10)
+  @Size(max = 50)
   private String city;
   /**
    * 年齢。
