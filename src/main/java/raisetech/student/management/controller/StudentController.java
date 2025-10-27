@@ -3,7 +3,6 @@ package raisetech.student.management.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -54,7 +53,7 @@ public class StudentController {
               description = "一覧表示検索成功。検索した全受講生のデータを返します。",
               content = @Content(
                   mediaType = "application/json",
-                  array = @ArraySchema(schema = @Schema(implementation = StudentDetail.class))
+                  schema = @Schema(implementation = StudentDetail.class)
               )
           )
       }
@@ -84,7 +83,7 @@ public class StudentController {
               description = "受講生検索成功。検索した受講生のデータを返します。",
               content = @Content(
                   mediaType = "application/json",
-                  array = @ArraySchema(schema = @Schema(implementation = StudentDetail.class))
+                  schema = @Schema(implementation = StudentDetail.class)
               )
           )
       }
@@ -104,7 +103,7 @@ public class StudentController {
           description = "登録する受講生の詳細情報。受講生ID・コースID・コース開始日・コース修了日はservice層で自動採番・自動登録します。",
           content = @Content(
               mediaType = "application/json",
-              array = @ArraySchema(schema = @Schema(implementation = RegisterRequestFormat.class))
+              schema = @Schema(implementation = RegisterRequestFormat.class)
           )
       ),
       responses = {
@@ -135,7 +134,7 @@ public class StudentController {
           description = "更新する受講生の詳細情報",
           content = @Content(
               mediaType = "application/json",
-              array = @ArraySchema(schema = @Schema(implementation = UpdateRequestFormat.class))
+              schema = @Schema(implementation = UpdateRequestFormat.class)
           )
       ),
       responses = {
