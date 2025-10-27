@@ -23,6 +23,6 @@ public class UpdateStudentData {
   private Integer age;
   private String gender;
   private String studentRemark;
-  private String studentIsDeleted;
+  private Boolean studentIsDeleted;
 
 }
