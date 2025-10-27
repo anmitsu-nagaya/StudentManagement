@@ -60,7 +60,7 @@ public class StudentController {
               description = "一覧表示検索成功。検索した全受講生のデータを返します。",
               content = @Content(
                   mediaType = "application/json",
-                  schema = @Schema(implementation = StudentDetail.class)
+                  array = @ArraySchema(schema = @Schema(implementation = StudentDetail.class))
               )
           )
       }
