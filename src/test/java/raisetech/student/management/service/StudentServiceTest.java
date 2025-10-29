@@ -1,5 +1,8 @@
 package raisetech.student.management.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -8,8 +11,6 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,7 +44,7 @@ class StudentServiceTest {
     student = new Student();
     studentCourse = new StudentCourse();
     studentDetail = new StudentDetail();
-    id = UUID.randomUUID().toString();
+    id = "test-id";
   }
 
   @Test
@@ -64,27 +65,29 @@ class StudentServiceTest {
   @Test
   void 受講生詳細の検索_リポジトリの処理が適切に呼び出せていること() {
     student.setId(id);
-    List<StudentCourse> studentCourseList = new ArrayList<>();
+    //List<StudentCourse> studentCourseList = new ArrayList<>();
     when(repository.searchStudent(id)).thenReturn(student);
-    when(repository.searchStudentCourse(student.getId())).thenReturn(studentCourseList);
+    when(repository.searchStudentCourse(student.getId())).thenReturn(new ArrayList<>());
 
-    sut.findStudentDetailById(id);
+    StudentDetail expected = new StudentDetail(student, new ArrayList<>());
+    StudentDetail actual = sut.findStudentDetailById(id);
 
     verify(repository, times(1)).searchStudent(id);
-    verify(repository, times(1)).searchStudentCourse(student.getId());
+    verify(repository, times(1)).searchStudentCourse(id);
+    assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
   }
 
   @Test
   void 受講生詳細の登録_リポジトリの処理が適切に呼び出せていること() {
-    student.setId(id);
-    studentCourse.setStudentId(id);
-    studentCourse.setCourseStartAt(LocalDateTime.now());
-    studentCourse.setCourseEndAt(LocalDateTime.now().plusDays(300));
+    //student.setId(id);
+    //studentCourse.setStudentId(id);
+    //studentCourse.setCourseStartAt(LocalDateTime.now());
+    //studentCourse.setCourseEndAt(LocalDateTime.now().plusDays(300));
 
-    List<StudentCourse> studentCourseList = new ArrayList<>();
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
 
     studentDetail.setStudent(student);
-    studentCourseList.add(studentCourse);
+    //studentCourseList.add(studentCourse);
     studentDetail.setStudentCoursesList(studentCourseList);
 
     sut.registerStudentDetailList(studentDetail);
@@ -99,18 +102,22 @@ class StudentServiceTest {
 
     sut.initStudentCourses(studentCourse, id);
 
-    Assertions.assertEquals(id, studentCourse.getStudentId());
-    Assertions.assertNotNull(studentCourse.getCourseStartAt());
-    Assertions.assertNotNull(studentCourse.getCourseEndAt());
-    Assertions.assertTrue(studentCourse.getCourseEndAt().isAfter(studentCourse.getCourseStartAt()));
+    assertEquals(id, studentCourse.getStudentId());
+    assertNotNull(studentCourse.getCourseStartAt());
+    assertNotNull(studentCourse.getCourseEndAt());
+    assertTrue(studentCourse.getCourseEndAt().isAfter(studentCourse.getCourseStartAt()));
+    assertEquals(LocalDateTime.now().getHour(), studentCourse.getCourseStartAt().getHour());
+    assertEquals(LocalDateTime.now().plusDays(300).getHour(),
+        studentCourse.getCourseEndAt().getHour());
 
   }
 
   @Test
   void 受講生詳細の更新_リポジトリが適切に呼び出せていること() {
 
-    List<StudentCourse> studentCourseList = new ArrayList<>();
-    studentCourseList.add(studentCourse);
+    //List<StudentCourse> studentCourseList = new ArrayList<>();
+    //studentCourseList.add(studentCourse);
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
     studentDetail.setStudent(student);
     studentDetail.setStudentCoursesList(studentCourseList);
 
