@@ -11,9 +11,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -133,6 +135,12 @@ public class StudentController {
     return ResponseEntity.ok(responseStudentDetail);
   }
 
+  /**
+   * レスポンスされた受講生リストのデータ(不完全)を、受講生リストの型にマッピングします。OpenAPI用に作成したメソッドです。
+   *
+   * @param registerRequestFormat リクエスト側で必要な項目のみデータとして格納されている受講生リスト
+   * @return　Postする際に必要な形にマッピングをした受講生リスト
+   */
   private StudentDetail registerStudentDetail(RegisterRequestFormat registerRequestFormat) {
 
     RegisterStudentData formatStudent = registerRequestFormat.getStudent();
@@ -193,7 +201,12 @@ public class StudentController {
     return ResponseEntity.ok("更新処理が成功しました。");
   }
 
-
+  /**
+   * レスポンスされた受講生リストのデータ(不完全)を、受講生リストの型にマッピングします。OpenAPI用に作成したメソッドです。
+   *
+   * @param updateRequestFormat リクエスト側で必要な項目のみデータとして格納されている受講生リスト
+   * @return　Putする際に必要な形にマッピングをした受講生リスト
+   */
   private StudentDetail updateStudentDetail(UpdateRequestFormat updateRequestFormat) {
 
     UpdateStudentData formatStudent = updateRequestFormat.getStudent();
@@ -223,6 +236,17 @@ public class StudentController {
     studentDetail.setStudentCoursesList(studentCourseList);
     return studentDetail;
   }
+
+  @GetMapping("/exception")
+  public ResponseEntity<String> throwException() throws NotFoundException {
+    throw new NotFoundException("このAPIは現在利用できません。古いURLとなっています。");
+  }
+
+  @ExceptionHandler(NotFoundException.class)
+  public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
+    return ResponseEntity.badRequest().body(ex.getMessage());
+  }
+
 }
 
 
