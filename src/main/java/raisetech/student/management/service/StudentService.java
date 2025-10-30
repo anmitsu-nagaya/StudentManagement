@@ -88,14 +88,14 @@ public class StudentService {
    * @param studentCourses 受講生コース情報
    * @param id             UUIDで生成した受講生ID
    */
-  private void initStudentCourses(StudentCourse studentCourses, String id) {
+  void initStudentCourses(StudentCourse studentCourses, String id) {
     LocalDateTime now = LocalDateTime.now();
 
     studentCourses.setStudentId(id);
     studentCourses.setCourseStartAt(now);
     studentCourses.setCourseEndAt(now.plusDays(300));
   }
-  
+
   /**
    * 受講生詳細の更新を行います。 受講生と受講生コース情報をそれぞれ更新します。
    *
@@ -117,7 +117,7 @@ public class StudentService {
    * @param studentCourse 更新内容を所持する受講生コース情報
    * @return　受講生ID,受講生コースID,受講生コース名を付与した受講生コース情報
    */
-  private static StudentCourseDto getStudentCourseDto(StudentCourse studentCourse) {
+  private StudentCourseDto getStudentCourseDto(StudentCourse studentCourse) {
     StudentCourseDto studentCourseDto = new StudentCourseDto();
     studentCourseDto.setStudentId(studentCourse.getStudentId());
     studentCourseDto.setCourseId(studentCourse.getCourseId());
