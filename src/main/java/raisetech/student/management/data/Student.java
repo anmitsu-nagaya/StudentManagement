@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,8 @@ public class Student {
   /**
    * 学生ID（主キー）。
    */
+  @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      message = "UUIDの形式が正しくありません。")
   private String id;
   /**
    * 学生のフルネーム。
@@ -47,7 +50,7 @@ public class Student {
   /**
    * 地域（都道府県）。
    */
-  @Size(max = 10)
+  @Size(max = 10, message = "文字数が超過しています。")
   private String prefecture;
   /**
    * 地域（市区町村）。
