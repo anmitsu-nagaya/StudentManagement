@@ -76,7 +76,7 @@ class StudentControllerTest {
   @Test
   void 受講生登録のレスポンス内容が正しいこと() throws Exception {
     // --- モックの戻り値 ---
-    student.setStudentFullName("山田");
+    student.setStudentFullName("山田太郎");
     student.setStudentFurigana("ヤマダタロウ");
     student.setEmail("taro@example.com");
     studentCourse.setCourseName("Javaコース");
@@ -104,14 +104,15 @@ class StudentControllerTest {
         .andExpect(jsonPath("$.student.studentFullName").value("山田太郎"))
         .andExpect(jsonPath("$.student.studentFurigana").value("ヤマダタロウ"))
         .andExpect(jsonPath("$.student.email").value("taro@example.com"))
-        .andExpect(jsonPath("$.studentCoursesList[0].courseName").value("Javaコース"));
+        .andExpect(jsonPath("$.studentCoursesList[0].courseName").value("Javaコース"))
+        .andExpect(status().isOk());
   }
 
   @Test
   void 受講生登録時にサービスが正しく呼び出されて正しい引数が渡されること() throws Exception {
     // --- リクエストBody ---
     requestStudent.setStudentFullName("山田太郎");
-    requestStudent.setStudentFurigana("ヤマダ");
+    requestStudent.setStudentFurigana("ヤマダタロウ");
     requestStudent.setEmail("taro@example.com");
     requestCourse.setCourseName("Javaコース");
     request.setStudent(requestStudent);
@@ -165,8 +166,7 @@ class StudentControllerTest {
             .content(json))
         .andExpect(status().isOk());
 
-    ArgumentCaptor<StudentDetail> captor = ArgumentCaptor.forClass(StudentDetail.class);
-    verify(service, times(1)).updateStudentDetailList(captor.capture());
+    verify(service, times(1)).updateStudentDetailList(any());
   }
 
   @Test
