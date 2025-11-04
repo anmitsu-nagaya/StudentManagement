@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.ibatis.javassist.NotFoundException;
@@ -99,7 +99,8 @@ public class StudentController {
       }
   )
   @GetMapping("/student/{id}")
-  public StudentDetail showStudentDetail(@PathVariable("id") @Size(min = 36, max = 36) String id) {
+  public StudentDetail showStudentDetail(
+      @PathVariable("id") @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$") String id) {
     return service.findStudentDetailById(id);
   }
 
