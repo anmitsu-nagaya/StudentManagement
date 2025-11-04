@@ -23,7 +23,6 @@ public class StudentConverter {
    */
   public List<StudentDetail> convertStudentDetails(List<Student> studentList,
       List<StudentCourse> studentCourseList) {
-    // TODO:汚い。絶対直す。
     List<StudentDetail> studentDetails = new ArrayList<>();
     studentList.forEach(student -> {
       StudentDetail studentDetail = new StudentDetail();
