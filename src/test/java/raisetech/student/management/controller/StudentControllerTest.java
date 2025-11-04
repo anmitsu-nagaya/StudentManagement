@@ -109,16 +109,13 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生登録時にサービスが正しく呼び出されて正しい引数が渡されること() throws Exception {
-    // --- リクエストBody ---
-    requestStudent.setStudentFullName("山田太郎");
-    requestStudent.setStudentFurigana("ヤマダタロウ");
-    requestStudent.setEmail("taro@example.com");
-    requestCourse.setCourseName("Javaコース");
-    request.setStudent(requestStudent);
-    request.setStudentCoursesList(List.of(requestCourse));
-
-    String json = new ObjectMapper().writeValueAsString(request);
+  void 受講生検索のIDにUUID以外が渡されたときにエラーがでること() throws Exception {
+    String id = "ID";
+    mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", id))
+        .andExpect(status().is4xxClientError())
+        .andExpect(content().string(
+            "リクエストのパラメータが正しくありません: showStudentDetail.id: must match \"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$\""));
+  }
 
     // --- モック ---
     when(service.registerStudentDetailList(any(StudentDetail.class)))
