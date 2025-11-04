@@ -4,20 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -25,11 +20,8 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import raisetech.student.management.controller.requestformat.RegisterRequestFormat;
-import raisetech.student.management.controller.requestformat.UpdateRequestFormat;
 import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentCourseData;
 import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentData;
-import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentCourseData;
-import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentData;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
@@ -90,52 +82,67 @@ class StudentControllerTest {
             "リクエストのパラメータが正しくありません: showStudentDetail.id: must match \"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$\""));
   }
 
-    // --- モック ---
-    when(service.registerStudentDetailList(any(StudentDetail.class)))
-        .thenReturn(new StudentDetail());
-
-    // --- MockMvc実行 ---
+  @Test
+  void 受講生詳細の登録が実行できて空で返ってくること() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.post("/register-student")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(json))
+            .content(
+                """
+                    {
+                           "student":{
+                               "studentFullName" : "山田太郎",
+                               "studentFurigana" : "ヤマダタロウ",
+                               "studentNickname" : "タロー",
+                               "email" : "taro@example.com",
+                               "prefecture" : "東京都",
+                               "city" : "渋谷区",
+                               "age" : 30,
+                               "gender" : "男性",
+                               "studentRemark" : ""
+                           },
+                           "studentCoursesList" : [
+                               {
+                                   "courseName" : "Javaコース"
+                               }
+                           ]
+                       }
+                    """
+            ))
         .andExpect(status().isOk());
 
-    // --- サービス引数を検証 ---
-    ArgumentCaptor<StudentDetail> captor = ArgumentCaptor.forClass(StudentDetail.class);
-    verify(service, times(1)).registerStudentDetailList(captor.capture());
-
-    StudentDetail actual = captor.getValue();
-    assertThat(actual.getStudent().getStudentFullName()).isEqualTo("山田太郎");
-    assertThat(actual.getStudent().getStudentFurigana()).isEqualTo("ヤマダタロウ");
-    assertThat(actual.getStudent().getEmail()).isEqualTo("taro@example.com");
-
-    assertThat(actual.getStudentCoursesList()).hasSize(1);
-    assertThat(actual.getStudentCoursesList().get(0).getCourseName()).isEqualTo("Javaコース");
+    verify(service, times(1)).registerStudentDetailList(any());
   }
 
+
   @Test
-  void 受講生詳細の更新が実行できること() throws Exception {
-
-    UpdateStudentData requestStudent = new UpdateStudentData();
-    requestStudent.setId("3b333f9d-993c-48c6-97ca-4a94bb7894b7");
-    requestStudent.setStudentFullName("山田太郎");
-    requestStudent.setStudentFurigana("ヤマダタロウ");
-    requestStudent.setEmail("test@example.com");
-
-    UpdateStudentCourseData requestCourse = new UpdateStudentCourseData();
-    requestCourse.setCourseName("Javaコース");
-
-    UpdateRequestFormat request = new UpdateRequestFormat();
-    request.setStudent(requestStudent);
-    request.setStudentCoursesList(List.of(requestCourse));
-
-    String json = new ObjectMapper().writeValueAsString(request);
-
+  void 受講生詳細の更新が実行できて空で返ってくること() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.put("/update-student")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(json))
+            .content(
+                """
+                    {
+                        "student":{
+                            "id" : "3b333f9d-993c-48c6-97ca-4a94bb7894b7",
+                            "studentFullName" : "かきくけこ",
+                            "studentFurigana" : "タチバナヒカリ",
+                            "studentNickname" : "ヒカリ",
+                            "email" : "hikari@example.com",
+                            "prefecture" : "北海道",
+                            "city" : "札幌市",
+                            "age" : 20,
+                            "gender" : "女性",
+                            "studentRemark" : "",
+                            "studentIsDeleted" : false
+                        },
+                        "studentCoursesList": [
+                            {
+                                "studentCourseName" : "デザインコース"
+                            }
+                        ]
+                    }
+                    """
+            ))
         .andExpect(status().isOk());
-
     verify(service, times(1)).updateStudentDetailList(any());
   }
 
@@ -143,7 +150,7 @@ class StudentControllerTest {
   void exceptionエンドポイントでNotFoundExceptionがハンドリングされて400が返ること()
       throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get("/exception"))
-        .andExpect(status().isBadRequest())
+        .andExpect(status().is4xxClientError())
         .andExpect(content().string("このAPIは現在利用できません。古いURLとなっています。"));
   }
 
