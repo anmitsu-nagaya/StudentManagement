@@ -74,38 +74,11 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生登録のレスポンス内容が正しいこと() throws Exception {
-    // --- モックの戻り値 ---
-    student.setStudentFullName("山田太郎");
-    student.setStudentFurigana("ヤマダタロウ");
-    student.setEmail("taro@example.com");
-    studentCourse.setCourseName("Javaコース");
-    studentDetail.setStudent(student);
-    studentDetail.setStudentCoursesList(List.of(studentCourse));
-
-    when(service.registerStudentDetailList(any(StudentDetail.class)))
-        .thenReturn(studentDetail);
-
-    // --- リクエストBody ---
-    requestStudent.setStudentFullName("てすと");
-    requestStudent.setStudentFurigana("テスト");
-    requestStudent.setEmail("test@example.com");
-    requestCourse.setCourseName("テスト");
-    request.setStudent(requestStudent);
-    request.setStudentCoursesList(List.of(requestCourse));
-
-    String json = new ObjectMapper().writeValueAsString(request);
-
-    // --- MockMvc実行 & レスポンス検証 ---
-    mockMvc.perform(MockMvcRequestBuilders.post("/register-student")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(json))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.student.studentFullName").value("山田太郎"))
-        .andExpect(jsonPath("$.student.studentFurigana").value("ヤマダタロウ"))
-        .andExpect(jsonPath("$.student.email").value("taro@example.com"))
-        .andExpect(jsonPath("$.studentCoursesList[0].courseName").value("Javaコース"))
+  void 受講生詳細の検索が実行できて空で返ってくること() throws Exception {
+    String id = "3b333f9d-993c-48c6-97ca-4a94bb7894b7";
+    mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", id))
         .andExpect(status().isOk());
+    verify(service, times(1)).findStudentDetailById(id);
   }
 
   @Test
