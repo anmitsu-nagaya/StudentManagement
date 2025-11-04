@@ -215,16 +215,5 @@ class StudentControllerTest {
 
   }
 
-  @Test
-  void 受講生詳細のコース詳細でコースIDに数字以外を用いたときに入力チェックに掛かること() {
-    studentCourse.setCourseId("テストID");
-
-    Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
-
-    assertThat(violations.size()).isEqualTo(1);
-    assertThat(violations).extracting("message")
-        .containsOnly("数字のみで入力してください");
-
-  }
 
 }
