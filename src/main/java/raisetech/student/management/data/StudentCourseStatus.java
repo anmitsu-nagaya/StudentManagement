@@ -22,7 +22,6 @@ public class StudentCourseStatus {
    * コースID。
    */
   private int courseId;
-
   /**
    * 申し込み状況。
    */

@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import raisetech.student.management.controller.converter.StudentConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
+import raisetech.student.management.data.StudentCourseStatus;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.repository.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
+import raisetech.student.management.service.mapping.StudentCourseMapper;
 
 /**
  * 受講生情報を取り扱うサービスです。 受講生の検索や登録・更新処理を行います。
@@ -21,6 +23,7 @@ public class StudentService {
 
   private StudentRepository repository;
   private StudentConverter converter;
+  private StudentCourseMapper mapper;
 
   /**
    * コンストラクタ
@@ -29,9 +32,11 @@ public class StudentService {
    * @param converter  受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
    */
   @Autowired
-  public StudentService(StudentRepository repository, StudentConverter converter) {
+  public StudentService(StudentRepository repository, StudentConverter converter,
+      StudentCourseMapper mapper) {
     this.repository = repository;
     this.converter = converter;
+    this.mapper = mapper;
   }
 
   /**
@@ -42,7 +47,8 @@ public class StudentService {
   public List<StudentDetail> searchStudentList() {
     List<Student> studentList = repository.searchStudentList();
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
-    return converter.convertStudentDetails(studentList, studentCourseList);
+    List<StudentCourse> statusMappingCourseList = mapper.statusMapping(studentCourseList);
+    return converter.convertStudentDetails(studentList, statusMappingCourseList);
   }
 
   /**
@@ -55,8 +61,10 @@ public class StudentService {
   public StudentDetail findStudentDetailById(String id) {
     Student student = repository.searchStudent(id);
     List<StudentCourse> studentCoursesList = repository.searchStudentCourse(student.getId());
-    return new StudentDetail(student, studentCoursesList);
+    List<StudentCourse> statusMappingCourseList = mapper.statusMapping(studentCoursesList);
+    return new StudentDetail(student, statusMappingCourseList);
   }
+
 
   /**
    * 受講生詳細の登録を行います。 受講生と受講生コース情報を個別に登録し、受講生コース情報には受講生情報を紐づける値や日付情報（コース開始日・終了日）を設定します。

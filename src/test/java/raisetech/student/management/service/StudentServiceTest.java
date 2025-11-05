@@ -1,5 +1,6 @@
 package raisetech.student.management.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,6 +23,7 @@ import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.repository.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
+import raisetech.student.management.service.mapping.StudentCourseMapper;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
@@ -32,6 +34,9 @@ class StudentServiceTest {
   @Mock
   private StudentConverter converter;
 
+  @Mock
+  private StudentCourseMapper mapper;
+
   private StudentService sut;
   private Student student;
   private StudentCourse studentCourse;
@@ -40,54 +45,53 @@ class StudentServiceTest {
 
   @BeforeEach
   void before() {
-    sut = new StudentService(repository, converter);
+    sut = new StudentService(repository, converter, mapper);
     student = new Student();
     studentCourse = new StudentCourse();
     studentDetail = new StudentDetail();
     id = "test-id";
   }
 
+
   @Test
-  void 受講生詳細の一覧検索_リポジトリとコンバーターの処理が適切に呼び出せていること() {
+  void 受講生詳細の一覧検索_リポジトリとコンバーターとマッパーの処理が適切に呼び出せていること() {
     List<Student> studentList = new ArrayList<>();
     List<StudentCourse> studentCourseList = new ArrayList<>();
     when(repository.searchStudentList()).thenReturn(studentList);
     when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
+    when(mapper.statusMapping(studentCourseList)).thenReturn(studentCourseList);
 
     sut.searchStudentList();
 
     verify(repository, times(1)).searchStudentList();
     verify(repository, times(1)).searchStudentCourseList();
     verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
-
+    verify(mapper, times(1)).statusMapping(studentCourseList);
   }
 
+
   @Test
-  void 受講生詳細の検索_リポジトリの処理が適切に呼び出せていること() {
+  void 受講生詳細の検索_リポジトリとマッパーの処理が適切に呼び出せていること() {
     student.setId(id);
-    //List<StudentCourse> studentCourseList = new ArrayList<>();
     when(repository.searchStudent(id)).thenReturn(student);
     when(repository.searchStudentCourse(student.getId())).thenReturn(new ArrayList<>());
+    List<StudentCourse> studentCourseList = new ArrayList<>();
+    when(mapper.statusMapping(studentCourseList)).thenReturn(studentCourseList);
 
     StudentDetail expected = new StudentDetail(student, new ArrayList<>());
     StudentDetail actual = sut.findStudentDetailById(id);
 
     verify(repository, times(1)).searchStudent(id);
     verify(repository, times(1)).searchStudentCourse(id);
-    assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
+    verify(mapper, times(1)).statusMapping(studentCourseList);
+    assertThat(actual.getStudent().getId()).isEqualTo(expected.getStudent().getId());
   }
 
   @Test
   void 受講生詳細の登録_リポジトリの処理が適切に呼び出せていること() {
-    //student.setId(id);
-    //studentCourse.setStudentId(id);
-    //studentCourse.setCourseStartAt(LocalDateTime.now());
-    //studentCourse.setCourseEndAt(LocalDateTime.now().plusDays(300));
-
     List<StudentCourse> studentCourseList = List.of(studentCourse);
 
     studentDetail.setStudent(student);
-    //studentCourseList.add(studentCourse);
     studentDetail.setStudentCoursesList(studentCourseList);
 
     sut.registerStudentDetailList(studentDetail);
