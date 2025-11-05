@@ -11,6 +11,6 @@ import lombok.Setter;
 public class StudentCourseDto {
 
   private String studentId;
-  private String courseId;
+  private int courseId;
   private String courseName;
 }

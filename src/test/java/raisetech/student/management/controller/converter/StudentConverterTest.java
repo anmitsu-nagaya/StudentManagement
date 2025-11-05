@@ -5,13 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
 
-@ExtendWith(MockitoExtension.class)
 class StudentConverterTest {
 
   @Test
