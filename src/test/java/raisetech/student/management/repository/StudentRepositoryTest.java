@@ -105,13 +105,13 @@ class StudentRepositoryTest {
 
     StudentCourseDto studentCourseDto = new StudentCourseDto();
     studentCourseDto.setStudentId("1a2b3c4d-0001-0000-0000-000000000001");
-    studentCourseDto.setCourseId(update.size());
-    studentCourseDto.setCourseName("デザインコース");
+    studentCourseDto.setCourseId(1);
+    studentCourseDto.setCourseName("Javaコース");
     sut.updateStudentCourse(studentCourseDto);
 
     List<StudentCourse> actual = sut.searchStudentCourse("1a2b3c4d-0001-0000-0000-000000000001");
 
-    assertThat(actual.getLast().getCourseName()).isEqualTo("デザインコース");
+    assertThat(actual.getFirst().getCourseName()).isEqualTo("Javaコース");
   }
 
 }
