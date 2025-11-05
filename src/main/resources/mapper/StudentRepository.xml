@@ -58,6 +58,16 @@
     VALUES (#{courseId}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt})
   </insert>
 
+  <!-- コース申し込み状況を新規登録 -->
+  <insert id="registerStudentCourseStatus"
+    parameterType="raisetech.student.management.data.StudentCourseStatus"
+    useGeneratedKeys="true"
+    keyProperty="statusId"
+    keyColumn="status_id">
+    INSERT INTO students_courses_status(status_id,course_id,status)
+    VALUES (#{statusId}, #{courseId}, #{status})
+  </insert>
+
   <!-- 受講生を更新 -->
   <update id="updateStudent"
     parameterType="raisetech.student.management.data.Student">

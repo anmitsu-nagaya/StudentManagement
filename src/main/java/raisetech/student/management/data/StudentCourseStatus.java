@@ -26,6 +26,6 @@ public class StudentCourseStatus {
    * 申し込み状況。
    */
   @NotNull
-  private CourseStatus status;
+  private CourseStatus status = CourseStatus.仮申込;
 
 }

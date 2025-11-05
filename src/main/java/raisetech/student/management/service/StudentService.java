@@ -11,6 +11,7 @@ import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
 import raisetech.student.management.domain.StudentDetail;
+import raisetech.student.management.enums.CourseStatus;
 import raisetech.student.management.repository.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
 import raisetech.student.management.service.mapping.StudentCourseMapper;
@@ -71,7 +72,7 @@ public class StudentService {
    * 受講生IDに対してUUIDの作成を行います。
    *
    * @param studentDetail 登録内容を所持する受講生詳細
-   * @return　登録情報を付与したした受講生詳細
+   * @return　登録情報を付与した受講生詳細
    */
   @Transactional
   public StudentDetail registerStudentDetailList(StudentDetail studentDetail) {
@@ -84,9 +85,14 @@ public class StudentService {
     studentDetail.getStudentCoursesList().forEach(studentCourse -> {
       initStudentCourses(studentCourse, id);
       repository.registerStudentCourse(studentCourse);
+      StudentCourseStatus status = new StudentCourseStatus();
+      status.setCourseId(studentCourse.getCourseId());
+      repository.registerStudentCourseStatus(status);
+      studentCourse.setStatus(CourseStatus.仮申込);
     });
 
     studentDetail.getStudent().setId(id);
+
     return studentDetail;
   }
 

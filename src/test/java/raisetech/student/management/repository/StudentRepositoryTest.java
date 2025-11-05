@@ -79,12 +79,26 @@ class StudentRepositoryTest {
   @Test
   void 受講生コース情報の登録が行えること() {
     StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setCourseId(1);
+    studentCourse.setCourseId(11);
     studentCourse.setStudentId(UUID.randomUUID().toString());
     studentCourse.setCourseName("Javaコース");
     sut.registerStudentCourse(studentCourse);
 
     List<StudentCourse> actual = sut.searchStudentCourseList();
+
+    assertThat(actual.size()).isEqualTo(11);
+  }
+
+  @Test
+  void コース申し込み状況の登録が行えること() {
+    StudentCourseStatus studentCourseStatus = new StudentCourseStatus();
+    studentCourseStatus.setStatusId(11);
+    studentCourseStatus.setCourseId(11);
+    studentCourseStatus.setStatus(CourseStatus.仮申込);
+
+    sut.registerStudentCourseStatus(studentCourseStatus);
+
+    List<StudentCourseStatus> actual = sut.searchStudentCourseStatusList();
 
     assertThat(actual.size()).isEqualTo(11);
   }

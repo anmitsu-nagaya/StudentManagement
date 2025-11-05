@@ -72,6 +72,13 @@ public interface StudentRepository {
   void registerStudentCourse(StudentCourse studentCourse);
 
   /**
+   * コース申し込み状況を新規登録します。IDに関しては自動採番を行います。
+   *
+   * @param studentCourseStatus 受講生コース情報
+   */
+  void registerStudentCourseStatus(StudentCourseStatus studentCourseStatus);
+
+  /**
    * 受講生を更新します。
    *
    * @param student 受講生

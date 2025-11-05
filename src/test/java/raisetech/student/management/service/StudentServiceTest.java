@@ -15,11 +15,14 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import raisetech.student.management.controller.converter.StudentConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
+import raisetech.student.management.data.StudentCourseStatus;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.repository.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
@@ -36,6 +39,9 @@ class StudentServiceTest {
 
   @Mock
   private StudentCourseMapper mapper;
+
+  @Captor
+  ArgumentCaptor<StudentCourseStatus> statusCaptor;
 
   private StudentService sut;
   private Student student;
@@ -90,7 +96,6 @@ class StudentServiceTest {
   @Test
   void 受講生詳細の登録_リポジトリの処理が適切に呼び出せていること() {
     List<StudentCourse> studentCourseList = List.of(studentCourse);
-
     studentDetail.setStudent(student);
     studentDetail.setStudentCoursesList(studentCourseList);
 
@@ -98,7 +103,21 @@ class StudentServiceTest {
 
     verify(repository, times(1)).registerStudent(student);
     verify(repository, times(1)).registerStudentCourse(studentCourse);
+    verify(repository, times(1)).registerStudentCourseStatus(any(StudentCourseStatus.class));
+  }
 
+  @Test
+  void 受講生詳細の登録_コース申し込み状況に正しくコースIDが登録されていること() {
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
+    studentDetail.setStudent(student);
+    studentDetail.setStudentCoursesList(studentCourseList);
+
+    sut.registerStudentDetailList(studentDetail);
+
+    verify(repository, times(1)).registerStudentCourseStatus(statusCaptor.capture());
+
+    StudentCourseStatus captured = statusCaptor.getValue();
+    assertThat(captured.getCourseId()).isEqualTo(studentCourse.getCourseId());
   }
 
   @Test
