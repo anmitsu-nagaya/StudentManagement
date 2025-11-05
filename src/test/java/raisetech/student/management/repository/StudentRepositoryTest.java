@@ -9,6 +9,8 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
+import raisetech.student.management.data.StudentCourseStatus;
+import raisetech.student.management.enums.CourseStatus;
 
 @MybatisTest
 class StudentRepositoryTest {
@@ -24,7 +26,7 @@ class StudentRepositoryTest {
 
   @Test
   void 受講生の単一検索が行えること() {
-    Student actual = sut.searchStudent("1a2b3c4d-0001-0000-0000-000000000001");
+    Student actual = sut.searchStudent("550e8400-e29b-41d4-a716-446655440001");
     assertThat(actual.getStudentFullName()).isEqualTo("山田太郎");
   }
 
@@ -36,9 +38,21 @@ class StudentRepositoryTest {
 
   @Test
   void 受講生コース情報の単一検索が行えること() {
-    List<StudentCourse> actual = sut.searchStudentCourse("1a2b3c4d-0001-0000-0000-000000000001");
+    List<StudentCourse> actual = sut.searchStudentCourse("550e8400-e29b-41d4-a716-446655440001");
     assertThat(actual.size()).isEqualTo(2);
     assertThat(actual.getFirst().getCourseName()).isEqualTo("Javaコース");
+  }
+
+  @Test
+  void 受講生コース申し込み状況の全件検索が行えること() {
+    List<StudentCourseStatus> actual = sut.searchStudentCourseStatusList();
+    assertThat(actual.size()).isEqualTo(10);
+  }
+
+  @Test
+  void 受講生コース申し込み状況の単一検索が行えること() {
+    StudentCourseStatus actual = sut.searchStudentCourseStatus(1);
+    assertThat(actual.getStatus()).isEqualTo(CourseStatus.受講修了);
   }
 
   @Test
