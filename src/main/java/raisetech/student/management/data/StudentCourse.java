@@ -18,7 +18,6 @@ public class StudentCourse {
   /**
    * コースID。PRIMARY KEY (`student_id`,`course_id`)。
    */
-  @Pattern(regexp = "^[0-9]+$", message = "数字のみで入力してください")
   private int courseId;
   /**
    * 受講生ID。PRIMARY KEY (`student_id`,`course_id`)
