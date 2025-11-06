@@ -101,7 +101,11 @@ class StudentRepositoryTest {
     studentCourseStatus.setId(11);
     studentCourseStatus.setCourseId(11);
     studentCourseStatus.setStatus(CourseStatus.仮申込);
-
+    studentCourseStatus.setTemporaryAppliedAt(LocalDateTime.parse("2025-10-01 09:00:00",
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    studentCourseStatus.setOfficialAppliedAt(null);
+    studentCourseStatus.setCourseStartedAt(null);
+    studentCourseStatus.setCourseCompletedAt(null);
     sut.registerStudentCourseStatus(studentCourseStatus);
 
     List<StudentCourseStatus> actual = sut.searchStudentCourseStatusList();

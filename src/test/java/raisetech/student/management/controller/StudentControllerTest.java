@@ -90,23 +90,25 @@ class StudentControllerTest {
             .content(
                 """
                     {
-                           "student":{
-                               "studentFullName" : "山田太郎",
-                               "studentFurigana" : "ヤマダタロウ",
-                               "studentNickname" : "タロー",
-                               "email" : "taro@example.com",
-                               "prefecture" : "東京都",
-                               "city" : "渋谷区",
-                               "age" : 30,
-                               "gender" : "男性",
-                               "studentRemark" : ""
-                           },
-                           "studentCoursesList" : [
-                               {
-                                   "courseName" : "Javaコース"
-                               }
-                           ]
-                       }
+                            "student": {
+                                "studentFullName": "山田太郎",
+                                "studentFurigana": "ヤマダタロウ",
+                                "studentNickname": "たろちゃん",
+                                "email": "yamada.taro@example.com",
+                                "prefecture": "東京都",
+                                "city": "渋谷区",
+                                "age": 25,
+                                "gender": "男性",
+                                "studentRemark": "積極的に質問する学生",
+                            },
+                            "courseList": [
+                                {
+                                    "course": {
+                                        "courseName": "Javaコース"
+                                    }
+                                }
+                            ]
+                        }
                     """
             ))
         .andExpect(status().isOk());
