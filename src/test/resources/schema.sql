@@ -21,7 +21,7 @@ CREATE TABLE students_courses (
 CREATE TABLE students_courses_status (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   course_id INT NOT NULL UNIQUE,
-  status ENUM('仮申込', '本申込', '受講中', '受講修了') NOT NULL DEFAULT '仮申込'
+  status ENUM('仮申込', '本申込', '受講中', '受講修了') NOT NULL DEFAULT '仮申込',
   temporary_applied_at TIMESTAMP,
   official_applied_at TIMESTAMP,
   course_started_at TIMESTAMP,

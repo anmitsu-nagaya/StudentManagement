@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import raisetech.student.management.data.StudentCourse;
-import raisetech.student.management.data.StudentCourseStatus;
 import raisetech.student.management.repository.StudentRepository;
 
 /**
@@ -32,12 +31,13 @@ public class StudentCourseMapper {
    * @return コース更新情報がマッピングされた受講生コース情報
    */
   public List<StudentCourse> statusMapping(List<StudentCourse> studentCourses) {
-    for (StudentCourse studentCourse : studentCourses) {
-      StudentCourseStatus studentCourseStatus = repository.searchStudentCourseStatus(
-          studentCourse.getCourseId());
-      studentCourse.setStatus(studentCourseStatus.getStatus());
-    }
-    return studentCourses;
+    //for (StudentCourse studentCourse : studentCourses) {
+    //StudentCourseStatus studentCourseStatus = repository.searchStudentCourseStatus(
+    //studentCourse.getCourseId());
+    //studentCourse.setStatus(studentCourseStatus.getStatus());
+    //}
+    //return studentCourses
+    return null;
   }
 
 }

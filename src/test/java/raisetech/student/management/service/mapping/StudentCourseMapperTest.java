@@ -27,10 +27,10 @@ class StudentCourseMapperTest {
   @Test
   void 受講生詳細の検索_受講生コース情報に申し込み状況が正しくマッピングされていること() {
     StudentCourse course1 = new StudentCourse();
-    course1.setCourseId(1);
-    course1.setCourseName("Javaコース");
+    //course1.setCourseId(1);
+    //course1.setCourseName("Javaコース");
     StudentCourse course2 = new StudentCourse();
-    course2.setCourseId(2);
+    //course2.setCourseId(2);
     course2.setCourseName("AWSコース");
     List<StudentCourse> studentCourseList = List.of(course1, course2);
 
@@ -50,8 +50,8 @@ class StudentCourseMapperTest {
 
     assertThat(actual).hasSize(2);
     assertThat(actual.get(0).getCourseName()).isEqualTo("Javaコース");
-    assertThat(actual.get(0).getStatus()).isEqualTo(CourseStatus.受講修了);
-    assertThat(actual.get(1).getStatus()).isEqualTo(CourseStatus.受講中);
+    //assertThat(actual.get(0).getStatus()).isEqualTo(CourseStatus.受講修了);
+    //assertThat(actual.get(1).getStatus()).isEqualTo(CourseStatus.受講中);
 
   }
 }

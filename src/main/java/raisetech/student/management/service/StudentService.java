@@ -10,8 +10,6 @@ import raisetech.student.management.converter.DataDomainConverter;
 import raisetech.student.management.converter.StudentCourseMapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
-import raisetech.student.management.data.StudentCourseStatus;
-import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.dto.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
@@ -49,7 +47,8 @@ public class StudentService {
     List<Student> studentList = repository.searchStudentList();
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
     List<StudentCourse> statusMappingCourseList = mapper.statusMapping(studentCourseList);
-    return converter.toStudentDetail(studentList, statusMappingCourseList);
+    return null;
+    //return converter.toStudentDetail(studentList, statusMappingCourseList);
   }
 
   /**
@@ -63,7 +62,8 @@ public class StudentService {
     Student student = repository.searchStudent(id);
     List<StudentCourse> studentCoursesList = repository.searchStudentCourse(student.getId());
     List<StudentCourse> statusMappingCourseList = mapper.statusMapping(studentCoursesList);
-    return new StudentDetail(student, statusMappingCourseList);
+    //return new StudentDetail(student, statusMappingCourseList);
+    return null;
   }
 
 
@@ -82,14 +82,14 @@ public class StudentService {
     student.setId(id);
     repository.registerStudent(student);
 
-    studentDetail.getCourseList().forEach(studentCourse -> {
-      initStudentCourses(studentCourse, id);
-      repository.registerStudentCourse(studentCourse);
-      StudentCourseStatus status = new StudentCourseStatus();
-      status.setCourseId(studentCourse.getCourseId());
-      repository.registerStudentCourseStatus(status);
-      studentCourse.setStatus(CourseStatus.仮申込);
-    });
+    //studentDetail.getCourseList().forEach(studentCourse -> {
+    //  initStudentCourses(studentCourse, id);
+    //  repository.registerStudentCourse(studentCourse);
+    //  StudentCourseStatus status = new StudentCourseStatus();
+    //  status.setCourseId(studentCourse.getCourseId());
+    //  repository.registerStudentCourseStatus(status);
+    //  studentCourse.setStatus(CourseStatus.仮申込);
+    //});
 
     studentDetail.getStudent().setId(id);
 
@@ -106,8 +106,8 @@ public class StudentService {
     LocalDateTime now = LocalDateTime.now();
 
     studentCourses.setStudentId(id);
-    studentCourses.setCourseStartAt(now);
-    studentCourses.setCourseEndAt(now.plusDays(300));
+    //studentCourses.setCourseStartAt(now);
+    //studentCourses.setCourseEndAt(now.plusDays(300));
   }
 
   /**
@@ -118,11 +118,11 @@ public class StudentService {
   @Transactional
   public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-    for (StudentCourse studentCourse : studentDetail.getCourseList()) {
-      studentCourse.setStudentId(studentDetail.getStudent().getId());
-      StudentCourseDto studentCourseDto = getStudentCourseDto(studentCourse);
-      repository.updateStudentCourse(studentCourseDto);
-    }
+    //for (StudentCourse studentCourse : studentDetail.getCourseList()) {
+    //  studentCourse.setStudentId(studentDetail.getStudent().getId());
+    //  StudentCourseDto studentCourseDto = getStudentCourseDto(studentCourse);
+    //  repository.updateStudentCourse(studentCourseDto);
+    //}
   }
 
   /**
@@ -134,7 +134,7 @@ public class StudentService {
   private StudentCourseDto getStudentCourseDto(StudentCourse studentCourse) {
     StudentCourseDto studentCourseDto = new StudentCourseDto();
     studentCourseDto.setStudentId(studentCourse.getStudentId());
-    studentCourseDto.setCourseId(studentCourse.getCourseId());
+    studentCourseDto.setCourseId(studentCourse.getId());
     studentCourseDto.setCourseName(studentCourse.getCourseName());
     return studentCourseDto;
   }

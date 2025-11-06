@@ -2,6 +2,8 @@ package raisetech.student.management.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -53,7 +55,10 @@ class StudentRepositoryTest {
   @Test
   void 受講生コース申し込み状況の単一検索が行えること() {
     StudentCourseStatus actual = sut.searchStudentCourseStatus(1);
-    assertThat(actual.getStatus()).isEqualTo(CourseStatus.受講修了);
+    assertThat(actual.getStatus()).isEqualTo(CourseStatus.仮申込);
+    LocalDateTime expected = LocalDateTime.parse("2025-10-01 09:00:00",
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    assertThat(actual.getTemporaryAppliedAt()).isEqualTo(expected);
   }
 
   @Test
@@ -80,7 +85,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生コース情報の登録が行えること() {
     StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setCourseId(11);
+    studentCourse.setId(11);
     studentCourse.setStudentId(UUID.randomUUID().toString());
     studentCourse.setCourseName("Javaコース");
     sut.registerStudentCourse(studentCourse);
@@ -93,7 +98,7 @@ class StudentRepositoryTest {
   @Test
   void コース申し込み状況の登録が行えること() {
     StudentCourseStatus studentCourseStatus = new StudentCourseStatus();
-    studentCourseStatus.setStatusId(11);
+    studentCourseStatus.setId(11);
     studentCourseStatus.setCourseId(11);
     studentCourseStatus.setStatus(CourseStatus.仮申込);
 

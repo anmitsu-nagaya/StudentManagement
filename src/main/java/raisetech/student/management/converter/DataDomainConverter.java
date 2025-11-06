@@ -35,7 +35,7 @@ public class DataDomainConverter {
     for (StudentCourse course : courseList) {
       CourseDetail courseDetail = new CourseDetail();
       courseDetail.setCourse(course);
-      courseDetail.setStatus(statusMap.get(course.getCourseId()));
+      courseDetail.setStatus(statusMap.get(course.getId()));
       courseDetails.add(courseDetail);
     }
 

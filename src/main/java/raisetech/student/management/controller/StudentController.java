@@ -166,7 +166,7 @@ public class StudentController {
 
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(student);
-    studentDetail.setCourseList(studentCourseList);
+    //studentDetail.setCourseList(studentCourseList);
     return studentDetail;
   }
 
@@ -234,7 +234,7 @@ public class StudentController {
 
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(student);
-    studentDetail.setCourseList(studentCourseList);
+    //studentDetail.setCourseList(studentCourseList);
     return studentDetail;
   }
 

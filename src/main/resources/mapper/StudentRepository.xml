@@ -52,20 +52,22 @@
   <insert id="registerStudentCourse"
     parameterType="raisetech.student.management.data.StudentCourse"
     useGeneratedKeys="true"
-    keyProperty="courseId"
-    keyColumn="course_id">
-    INSERT INTO students_courses(course_id,student_id,course_name,course_start_at,course_end_at)
-    VALUES (#{courseId}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt})
+    keyProperty="id"
+    keyColumn="id">
+    INSERT INTO students_courses(id,student_id,course_name)
+    VALUES (#{id}, #{studentId}, #{courseName})
   </insert>
 
   <!-- コース申し込み状況を新規登録 -->
   <insert id="registerStudentCourseStatus"
     parameterType="raisetech.student.management.data.StudentCourseStatus"
     useGeneratedKeys="true"
-    keyProperty="statusId"
-    keyColumn="status_id">
-    INSERT INTO students_courses_status(status_id,course_id,status)
-    VALUES (#{statusId}, #{courseId}, #{status})
+    keyProperty="id"
+    keyColumn="id">
+    INSERT INTO students_courses_status (id, course_id, status, temporary_applied_at,
+    official_applied_at, course_started_at, course_completed_at)
+    VALUES (#{id}, #{courseId},
+    #{status},#{temporaryAppliedAt},#{officialAppliedAt},#{courseStartedAt},#{courseCompletedAt})
   </insert>
 
   <!-- 受講生を更新 -->
