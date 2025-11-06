@@ -23,9 +23,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
-import raisetech.student.management.dto.RegisterRequestFormat;
-import raisetech.student.management.dto.RegisterStudentCourseData;
-import raisetech.student.management.dto.RegisterStudentData;
+import raisetech.student.management.dto.RegisterStudentDetailRequest;
+import raisetech.student.management.dto.registerdata.RegisterCourseRequest;
+import raisetech.student.management.dto.registerdata.RegisterStudentRequest;
 import raisetech.student.management.service.StudentService;
 
 @WebMvcTest(StudentController.class)
@@ -43,9 +43,9 @@ class StudentControllerTest {
   private StudentCourse studentCourse;
   private StudentDetail studentDetail;
 
-  private RegisterStudentData requestStudent;
-  private RegisterStudentCourseData requestCourse;
-  private RegisterRequestFormat request;
+  private RegisterStudentRequest requestStudent;
+  private RegisterCourseRequest requestCourse;
+  private RegisterStudentDetailRequest request;
 
   @BeforeEach
   void before() {
@@ -53,9 +53,9 @@ class StudentControllerTest {
     studentCourse = new StudentCourse();
     studentDetail = new StudentDetail();
 
-    requestStudent = new RegisterStudentData();
-    requestCourse = new RegisterStudentCourseData();
-    request = new RegisterRequestFormat();
+    requestStudent = new RegisterStudentRequest();
+    requestCourse = new RegisterCourseRequest();
+    request = new RegisterStudentDetailRequest();
   }
 
   @Test

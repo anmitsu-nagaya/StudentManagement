@@ -22,12 +22,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.student.management.converter.DomainDtoConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
-import raisetech.student.management.dto.RegisterRequestFormat;
-import raisetech.student.management.dto.RegisterStudentCourseData;
-import raisetech.student.management.dto.RegisterStudentData;
+import raisetech.student.management.dto.RegisterStudentDetailRequest;
 import raisetech.student.management.dto.UpdateRequestFormat;
 import raisetech.student.management.dto.UpdateStudentCourseData;
 import raisetech.student.management.dto.UpdateStudentData;
@@ -42,6 +41,7 @@ import raisetech.student.management.service.StudentService;
 public class StudentController {
 
   private StudentService service;
+  private DomainDtoConverter converter;
 
   /**
    * コンストラクタ
@@ -49,8 +49,9 @@ public class StudentController {
    * @param service 受講生サービス
    */
   @Autowired
-  public StudentController(StudentService service) {
+  public StudentController(StudentService service, DomainDtoConverter converter) {
     this.service = service;
+    this.converter = converter;
   }
 
   @Operation(
@@ -114,7 +115,7 @@ public class StudentController {
           description = "登録する受講生の詳細情報。受講生ID・コースID・コース開始日・コース修了日はservice層で自動採番・自動登録します。",
           content = @Content(
               mediaType = "application/json",
-              schema = @Schema(implementation = RegisterRequestFormat.class)
+              schema = @Schema(implementation = RegisterStudentDetailRequest.class)
           )
       ),
       responses = {
@@ -130,44 +131,10 @@ public class StudentController {
   )
   @PostMapping("/register-student")
   public ResponseEntity<String> registerStudent(
-      @RequestBody @Valid RegisterRequestFormat registerRequestFormat) {
-    StudentDetail studentDetail = registerStudentDetail(registerRequestFormat);
+      @RequestBody @Valid RegisterStudentDetailRequest request) {
+    StudentDetail studentDetail = converter.toStudentDetailDomain(request);
     service.registerStudentDetailList(studentDetail);
     return ResponseEntity.ok("登録処理が成功しました。");
-  }
-
-  /**
-   * レスポンスされた受講生リストのデータ(不完全)を、受講生リストの型にマッピングします。OpenAPI用に作成したメソッドです。
-   *
-   * @param registerRequestFormat リクエスト側で必要な項目のみデータとして格納されている受講生リスト
-   * @return　Postする際に必要な形にマッピングをした受講生リスト
-   */
-  private StudentDetail registerStudentDetail(RegisterRequestFormat registerRequestFormat) {
-
-    RegisterStudentData formatStudent = registerRequestFormat.getStudent();
-    Student student = new Student();
-    student.setStudentFullName(formatStudent.getStudentFullName());
-    student.setStudentFurigana(formatStudent.getStudentFurigana());
-    student.setStudentNickname(formatStudent.getStudentNickname());
-    student.setEmail(formatStudent.getEmail());
-    student.setPrefecture(formatStudent.getPrefecture());
-    student.setCity(formatStudent.getCity());
-    student.setAge(formatStudent.getAge());
-    student.setGender(formatStudent.getGender());
-    student.setStudentRemark(formatStudent.getStudentRemark());
-
-    List<RegisterStudentCourseData> formatstudentCoursesList = registerRequestFormat.getStudentCoursesList();
-    List<StudentCourse> studentCourseList = new ArrayList<>();
-    for (RegisterStudentCourseData formatCourseData : formatstudentCoursesList) {
-      StudentCourse studentCourse = new StudentCourse();
-      studentCourse.setCourseName(formatCourseData.getCourseName());
-      studentCourseList.add(studentCourse);
-    }
-
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(student);
-    //studentDetail.setCourseList(studentCourseList);
-    return studentDetail;
   }
 
 

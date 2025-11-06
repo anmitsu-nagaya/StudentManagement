@@ -1,4 +1,4 @@
-package raisetech.student.management.dto;
+package raisetech.student.management.dto.registerdata;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -11,28 +11,55 @@ import lombok.Setter;
 @Schema(description = "受講生登録内容")
 @Getter
 @Setter
-public class RegisterStudentData {
+public class RegisterStudentRequest {
 
+  /**
+   * 学生のフルネーム。
+   */
   @NotBlank
   @Size(max = 100)
   private String studentFullName;
+  /**
+   * 学生のフリガナ（カタカナ）。
+   */
   @NotBlank
   @Size(max = 100)
   private String studentFurigana;
+  /**
+   * 学生のニックネーム。
+   */
   @Size(max = 50)
   private String studentNickname;
+  /**
+   * メールアドレス。
+   */
   @NotBlank
   @Email
   @Size(max = 254)
   private String email;
-  @Size(max = 10)
+  /**
+   * 地域（都道府県）。
+   */
+  @Size(max = 10, message = "文字数が超過しています。")
   private String prefecture;
+  /**
+   * 地域（市区町村）。
+   */
   @Size(max = 50)
   private String city;
+  /**
+   * 年齢。
+   */
   @Min(1)
   private Integer age;
+  /**
+   * 性別。
+   */
   @Size(max = 20)
   private String gender;
+  /**
+   * 備考欄。
+   */
   @Size(max = 500)
   private String studentRemark;
 
