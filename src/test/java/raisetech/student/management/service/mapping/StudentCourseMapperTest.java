@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import raisetech.student.management.converter.StudentCourseMapper;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
-import raisetech.student.management.enums.CourseStatus;
+import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.repository.StudentRepository;
 
 @ExtendWith(MockitoExtension.class)

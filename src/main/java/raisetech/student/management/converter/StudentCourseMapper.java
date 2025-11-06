@@ -1,4 +1,4 @@
-package raisetech.student.management.service.mapping;
+package raisetech.student.management.converter;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

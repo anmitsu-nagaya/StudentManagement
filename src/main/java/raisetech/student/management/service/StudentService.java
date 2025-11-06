@@ -6,15 +6,15 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import raisetech.student.management.controller.converter.StudentConverter;
+import raisetech.student.management.converter.DataDomainConverter;
+import raisetech.student.management.converter.StudentCourseMapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
+import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.StudentDetail;
-import raisetech.student.management.enums.CourseStatus;
-import raisetech.student.management.repository.StudentCourseDto;
+import raisetech.student.management.dto.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
-import raisetech.student.management.service.mapping.StudentCourseMapper;
 
 /**
  * 受講生情報を取り扱うサービスです。 受講生の検索や登録・更新処理を行います。
@@ -23,7 +23,7 @@ import raisetech.student.management.service.mapping.StudentCourseMapper;
 public class StudentService {
 
   private StudentRepository repository;
-  private StudentConverter converter;
+  private DataDomainConverter converter;
   private StudentCourseMapper mapper;
 
   /**
@@ -33,7 +33,7 @@ public class StudentService {
    * @param converter  受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
    */
   @Autowired
-  public StudentService(StudentRepository repository, StudentConverter converter,
+  public StudentService(StudentRepository repository, DataDomainConverter converter,
       StudentCourseMapper mapper) {
     this.repository = repository;
     this.converter = converter;
@@ -49,7 +49,7 @@ public class StudentService {
     List<Student> studentList = repository.searchStudentList();
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
     List<StudentCourse> statusMappingCourseList = mapper.statusMapping(studentCourseList);
-    return converter.convertStudentDetails(studentList, statusMappingCourseList);
+    return converter.toStudentDetail(studentList, statusMappingCourseList);
   }
 
   /**
@@ -82,7 +82,7 @@ public class StudentService {
     student.setId(id);
     repository.registerStudent(student);
 
-    studentDetail.getStudentCoursesList().forEach(studentCourse -> {
+    studentDetail.getCourseList().forEach(studentCourse -> {
       initStudentCourses(studentCourse, id);
       repository.registerStudentCourse(studentCourse);
       StudentCourseStatus status = new StudentCourseStatus();
@@ -118,7 +118,7 @@ public class StudentService {
   @Transactional
   public void updateStudentDetailList(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-    for (StudentCourse studentCourse : studentDetail.getStudentCoursesList()) {
+    for (StudentCourse studentCourse : studentDetail.getCourseList()) {
       studentCourse.setStudentId(studentDetail.getStudent().getId());
       StudentCourseDto studentCourseDto = getStudentCourseDto(studentCourse);
       repository.updateStudentCourse(studentCourseDto);

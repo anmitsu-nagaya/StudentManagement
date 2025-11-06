@@ -22,15 +22,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import raisetech.student.management.controller.requestformat.RegisterRequestFormat;
-import raisetech.student.management.controller.requestformat.UpdateRequestFormat;
-import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentCourseData;
-import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentData;
-import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentCourseData;
-import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentData;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
+import raisetech.student.management.dto.RegisterRequestFormat;
+import raisetech.student.management.dto.RegisterStudentCourseData;
+import raisetech.student.management.dto.RegisterStudentData;
+import raisetech.student.management.dto.UpdateRequestFormat;
+import raisetech.student.management.dto.UpdateStudentCourseData;
+import raisetech.student.management.dto.UpdateStudentData;
 import raisetech.student.management.service.StudentService;
 
 /**
@@ -166,7 +166,7 @@ public class StudentController {
 
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(student);
-    studentDetail.setStudentCoursesList(studentCourseList);
+    studentDetail.setCourseList(studentCourseList);
     return studentDetail;
   }
 
@@ -234,7 +234,7 @@ public class StudentController {
 
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(student);
-    studentDetail.setStudentCoursesList(studentCourseList);
+    studentDetail.setCourseList(studentCourseList);
     return studentDetail;
   }
 

@@ -79,7 +79,7 @@
 
   <!-- 受講生コース情報のコース名を更新 -->
   <update id="updateStudentCourse"
-    parameterType="raisetech.student.management.repository.StudentCourseDto">
+    parameterType="raisetech.student.management.dto.StudentCourseDto">
     UPDATE students_courses
     SET
     course_name = #{courseName}

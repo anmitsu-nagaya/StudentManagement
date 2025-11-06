@@ -5,11 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
+import raisetech.student.management.converter.DataDomainConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
 
-class StudentConverterTest {
+class dataDomainConverterTest {
 
   @Test
   void レポジトリ層から得た受講生とその受講生のコースリストがStudentDetail型に正しく変換されること() {
@@ -27,14 +28,14 @@ class StudentConverterTest {
     List<StudentCourse> studentCourseList = List.of(studentCourse1, studentCourse2);
 
     //実行
-    StudentConverter sut = new StudentConverter();
-    List<StudentDetail> actual = sut.convertStudentDetails(studentList, studentCourseList);
+    DataDomainConverter sut = new DataDomainConverter();
+    List<StudentDetail> actual = sut.toStudentDetail(studentList, studentCourseList);
 
     //検証
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getStudentCoursesList()).hasSize(2);
+    assertThat(actual.getFirst().getCourseList()).hasSize(2);
     assertThat(actual.getFirst().getStudent()).isEqualTo(student);
-    assertThat(actual.getFirst().getStudentCoursesList().getFirst()).isEqualTo(studentCourse1);
+    assertThat(actual.getFirst().getCourseList().getFirst()).isEqualTo(studentCourse1);
 
     //後処理
     //ここでDBを元に戻す。

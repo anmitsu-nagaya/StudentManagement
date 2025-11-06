@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
+import raisetech.student.management.dto.StudentCourseDto;
 
 /**
  * 受講生テーブルと受講生コース情報テーブルと紐づくリポジトリです。

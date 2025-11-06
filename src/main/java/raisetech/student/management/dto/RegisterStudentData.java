@@ -1,4 +1,4 @@
-package raisetech.student.management.controller.requestformat.registerdata;
+package raisetech.student.management.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

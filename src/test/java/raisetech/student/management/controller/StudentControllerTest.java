@@ -19,12 +19,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import raisetech.student.management.controller.requestformat.RegisterRequestFormat;
-import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentCourseData;
-import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentData;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
+import raisetech.student.management.dto.RegisterRequestFormat;
+import raisetech.student.management.dto.RegisterStudentCourseData;
+import raisetech.student.management.dto.RegisterStudentData;
 import raisetech.student.management.service.StudentService;
 
 @WebMvcTest(StudentController.class)

@@ -13,15 +13,17 @@ CREATE TABLE students (
 );
 
 CREATE TABLE students_courses (
-  course_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   student_id CHAR(36) NOT NULL,
-  course_name VARCHAR(50) NOT NULL,
-  course_start_at TIMESTAMP,
-  course_end_at TIMESTAMP
+  course_name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE students_courses_status (
-  status_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   course_id INT NOT NULL UNIQUE,
   status ENUM('仮申込', '本申込', '受講中', '受講修了') NOT NULL DEFAULT '仮申込'
+  temporary_applied_at TIMESTAMP,
+  official_applied_at TIMESTAMP,
+  course_started_at TIMESTAMP,
+  course_completed_at TIMESTAMP
 );

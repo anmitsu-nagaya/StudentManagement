@@ -19,14 +19,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import raisetech.student.management.controller.converter.StudentConverter;
+import raisetech.student.management.converter.DataDomainConverter;
+import raisetech.student.management.converter.StudentCourseMapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
 import raisetech.student.management.domain.StudentDetail;
-import raisetech.student.management.repository.StudentCourseDto;
+import raisetech.student.management.dto.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
-import raisetech.student.management.service.mapping.StudentCourseMapper;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
@@ -35,7 +35,7 @@ class StudentServiceTest {
   private StudentRepository repository;
 
   @Mock
-  private StudentConverter converter;
+  private DataDomainConverter converter;
 
   @Mock
   private StudentCourseMapper mapper;
@@ -71,7 +71,7 @@ class StudentServiceTest {
 
     verify(repository, times(1)).searchStudentList();
     verify(repository, times(1)).searchStudentCourseList();
-    verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
+    verify(converter, times(1)).toStudentDetail(studentList, studentCourseList);
     verify(mapper, times(1)).statusMapping(studentCourseList);
   }
 
@@ -97,7 +97,7 @@ class StudentServiceTest {
   void 受講生詳細の登録_リポジトリの処理が適切に呼び出せていること() {
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     studentDetail.setStudent(student);
-    studentDetail.setStudentCoursesList(studentCourseList);
+    studentDetail.setCourseList(studentCourseList);
 
     sut.registerStudentDetailList(studentDetail);
 
@@ -110,7 +110,7 @@ class StudentServiceTest {
   void 受講生詳細の登録_コース申し込み状況に正しくコースIDが登録されていること() {
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     studentDetail.setStudent(student);
-    studentDetail.setStudentCoursesList(studentCourseList);
+    studentDetail.setCourseList(studentCourseList);
 
     sut.registerStudentDetailList(studentDetail);
 
@@ -142,7 +142,7 @@ class StudentServiceTest {
     //studentCourseList.add(studentCourse);
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     studentDetail.setStudent(student);
-    studentDetail.setStudentCoursesList(studentCourseList);
+    studentDetail.setCourseList(studentCourseList);
 
     sut.updateStudentDetailList(studentDetail);
 

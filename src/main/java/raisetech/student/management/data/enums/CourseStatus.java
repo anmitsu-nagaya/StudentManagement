@@ -1,4 +1,4 @@
-package raisetech.student.management.enums;
+package raisetech.student.management.data.enums;
 
 public enum CourseStatus {
 

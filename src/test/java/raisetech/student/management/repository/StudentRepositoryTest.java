@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
-import raisetech.student.management.enums.CourseStatus;
+import raisetech.student.management.data.enums.CourseStatus;
+import raisetech.student.management.dto.StudentCourseDto;
 
 @MybatisTest
 class StudentRepositoryTest {
