@@ -23,7 +23,7 @@ public class DataDomainConverter {
    *
    * @param courseList 受講生コース情報一覧
    * @param statusList 申し込み状況一覧
-   * @return　受講生詳細情報のリスト
+   * @return　コース詳細情報のリスト
    */
   public List<CourseDetail> toCourseWithStatus(List<StudentCourse> courseList,
       List<StudentCourseStatus> statusList) {
@@ -66,6 +66,4 @@ public class DataDomainConverter {
     });
     return studentDetails;
   }
-
-
 }
