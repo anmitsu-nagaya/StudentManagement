@@ -129,11 +129,11 @@ public class StudentController {
       }
   )
   @PostMapping("/register-student")
-  public ResponseEntity<StudentDetail> registerStudent(
+  public ResponseEntity<String> registerStudent(
       @RequestBody @Valid RegisterRequestFormat registerRequestFormat) {
     StudentDetail studentDetail = registerStudentDetail(registerRequestFormat);
-    StudentDetail responseStudentDetail = service.registerStudentDetailList(studentDetail);
-    return ResponseEntity.ok(responseStudentDetail);
+    service.registerStudentDetailList(studentDetail);
+    return ResponseEntity.ok("登録処理が成功しました。");
   }
 
   /**

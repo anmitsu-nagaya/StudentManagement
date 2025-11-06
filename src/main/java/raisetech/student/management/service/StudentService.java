@@ -10,6 +10,7 @@ import raisetech.student.management.converter.DataDomainConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
+import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.CourseDetail;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.dto.StudentCourseDto;
@@ -68,47 +69,33 @@ public class StudentService {
 
 
   /**
-   * 受講生詳細の登録を行います。 受講生と受講生コース情報を個別に登録し、受講生コース情報には受講生情報を紐づける値や日付情報（コース開始日・終了日）を設定します。
+   * 受講生詳細の登録を行います。 受講生とコース詳細を個別に登録し、コース詳細には受講生情報を紐づける値や日付情報・申し込み状況の初期値を設定します。
    * 受講生IDに対してUUIDの作成を行います。
    *
-   * @param studentDetail 登録内容を所持する受講生詳細
+   * @param studentDetail リクエストされた登録内容を所持する受講生詳細
    * @return　登録情報を付与した受講生詳細
    */
   @Transactional
-  public StudentDetail registerStudentDetailList(StudentDetail studentDetail) {
+  public void registerStudentDetailList(StudentDetail studentDetail) {
     String id = UUID.randomUUID().toString();
 
     Student student = studentDetail.getStudent();
     student.setId(id);
     repository.registerStudent(student);
 
-    //studentDetail.getCourseList().forEach(studentCourse -> {
-    //  initStudentCourses(studentCourse, id);
-    //  repository.registerStudentCourse(studentCourse);
-    //  StudentCourseStatus status = new StudentCourseStatus();
-    //  status.setCourseId(studentCourse.getCourseId());
-    //  repository.registerStudentCourseStatus(status);
-    //  studentCourse.setStatus(CourseStatus.仮申込);
-    //});
+    studentDetail.getCourseList().forEach(courseDetail -> {
+      StudentCourse course = courseDetail.getCourse();
+      course.setStudentId(id);
+      repository.registerStudentCourse(course);
 
-    studentDetail.getStudent().setId(id);
-
-    return studentDetail;
+      StudentCourseStatus status = new StudentCourseStatus();
+      status.setCourseId(course.getId());
+      status.setStatus(CourseStatus.仮申込);
+      status.setTemporaryAppliedAt(LocalDateTime.now());
+      repository.registerStudentCourseStatus(status);
+    });
   }
 
-  /**
-   * 受講生コース情報を登録する際の初期情報を設定します。
-   *
-   * @param studentCourses 受講生コース情報
-   * @param id             UUIDで生成した受講生ID
-   */
-  void initStudentCourses(StudentCourse studentCourses, String id) {
-    LocalDateTime now = LocalDateTime.now();
-
-    studentCourses.setStudentId(id);
-    //studentCourses.setCourseStartAt(now);
-    //studentCourses.setCourseEndAt(now.plusDays(300));
-  }
 
   /**
    * 受講生詳細の更新を行います。 受講生と受講生コース情報をそれぞれ更新します。

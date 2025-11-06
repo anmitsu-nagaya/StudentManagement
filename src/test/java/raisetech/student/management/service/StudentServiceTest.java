@@ -1,12 +1,13 @@
 package raisetech.student.management.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +21,7 @@ import raisetech.student.management.converter.DataDomainConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
+import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.CourseDetail;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.dto.StudentCourseDto;
@@ -35,20 +37,27 @@ class StudentServiceTest {
   private DataDomainConverter dataDomainConverter;
 
   @Captor
+  ArgumentCaptor<StudentCourse> courseCaptor;
+
+  @Captor
   ArgumentCaptor<StudentCourseStatus> statusCaptor;
 
   private StudentService sut;
   private Student student;
   private StudentCourse studentCourse;
+  private StudentCourseStatus studentCourseStatus;
   private String id;
   private StudentDetail studentDetail;
+  private CourseDetail courseDetail;
 
   @BeforeEach
   void before() {
     sut = new StudentService(repository, dataDomainConverter);
     student = new Student();
     studentCourse = new StudentCourse();
+    studentCourseStatus = new StudentCourseStatus();
     studentDetail = new StudentDetail();
+    courseDetail = new CourseDetail();
     id = "test-id";
   }
 
@@ -101,44 +110,57 @@ class StudentServiceTest {
 
   @Test
   void 受講生詳細の登録_リポジトリの処理が適切に呼び出せていること() {
-    List<StudentCourse> studentCourseList = List.of(studentCourse);
-    studentDetail.setStudent(student);
-    //studentDetail.setCourseList(studentCourseList);
+    extracted();
+    sut.registerStudentDetailList(studentDetail);
 
+    verify(repository, times(1)).registerStudent(any(Student.class));
+    verify(repository, times(1)).registerStudentCourse(any(StudentCourse.class));
+    verify(repository, times(1)).registerStudentCourseStatus(any(StudentCourseStatus.class));
+  }
+
+
+  @Test
+  void 受講生詳細の登録_受講生IDに正しいIDが設定されること() {
+    extracted();
     sut.registerStudentDetailList(studentDetail);
 
     verify(repository, times(1)).registerStudent(student);
     verify(repository, times(1)).registerStudentCourse(studentCourse);
-    verify(repository, times(1)).registerStudentCourseStatus(any(StudentCourseStatus.class));
+
+    assertThat(studentDetail.getStudent().getId()).isNotNull();
+    assertThat(studentDetail.getStudent().getId()).matches(
+        "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+    assertThat(studentDetail.getCourseList().getFirst().getCourse().getStudentId()).isNotNull();
+    assertThat(studentDetail.getCourseList().getFirst().getCourse().getStudentId()).matches(
+        "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+
   }
 
   @Test
-  void 受講生詳細の登録_コース申し込み状況に正しくコースIDが登録されていること() {
-    List<StudentCourse> studentCourseList = List.of(studentCourse);
-    studentDetail.setStudent(student);
-    //studentDetail.setCourseList(studentCourseList);
-
+  void 受講生詳細の登録_コース詳細のデータマッピングが正しいこと() {
+    extracted();
     sut.registerStudentDetailList(studentDetail);
 
+    verify(repository, times(1)).registerStudentCourse(courseCaptor.capture());
     verify(repository, times(1)).registerStudentCourseStatus(statusCaptor.capture());
 
-    StudentCourseStatus captured = statusCaptor.getValue();
-    //assertThat(captured.getCourseId()).isEqualTo(studentCourse.getCourseId());
+    StudentCourse courseCaptured = courseCaptor.getValue();
+    assertThat(courseCaptured.getStudentId()).isEqualTo(studentDetail.getStudent().getId());
+    assertThat(courseCaptured.getCourseName()).isEqualTo(courseDetail.getCourse().getCourseName());
+    StudentCourseStatus statusCaptured = statusCaptor.getValue();
+    assertThat(statusCaptured.getCourseId()).isEqualTo(studentCourse.getId());
+    assertThat(statusCaptured.getStatus()).isEqualTo(CourseStatus.仮申込);
+    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime actual = statusCaptured.getTemporaryAppliedAt();
+    assertThat(Duration.between(actual, now).abs().getSeconds()).isLessThan(3);
   }
 
-  @Test
-  void 受講生詳細の登録_初期情報の設定が適切に動作していること() {
-
-    sut.initStudentCourses(studentCourse, id);
-
-    assertEquals(id, studentCourse.getStudentId());
-    //assertNotNull(studentCourse.getCourseStartAt());
-    //assertNotNull(studentCourse.getCourseEndAt());
-    //assertTrue(studentCourse.getCourseEndAt().isAfter(studentCourse.getCourseStartAt()));
-    //assertEquals(LocalDateTime.now().getHour(), studentCourse.getCourseStartAt().getHour());
-    //assertEquals(LocalDateTime.now().plusDays(300).getHour(),
-    //    studentCourse.getCourseEndAt().getHour());
-
+  private void extracted() {
+    studentDetail.setStudent(student);
+    courseDetail.setCourse(studentCourse);
+    courseDetail.setStatus(studentCourseStatus);
+    List<CourseDetail> courseDetails = List.of(courseDetail);
+    studentDetail.setCourseList(courseDetails);
   }
 
   @Test
