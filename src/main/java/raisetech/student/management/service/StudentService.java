@@ -10,6 +10,8 @@ import raisetech.student.management.converter.DataDomainConverter;
 import raisetech.student.management.converter.StudentCourseMapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
+import raisetech.student.management.data.StudentCourseStatus;
+import raisetech.student.management.domain.CourseDetail;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.dto.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
@@ -21,20 +23,20 @@ import raisetech.student.management.repository.StudentRepository;
 public class StudentService {
 
   private StudentRepository repository;
-  private DataDomainConverter converter;
+  private DataDomainConverter dataDomainConverter;
   private StudentCourseMapper mapper;
 
   /**
    * コンストラクタ
    *
-   * @param repository 受講生テーブルと受講生コース情報テーブルと紐づくリポジトリ
-   * @param converter  受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
+   * @param repository          受講生テーブルと受講生コース情報テーブルと紐づくリポジトリ
+   * @param dataDomainConverter 受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
    */
   @Autowired
-  public StudentService(StudentRepository repository, DataDomainConverter converter,
+  public StudentService(StudentRepository repository, DataDomainConverter dataDomainConverter,
       StudentCourseMapper mapper) {
     this.repository = repository;
-    this.converter = converter;
+    this.dataDomainConverter = dataDomainConverter;
     this.mapper = mapper;
   }
 
@@ -45,10 +47,11 @@ public class StudentService {
    */
   public List<StudentDetail> searchStudentList() {
     List<Student> studentList = repository.searchStudentList();
-    List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
-    List<StudentCourse> statusMappingCourseList = mapper.statusMapping(studentCourseList);
-    return null;
-    //return converter.toStudentDetail(studentList, statusMappingCourseList);
+    List<StudentCourse> courseList = repository.searchStudentCourseList();
+    List<StudentCourseStatus> statusList = repository.searchStudentCourseStatusList();
+    List<CourseDetail> courseDetails = dataDomainConverter.toCourseWithStatus(courseList,
+        statusList);
+    return dataDomainConverter.toStudentDetail(studentList, courseDetails);
   }
 
   /**

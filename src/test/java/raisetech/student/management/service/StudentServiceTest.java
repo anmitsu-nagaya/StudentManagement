@@ -21,6 +21,7 @@ import raisetech.student.management.converter.StudentCourseMapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
+import raisetech.student.management.domain.CourseDetail;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.dto.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
@@ -32,7 +33,7 @@ class StudentServiceTest {
   private StudentRepository repository;
 
   @Mock
-  private DataDomainConverter converter;
+  private DataDomainConverter dataDomainConverter;
 
   @Mock
   private StudentCourseMapper mapper;
@@ -48,7 +49,7 @@ class StudentServiceTest {
 
   @BeforeEach
   void before() {
-    sut = new StudentService(repository, converter, mapper);
+    sut = new StudentService(repository, dataDomainConverter, mapper);
     student = new Student();
     studentCourse = new StudentCourse();
     studentDetail = new StudentDetail();
@@ -57,19 +58,27 @@ class StudentServiceTest {
 
 
   @Test
-  void 受講生詳細の一覧検索_リポジトリとコンバーターとマッパーの処理が適切に呼び出せていること() {
+  void 受講生詳細の一覧検索_リポジトリとコンバーター処理が適切に呼び出せていること() {
     List<Student> studentList = new ArrayList<>();
-    List<StudentCourse> studentCourseList = new ArrayList<>();
+    List<StudentCourse> courseList = new ArrayList<>();
+    List<StudentCourseStatus> statusList = new ArrayList<>();
+    List<CourseDetail> courseDetails = new ArrayList<>();
+    List<StudentDetail> studentDetails = new ArrayList<>();
     when(repository.searchStudentList()).thenReturn(studentList);
-    when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
-    when(mapper.statusMapping(studentCourseList)).thenReturn(studentCourseList);
+    when(repository.searchStudentCourseList()).thenReturn(courseList);
+    when(repository.searchStudentCourseStatusList()).thenReturn(statusList);
+    when(dataDomainConverter.toCourseWithStatus(courseList, statusList)).thenReturn(courseDetails);
+    when(dataDomainConverter.toStudentDetail(studentList, courseDetails)).thenReturn(
+        studentDetails);
 
     sut.searchStudentList();
 
     verify(repository, times(1)).searchStudentList();
     verify(repository, times(1)).searchStudentCourseList();
-    //verify(converter, times(1)).toStudentDetail(studentList, studentCourseList);
-    verify(mapper, times(1)).statusMapping(studentCourseList);
+    verify(repository, times(1)).searchStudentCourseStatusList();
+    verify(dataDomainConverter, times(1)).toCourseWithStatus(courseList, statusList);
+    verify(dataDomainConverter, times(1)).toStudentDetail(studentList, courseDetails);
+
   }
 
 
