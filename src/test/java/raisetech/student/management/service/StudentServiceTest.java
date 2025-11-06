@@ -17,7 +17,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import raisetech.student.management.converter.DataDomainConverter;
-import raisetech.student.management.converter.StudentCourseMapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
@@ -35,9 +34,6 @@ class StudentServiceTest {
   @Mock
   private DataDomainConverter dataDomainConverter;
 
-  @Mock
-  private StudentCourseMapper mapper;
-
   @Captor
   ArgumentCaptor<StudentCourseStatus> statusCaptor;
 
@@ -49,7 +45,7 @@ class StudentServiceTest {
 
   @BeforeEach
   void before() {
-    sut = new StudentService(repository, dataDomainConverter, mapper);
+    sut = new StudentService(repository, dataDomainConverter);
     student = new Student();
     studentCourse = new StudentCourse();
     studentDetail = new StudentDetail();
@@ -87,15 +83,19 @@ class StudentServiceTest {
     student.setId(id);
     when(repository.searchStudent(id)).thenReturn(student);
     when(repository.searchStudentCourse(student.getId())).thenReturn(new ArrayList<>());
-    List<StudentCourse> studentCourseList = new ArrayList<>();
-    when(mapper.statusMapping(studentCourseList)).thenReturn(studentCourseList);
+    List<StudentCourse> courseList = new ArrayList<>();
+    List<StudentCourseStatus> statusList = new ArrayList<>();
+    List<CourseDetail> courseDetails = new ArrayList<>();
+    when(repository.searchStudentCourseStatusList()).thenReturn(new ArrayList<>());
+    when(dataDomainConverter.toCourseWithStatus(courseList, statusList)).thenReturn(courseDetails);
 
     StudentDetail expected = new StudentDetail(student, new ArrayList<>());
     StudentDetail actual = sut.findStudentDetailById(id);
 
     verify(repository, times(1)).searchStudent(id);
     verify(repository, times(1)).searchStudentCourse(id);
-    verify(mapper, times(1)).statusMapping(studentCourseList);
+    verify(repository, times(1)).searchStudentCourseStatusList();
+    verify(dataDomainConverter, times(1)).toCourseWithStatus(courseList, statusList);
     assertThat(actual.getStudent().getId()).isEqualTo(expected.getStudent().getId());
   }
 

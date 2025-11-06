@@ -54,7 +54,7 @@ public interface StudentRepository {
    * コースIDに紐づくコース申し込み状況を検索します。
    *
    * @param courseId コースID
-   * @return 受講生IDに紐づく受講生コース情報
+   * @return コースIDに紐づくコース申し込み状況
    */
   StudentCourseStatus searchStudentCourseStatus(Integer courseId);
 

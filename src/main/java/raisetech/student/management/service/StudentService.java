@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import raisetech.student.management.converter.DataDomainConverter;
-import raisetech.student.management.converter.StudentCourseMapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
@@ -24,7 +23,6 @@ public class StudentService {
 
   private StudentRepository repository;
   private DataDomainConverter dataDomainConverter;
-  private StudentCourseMapper mapper;
 
   /**
    * コンストラクタ
@@ -33,11 +31,9 @@ public class StudentService {
    * @param dataDomainConverter 受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
    */
   @Autowired
-  public StudentService(StudentRepository repository, DataDomainConverter dataDomainConverter,
-      StudentCourseMapper mapper) {
+  public StudentService(StudentRepository repository, DataDomainConverter dataDomainConverter) {
     this.repository = repository;
     this.dataDomainConverter = dataDomainConverter;
-    this.mapper = mapper;
   }
 
   /**
@@ -55,7 +51,7 @@ public class StudentService {
   }
 
   /**
-   * 受講生詳細検索です。 IDに紐づく受講生情報を取得した後、その受講生に紐づく受講生コース情報を取得して設定します。
+   * 受講生詳細検索です。 IDに紐づく受講生情報を取得した後、その受講生に紐づくコース詳細を取得して設定します。
    *
    * @param id 受講生ID
    * @return 受講生
@@ -63,10 +59,11 @@ public class StudentService {
   @Transactional
   public StudentDetail findStudentDetailById(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentCourse> studentCoursesList = repository.searchStudentCourse(student.getId());
-    List<StudentCourse> statusMappingCourseList = mapper.statusMapping(studentCoursesList);
-    //return new StudentDetail(student, statusMappingCourseList);
-    return null;
+    List<StudentCourse> courseList = repository.searchStudentCourse(student.getId());
+    List<StudentCourseStatus> statusList = repository.searchStudentCourseStatusList();
+    List<CourseDetail> courseDetails = dataDomainConverter.toCourseWithStatus(courseList,
+        statusList);
+    return new StudentDetail(student, courseDetails);
   }
 
 
