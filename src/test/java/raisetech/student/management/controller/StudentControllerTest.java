@@ -11,6 +11,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import java.util.Set;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の検索が実行できて空で返ってくること() throws Exception {
-    String id = "3b333f9d-993c-48c6-97ca-4a94bb7894b7";
+    String id = UUID.randomUUID().toString();
     mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", id))
         .andExpect(status().isOk());
     verify(service, times(1)).findStudentDetailById(id);
