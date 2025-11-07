@@ -146,12 +146,14 @@ class StudentControllerTest {
                                 {
                                     "course": {
                                         "id": 1,
+                                        "studentId" : "550e8400-e29b-41d4-a716-446655440001",
                                         "courseName": "Javaコース"
                                     }
                                 }
                                 {
                                     "status": {
                                         "id": 1,
+                                        "courseId": 1,
                                         "status": "本申込"
                                     }
                                 }

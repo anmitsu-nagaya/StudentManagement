@@ -13,7 +13,6 @@ import raisetech.student.management.data.StudentCourseStatus;
 import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.CourseDetail;
 import raisetech.student.management.domain.StudentDetail;
-import raisetech.student.management.dto.StudentCourseDto;
 import raisetech.student.management.repository.StudentRepository;
 
 /**
@@ -28,8 +27,8 @@ public class StudentService {
   /**
    * コンストラクタ
    *
-   * @param repository          受講生テーブルと受講生コース情報テーブルと紐づくリポジトリ
-   * @param converter 受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
+   * @param repository 受講生テーブルと受講生コース情報テーブルと紐づくリポジトリ
+   * @param converter  受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
    */
   @Autowired
   public StudentService(StudentRepository repository, DataDomainConverter converter) {
@@ -98,31 +97,30 @@ public class StudentService {
 
 
   /**
-   * 受講生詳細の更新を行います。 受講生と受講生コース情報をそれぞれ更新します。
+   * 受講生詳細の更新を行います。 受講生とコース詳細をそれぞれ更新します。
    *
    * @param studentDetail 更新内容を所持する受講生詳細
    */
   @Transactional
   public void updateStudentDetailList(StudentDetail studentDetail) {
-    repository.updateStudent(studentDetail.getStudent());
-    //for (StudentCourse studentCourse : studentDetail.getCourseList()) {
-    //  studentCourse.setStudentId(studentDetail.getStudent().getId());
-    //  StudentCourseDto studentCourseDto = getStudentCourseDto(studentCourse);
-    //  repository.updateStudentCourse(studentCourseDto);
-    //}
-  }
 
-  /**
-   * 受講生コース情報のコース名を更新する際に必要な引数をまとめて取得します。
-   *
-   * @param studentCourse 更新内容を所持する受講生コース情報
-   * @return　受講生ID,受講生コースID,受講生コース名を付与した受講生コース情報
-   */
-  private StudentCourseDto getStudentCourseDto(StudentCourse studentCourse) {
-    StudentCourseDto studentCourseDto = new StudentCourseDto();
-    studentCourseDto.setStudentId(studentCourse.getStudentId());
-    studentCourseDto.setCourseId(studentCourse.getId());
-    studentCourseDto.setCourseName(studentCourse.getCourseName());
-    return studentCourseDto;
+    repository.updateStudent(studentDetail.getStudent());
+
+    studentDetail.getCourseList().forEach(courseDetail -> {
+      StudentCourse course = courseDetail.getCourse();
+      repository.updateStudentCourse(course);
+
+      StudentCourseStatus status = courseDetail.getStatus();
+      CourseStatus courseStatus = status.getStatus();
+      LocalDateTime now = LocalDateTime.now();
+      switch (courseStatus) {
+        case 本申込 -> status.setOfficialAppliedAt(now);
+        case 受講中 -> {
+          status.setCourseStartedAt(now);
+          status.setCourseCompletedAt(now.plusDays(300));
+        }
+      }
+      repository.updateStudentCourseStatus(status);
+    });
   }
 }

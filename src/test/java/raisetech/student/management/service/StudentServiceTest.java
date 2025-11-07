@@ -109,7 +109,7 @@ class StudentServiceTest {
 
   @Test
   void 受講生詳細の登録_リポジトリの処理が適切に呼び出せていること() {
-    extracted();
+    registerExtracted();
     sut.registerStudentDetailList(studentDetail);
 
     verify(repository, times(1)).registerStudent(any(Student.class));
@@ -120,7 +120,7 @@ class StudentServiceTest {
 
   @Test
   void 受講生詳細の登録_受講生IDに正しいIDが設定されること() {
-    extracted();
+    registerExtracted();
     sut.registerStudentDetailList(studentDetail);
 
     verify(repository, times(1)).registerStudent(student);
@@ -137,7 +137,7 @@ class StudentServiceTest {
 
   @Test
   void 受講生詳細の登録_コース詳細のデータマッピングが正しいこと() {
-    extracted();
+    registerExtracted();
     sut.registerStudentDetailList(studentDetail);
 
     verify(repository, times(1)).registerStudentCourse(courseCaptor.capture());
@@ -154,7 +154,7 @@ class StudentServiceTest {
     assertThat(Duration.between(actual, now).abs().getSeconds()).isLessThan(3);
   }
 
-  private void extracted() {
+  private void registerExtracted() {
     studentDetail.setStudent(student);
     courseDetail.setCourse(studentCourse);
     courseDetail.setStatus(studentCourseStatus);
@@ -164,18 +164,43 @@ class StudentServiceTest {
 
   @Test
   void 受講生詳細の更新_リポジトリが適切に呼び出せていること() {
-
-    //List<StudentCourse> studentCourseList = new ArrayList<>();
-    //studentCourseList.add(studentCourse);
-    List<StudentCourse> studentCourseList = List.of(studentCourse);
-    studentDetail.setStudent(student);
-    //studentDetail.setCourseList(studentCourseList);
-
+    updateExtracted();
     sut.updateStudentDetailList(studentDetail);
 
-    verify(repository, times(1)).updateStudent(studentDetail.getStudent());
-    //verify(repository, times(1)).updateStudentCourse(any(StudentCourseDto.class));
+    verify(repository, times(1)).updateStudent(any(Student.class));
+    verify(repository, times(1)).updateStudentCourse(any(StudentCourse.class));
+    verify(repository, times(1)).updateStudentCourseStatus(any(StudentCourseStatus.class));
 
   }
 
+  @Test
+  void 受講生詳細の更新_コース詳細のデータマッピングが正しいこと() {
+    updateExtracted();
+    sut.updateStudentDetailList(studentDetail);
+
+    verify(repository, times(1)).updateStudentCourse(courseCaptor.capture());
+    verify(repository, times(1)).updateStudentCourseStatus(statusCaptor.capture());
+
+    assertThat(courseCaptor.getValue()).isEqualTo(studentCourse);
+    StudentCourseStatus statusCaptured = statusCaptor.getValue();
+    assertThat(statusCaptured.getId()).isEqualTo(studentCourseStatus.getId());
+    assertThat(statusCaptured.getCourseId()).isEqualTo(studentCourseStatus.getCourseId());
+    assertThat(statusCaptured.getStatus()).isEqualTo(studentCourseStatus.getStatus());
+    System.out.println(statusCaptured.getStatus());
+    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime courseStartedAtActual = statusCaptured.getCourseStartedAt();
+    assertThat(Duration.between(courseStartedAtActual, now).abs().getSeconds()).isLessThan(3);
+    LocalDateTime courseCompletedAtActual = statusCaptured.getCourseCompletedAt();
+    assertThat(Duration.between(courseCompletedAtActual, now.plusDays(300)).abs()
+        .getSeconds()).isLessThan(3);
+  }
+
+  private void updateExtracted() {
+    studentDetail.setStudent(student);
+    courseDetail.setCourse(studentCourse);
+    studentCourseStatus.setStatus(CourseStatus.受講中);
+    courseDetail.setStatus(studentCourseStatus);
+    List<CourseDetail> courseDetails = List.of(courseDetail);
+    studentDetail.setCourseList(courseDetails);
+  }
 }

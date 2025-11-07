@@ -27,7 +27,7 @@ public class StudentCourseStatus {
    * 申し込み状況。
    */
   @NotNull(message = "入力は必須です。")
-  private CourseStatus status = CourseStatus.仮申込;
+  private CourseStatus status;
   /**
    * 仮申込日。
    */
