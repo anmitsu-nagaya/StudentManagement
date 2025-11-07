@@ -106,7 +106,7 @@ public class StudentController {
       operationId = "registerStudent",
       requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
           required = true,
-          description = "登録する受講生の詳細情報。受講生ID・コースID・コース開始日・コース修了日はservice層で自動採番・自動登録します。",
+          description = "登録する受講生の詳細情報。受講生ID・コースID・申込状況IDを自動採番・自動登録します。",
           content = @Content(
               mediaType = "application/json",
               schema = @Schema(implementation = RegisterStudentDetailRequest.class)
@@ -134,14 +134,14 @@ public class StudentController {
 
   @Operation(
       summary = "受講生更新",
-      description = "受講生情報とコース情報を更新します。受講生IDが必要です。",
+      description = "受講生情報とコース情報を更新します。受講生IDとコースIDが必要です。",
       operationId = "updateStudent",
       requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
           required = true,
-          description = "更新する受講生の詳細情報",
+          description = "更新する受講生の詳細情報。申し込み状況を更新した日時を記録します。",
           content = @Content(
               mediaType = "application/json",
-              schema = @Schema(implementation = RegisterStudentDetailRequest.class)
+              schema = @Schema(implementation = UpdateStudentDetailRequest.class)
           )
       ),
       responses = {
