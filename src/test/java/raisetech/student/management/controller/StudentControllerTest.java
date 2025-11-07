@@ -130,22 +130,31 @@ class StudentControllerTest {
                 """
                     {
                         "student":{
-                            "id" : "3b333f9d-993c-48c6-97ca-4a94bb7894b7",
-                            "studentFullName" : "かきくけこ",
-                            "studentFurigana" : "タチバナヒカリ",
-                            "studentNickname" : "ヒカリ",
-                            "email" : "hikari@example.com",
-                            "prefecture" : "北海道",
-                            "city" : "札幌市",
-                            "age" : 20,
-                            "gender" : "女性",
-                            "studentRemark" : "",
+                            "id" : "550e8400-e29b-41d4-a716-446655440001",
+                            "studentFullName": "山田太郎",
+                                "studentFurigana": "ヤマダタロウ",
+                                "studentNickname": "たろちゃん",
+                                "email": "yamada.taro@example.com",
+                                "prefecture": "東京都",
+                                "city": "渋谷区",
+                                "age": 25,
+                                "gender": "男性",
+                                "studentRemark": "積極的に質問する学生",
                             "studentIsDeleted" : false
                         },
-                        "studentCoursesList": [
-                            {
-                                "studentCourseName" : "デザインコース"
-                            }
+                        "courseList": [
+                                {
+                                    "course": {
+                                        "id": 1,
+                                        "courseName": "Javaコース"
+                                    }
+                                }
+                                {
+                                    "status": {
+                                        "id": 1,
+                                        "status": "本申込"
+                                    }
+                                }
                         ]
                     }
                     """
@@ -213,7 +222,7 @@ class StudentControllerTest {
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
             "リクエスト形式に問題があります：JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries"));
-    
+
   }
 
 

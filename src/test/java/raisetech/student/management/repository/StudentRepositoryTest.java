@@ -13,7 +13,6 @@ import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
 import raisetech.student.management.data.enums.CourseStatus;
-import raisetech.student.management.dto.StudentCourseDto;
 
 @MybatisTest
 class StudentRepositoryTest {
@@ -116,40 +115,59 @@ class StudentRepositoryTest {
   @Test
   void 受講生の更新が行えること() {
     Student student = new Student();
-    student.setId("1a2b3c4d-0001-0000-0000-000000000001");
+    student.setId("550e8400-e29b-41d4-a716-446655440001");
     student.setStudentFullName("山田太郎");
     student.setStudentFurigana("ヤマダタロウ");
-    student.setStudentNickname("たろう");
-    student.setEmail("taro.yamada@example.com");
+    student.setStudentNickname("たろちゃん");
+    student.setEmail("yamada.taro@example.com");
     student.setPrefecture("東京都");
-    student.setCity("渋谷区");
+    student.setCity("新宿区");
     student.setAge(26);
     student.setGender("男性");
-    student.setStudentRemark("Java勉強中");
+    student.setStudentRemark("積極的に質問する学生");
     student.setStudentIsDeleted(false);
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent("1a2b3c4d-0001-0000-0000-000000000001");
+    Student actual = sut.searchStudent("550e8400-e29b-41d4-a716-446655440001");
 
     assertThat(actual.getAge()).isEqualTo(26);
-    assertThat(actual.getCity()).isEqualTo("渋谷区");
+    assertThat(actual.getCity()).isEqualTo("新宿区");
   }
 
   @Test
   void 受講生コース情報の更新が行えること() {
 
-    List<StudentCourse> update = sut.searchStudentCourse("1a2b3c4d-0001-0000-0000-000000000001");
+    StudentCourse studentCourse = new StudentCourse();
+    studentCourse.setId(1);
+    studentCourse.setStudentId("550e8400-e29b-41d4-a716-446655440001");
+    studentCourse.setCourseName("AWSコース");
+    sut.updateStudentCourse(studentCourse);
 
-    StudentCourseDto studentCourseDto = new StudentCourseDto();
-    studentCourseDto.setStudentId("1a2b3c4d-0001-0000-0000-000000000001");
-    studentCourseDto.setCourseId(1);
-    studentCourseDto.setCourseName("Javaコース");
-    sut.updateStudentCourse(studentCourseDto);
+    List<StudentCourse> actual = sut.searchStudentCourse("550e8400-e29b-41d4-a716-446655440001");
 
-    List<StudentCourse> actual = sut.searchStudentCourse("1a2b3c4d-0001-0000-0000-000000000001");
-
-    assertThat(actual.getFirst().getCourseName()).isEqualTo("Javaコース");
+    assertThat(actual.getFirst().getCourseName()).isEqualTo("AWSコース");
   }
 
+  @Test
+  void コース申し込み状況の更新が行えること() {
+
+    StudentCourseStatus studentCourseStatus = new StudentCourseStatus();
+    studentCourseStatus.setId(1);
+    studentCourseStatus.setCourseId(1);
+    studentCourseStatus.setStatus(CourseStatus.本申込);
+    studentCourseStatus.setTemporaryAppliedAt(LocalDateTime.parse("2025-10-01 09:00:00",
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    studentCourseStatus.setOfficialAppliedAt(LocalDateTime.parse("2025-10-05 09:00:00",
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    studentCourseStatus.setCourseStartedAt(null);
+    studentCourseStatus.setCourseCompletedAt(null);
+    sut.updateStudentCourseStatus(studentCourseStatus);
+
+    StudentCourseStatus actual = sut.searchStudentCourseStatus(1);
+
+    assertThat(actual.getStatus()).isEqualTo(CourseStatus.本申込);
+    assertThat(actual.getOfficialAppliedAt()).isEqualTo(LocalDateTime.parse("2025-10-05 09:00:00",
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+  }
 }

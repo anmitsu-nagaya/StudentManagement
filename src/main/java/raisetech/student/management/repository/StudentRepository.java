@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
-import raisetech.student.management.dto.StudentCourseDto;
 
 /**
  * 受講生テーブルと受講生コース情報テーブルと紐づくリポジトリです。
@@ -75,7 +74,7 @@ public interface StudentRepository {
   /**
    * コース申し込み状況を新規登録します。IDに関しては自動採番を行います。
    *
-   * @param studentCourseStatus 受講生コース情報
+   * @param studentCourseStatus コース申し込み状況
    */
   void registerStudentCourseStatus(StudentCourseStatus studentCourseStatus);
 
@@ -89,8 +88,15 @@ public interface StudentRepository {
   /**
    * 受講生コース情報のコース名を更新します。
    *
-   * @param studentCourseDto 受講生ID,受講生コースID,受講生コース名
+   * @param studentCourse 受講生コース情報
    */
-  void updateStudentCourse(StudentCourseDto studentCourseDto);
+  void updateStudentCourse(StudentCourse studentCourse);
+
+  /**
+   * コース申し込み状況の申し込み状況を更新します。
+   *
+   * @param studentCourseStatus コース申し込み状況
+   */
+  void updateStudentCourseStatus(StudentCourseStatus studentCourseStatus);
 
 }
