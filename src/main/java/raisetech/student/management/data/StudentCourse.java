@@ -28,8 +28,8 @@ public class StudentCourse {
   /**
    * コース名。
    */
-  @NotBlank
-  @Size(max = 50)
+  @NotBlank(message = "入力は必須です。")
+  @Size(max = 50, message = "文字数が超過しています。")
   private String courseName;
 
 

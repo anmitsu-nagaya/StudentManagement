@@ -26,26 +26,26 @@ public class Student {
   /**
    * 学生のフルネーム。
    */
-  @NotBlank
-  @Size(max = 100)
+  @NotBlank(message = "入力は必須です。")
+  @Size(max = 100, message = "文字数が超過しています。")
   private String studentFullName;
   /**
    * 学生のフリガナ（カタカナ）。
    */
-  @NotBlank
-  @Size(max = 100)
+  @NotBlank(message = "入力は必須です。")
+  @Size(max = 100, message = "文字数が超過しています。")
   private String studentFurigana;
   /**
    * 学生のニックネーム。
    */
-  @Size(max = 50)
+  @Size(max = 50, message = "文字数が超過しています。")
   private String studentNickname;
   /**
    * メールアドレス。
    */
-  @NotBlank
-  @Email
-  @Size(max = 254)
+  @NotBlank(message = "入力は必須です。")
+  @Email(message = "電子メールアドレスとして正しい形式にしてください")
+  @Size(max = 254, message = "文字数が超過しています。")
   private String email;
   /**
    * 地域（都道府県）。
@@ -55,22 +55,22 @@ public class Student {
   /**
    * 地域（市区町村）。
    */
-  @Size(max = 50)
+  @Size(max = 50, message = "文字数が超過しています。")
   private String city;
   /**
    * 年齢。
    */
-  @Min(1)
+  @Min(value = 1, message = "値は1以上で入力してください。")
   private Integer age;
   /**
    * 性別。
    */
-  @Size(max = 20)
+  @Size(max = 20, message = "文字数が超過しています。")
   private String gender;
   /**
    * 備考欄。
    */
-  @Size(max = 500)
+  @Size(max = 500, message = "文字数が超過しています。")
   private String studentRemark;
   /**
    * 論理削除フラグ。

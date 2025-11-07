@@ -19,33 +19,27 @@ public class StudentCourseStatus {
    * 申し込み状況ID。
    */
   private int id;
-
   /**
    * コースID。
    */
   private int courseId;
-
   /**
    * 申し込み状況。
    */
-  @NotNull
+  @NotNull(message = "入力は必須です。")
   private CourseStatus status = CourseStatus.仮申込;
-
   /**
    * 仮申込日。
    */
   private LocalDateTime temporaryAppliedAt;
-
   /**
    * 本申込日。
    */
   private LocalDateTime officialAppliedAt;
-
   /**
    * 受講開始日。
    */
   private LocalDateTime courseStartedAt;
-
   /**
    * 受講終了日。
    */
