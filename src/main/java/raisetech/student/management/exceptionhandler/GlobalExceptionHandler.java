@@ -10,20 +10,44 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * 例外ハンドリングを管理します。
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+  /**
+   *
+   * NotFoundExceptionをハンドリングして、HTTP400のレスポンスを返します。存在しないURLにアクセスした場合に発生します。
+   *
+   * @param e 発生したNotFoundException
+   * @return　エラーメッセージを含むResponseEntity
+   */
   @ExceptionHandler(NotFoundException.class)
-  public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
-    return ResponseEntity.badRequest().body(ex.getMessage());
+  public ResponseEntity<String> handleNotFoundException(NotFoundException e) {
+    return ResponseEntity.badRequest().body(e.getMessage());
   }
 
+  /**
+   *
+   * ConstraintViolationExceptionをハンドリングして、HTTP400のレスポンスを返します。HTTPメソッドに渡されたリクエストパラメータがバリデーションルールに違反した場合に発生します。
+   *
+   * @param e 発生したConstraintViolationException
+   * @return　エラーメッセージを含むResponseEntity
+   */
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<String> handleConstraintViolation(ConstraintViolationException e) {
     return ResponseEntity.badRequest()
         .body("リクエストのパラメータが正しくありません: " + e.getMessage());
   }
 
+  /**
+   *
+   * MethodArgumentNotValidExceptionをハンドリングして、HTTP400のレスポンスを返します。リクエストボディのフィールドがバリデーションルールに違反した場合に発生します。
+   *
+   * @param e 発生したMethodArgumentNotValidException
+   * @return　エラー詳細をMapとしてまとめたResponseEntity
+   */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValidException(
       MethodArgumentNotValidException e) {
@@ -42,6 +66,13 @@ public class GlobalExceptionHandler {
     return ResponseEntity.badRequest().body(body);
   }
 
+  /**
+   *
+   * HttpMessageNotReadableExceptionをハンドリングして、HTTP400のレスポンスを返します。Json形式の入力に誤りがあった場合に発生します。
+   *
+   * @param e 発生したHttpMessageNotReadableException
+   * @return　エラーメッセージを含むResponseEntity
+   */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleHttpMessageNotReadableException(
       HttpMessageNotReadableException e) {
@@ -49,6 +80,4 @@ public class GlobalExceptionHandler {
     return ResponseEntity.badRequest().body("リクエスト形式に問題があります：" + e.getMessage());
 
   }
-
-
 }

@@ -19,7 +19,7 @@ public class DataDomainConverter {
 
 
   /**
-   * コースに紐づくコース詳細をマッピングします。
+   * コースに紐づく申し込み状況をマッピングします。
    *
    * @param courseList 受講生コース情報一覧
    * @param statusList 申し込み状況一覧

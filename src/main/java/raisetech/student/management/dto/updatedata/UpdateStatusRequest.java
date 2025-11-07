@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 import raisetech.student.management.data.enums.CourseStatus;
 
-@Schema(description = "受講生コース更新内容")
+/**
+ * 更新時にリクエストされた申し込み状況を扱うオブジェクト。
+ */
+@Schema(description = "更新リクエスト申し込み状況")
 @Getter
 @Setter
 public class UpdateStatusRequest {

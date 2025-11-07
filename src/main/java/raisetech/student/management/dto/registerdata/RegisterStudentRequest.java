@@ -8,7 +8,10 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(description = "受講生登録内容")
+/**
+ * 登録時にリクエストされた受講生情報を扱うオブジェクト。
+ */
+@Schema(description = "登録リクエスト受講生")
 @Getter
 @Setter
 public class RegisterStudentRequest {

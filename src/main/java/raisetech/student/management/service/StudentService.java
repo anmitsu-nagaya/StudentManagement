@@ -27,8 +27,8 @@ public class StudentService {
   /**
    * コンストラクタ
    *
-   * @param repository 受講生テーブルと受講生コース情報テーブルと紐づくリポジトリ
-   * @param converter  受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーター
+   * @param repository 受講生テーブルと受講生コース情報テーブルと申し込み状況テーブルが紐づくリポジトリ
+   * @param converter  受講生詳細を受講生やコース詳細、コース詳細をコース情報や申し込み状況、もしくはその逆の変換を行うコンバーター
    */
   @Autowired
   public StudentService(StudentRepository repository, DataDomainConverter converter) {
@@ -97,7 +97,7 @@ public class StudentService {
 
 
   /**
-   * 受講生詳細の更新を行います。 受講生とコース詳細をそれぞれ更新します。
+   * 受講生詳細の更新を行います。 受講生とコース詳細をそれぞれ更新します。申し込み状況の更新時に日付情報を登録します。
    *
    * @param studentDetail 更新内容を所持する受講生詳細
    */

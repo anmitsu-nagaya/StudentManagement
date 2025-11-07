@@ -7,7 +7,7 @@ import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
 
 /**
- * 受講生テーブルと受講生コース情報テーブルと紐づくリポジトリです。
+ * 受講生テーブルと受講生コース情報テーブルと申し込み状況テーブルが紐づくリポジトリです。
  */
 @Mapper
 public interface StudentRepository {
