@@ -24,10 +24,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import raisetech.student.management.converter.DomainDtoConverter;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
+import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.dto.RegisterStudentDetailRequest;
 import raisetech.student.management.dto.registerdata.RegisterCourseRequest;
 import raisetech.student.management.dto.registerdata.RegisterStudentRequest;
+import raisetech.student.management.dto.updatedata.UpdateStatusRequest;
 import raisetech.student.management.service.StudentService;
 
 @WebMvcTest(StudentController.class)
@@ -55,6 +57,8 @@ class StudentControllerTest {
   private RegisterCourseRequest registerCourseRequest;
   private RegisterStudentDetailRequest registerRequest;
 
+  private UpdateStatusRequest updateStatusRequest;
+
   @BeforeEach
   void before() {
     student = new Student();
@@ -67,6 +71,8 @@ class StudentControllerTest {
     registerStudentRequest = new RegisterStudentRequest();
     registerCourseRequest = new RegisterCourseRequest();
     registerRequest = new RegisterStudentDetailRequest();
+
+    updateStatusRequest = new UpdateStatusRequest();
   }
 
   @Test
@@ -116,7 +122,7 @@ class StudentControllerTest {
             ))
         .andExpect(status().isOk());
 
-    verify(converter, times(1)).toStudentDetailDomain(any());
+    verify(converter, times(1)).toUpdateStudentDetailDomain(any());
     verify(service, times(1)).registerStudentDetailList(any());
 
   }
@@ -132,14 +138,14 @@ class StudentControllerTest {
                         "student":{
                             "id" : "550e8400-e29b-41d4-a716-446655440001",
                             "studentFullName": "山田太郎",
-                                "studentFurigana": "ヤマダタロウ",
-                                "studentNickname": "たろちゃん",
-                                "email": "yamada.taro@example.com",
-                                "prefecture": "東京都",
-                                "city": "渋谷区",
-                                "age": 25,
-                                "gender": "男性",
-                                "studentRemark": "積極的に質問する学生",
+                            "studentFurigana": "ヤマダタロウ",
+                            "studentNickname": "たろちゃん",
+                            "email": "yamada.taro@example.com",
+                            "prefecture": "東京都",
+                            "city": "渋谷区",
+                            "age": 25,
+                            "gender": "男性",
+                            "studentRemark": "積極的に質問する学生",
                             "studentIsDeleted" : false
                         },
                         "courseList": [
@@ -149,7 +155,7 @@ class StudentControllerTest {
                                         "studentId" : "550e8400-e29b-41d4-a716-446655440001",
                                         "courseName": "Javaコース"
                                     }
-                                }
+                                },
                                 {
                                     "status": {
                                         "id": 1,
@@ -251,6 +257,18 @@ class StudentControllerTest {
 
     Set<ConstraintViolation<RegisterCourseRequest>> violations = validator.validate(
         registerCourse);
+
+    assertThat(violations.size()).isEqualTo(0);
+  }
+
+  @Test
+  void 更新リクエストの申し込み状況で適切な値を入力したときに入力チェックが正しく実行されて異常が発生しないこと() {
+    updateStatusRequest.setId(1);
+    updateStatusRequest.setCourseId(1);
+    updateStatusRequest.setStatus(CourseStatus.本申込);
+
+    Set<ConstraintViolation<UpdateStatusRequest>> violations =
+        validator.validate(updateStatusRequest);
 
     assertThat(violations.size()).isEqualTo(0);
   }

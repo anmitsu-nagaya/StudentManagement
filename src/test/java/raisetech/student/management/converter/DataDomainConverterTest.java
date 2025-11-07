@@ -14,7 +14,7 @@ import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.CourseDetail;
 import raisetech.student.management.domain.StudentDetail;
 
-class dataDomainConverterTest {
+class DataDomainConverterTest {
 
   private DataDomainConverter sut;
 

@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +21,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.student.management.converter.DomainDtoConverter;
-import raisetech.student.management.data.Student;
-import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.dto.RegisterStudentDetailRequest;
-import raisetech.student.management.dto.UpdateRequestFormat;
-import raisetech.student.management.dto.UpdateStudentCourseData;
-import raisetech.student.management.dto.UpdateStudentData;
+import raisetech.student.management.dto.UpdateStudentDetailRequest;
 import raisetech.student.management.service.StudentService;
 
 /**
@@ -131,7 +126,7 @@ public class StudentController {
   @PostMapping("/register-student")
   public ResponseEntity<String> registerStudent(
       @RequestBody @Valid RegisterStudentDetailRequest request) {
-    StudentDetail studentDetail = converter.toStudentDetailDomain(request);
+    StudentDetail studentDetail = converter.toRegisterStudentDetailDomain(request);
     service.registerStudentDetailList(studentDetail);
     return ResponseEntity.ok("登録処理が成功しました。");
   }
@@ -146,7 +141,7 @@ public class StudentController {
           description = "更新する受講生の詳細情報",
           content = @Content(
               mediaType = "application/json",
-              schema = @Schema(implementation = UpdateRequestFormat.class)
+              schema = @Schema(implementation = RegisterStudentDetailRequest.class)
           )
       ),
       responses = {
@@ -162,46 +157,10 @@ public class StudentController {
   )
   @PutMapping("/update-student")
   public ResponseEntity<String> updateStudent(
-      @RequestBody @Valid UpdateRequestFormat updateRequestFormat) {
-    StudentDetail studentDetail = updateStudentDetail(updateRequestFormat);
+      @RequestBody @Valid UpdateStudentDetailRequest request) {
+    StudentDetail studentDetail = converter.toUpdateStudentDetailDomain(request);
     service.updateStudentDetailList(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
-  }
-
-  /**
-   * レスポンスされた受講生リストのデータ(不完全)を、受講生リストの型にマッピングします。OpenAPI用に作成したメソッドです。
-   *
-   * @param updateRequestFormat リクエスト側で必要な項目のみデータとして格納されている受講生リスト
-   * @return　Putする際に必要な形にマッピングをした受講生リスト
-   */
-  private StudentDetail updateStudentDetail(UpdateRequestFormat updateRequestFormat) {
-
-    UpdateStudentData formatStudent = updateRequestFormat.getStudent();
-    Student student = new Student();
-    student.setId(formatStudent.getId());
-    student.setStudentFullName(formatStudent.getStudentFullName());
-    student.setStudentFurigana(formatStudent.getStudentFurigana());
-    student.setStudentNickname(formatStudent.getStudentNickname());
-    student.setEmail(formatStudent.getEmail());
-    student.setPrefecture(formatStudent.getPrefecture());
-    student.setCity(formatStudent.getCity());
-    student.setAge(formatStudent.getAge());
-    student.setGender(formatStudent.getGender());
-    student.setStudentRemark(formatStudent.getStudentRemark());
-    student.setStudentIsDeleted(formatStudent.getStudentIsDeleted());
-
-    List<UpdateStudentCourseData> formatstudentCoursesList = updateRequestFormat.getStudentCoursesList();
-    List<StudentCourse> studentCourseList = new ArrayList<>();
-    for (UpdateStudentCourseData formatCourseData : formatstudentCoursesList) {
-      StudentCourse studentCourse = new StudentCourse();
-      studentCourse.setCourseName(formatCourseData.getCourseName());
-      studentCourseList.add(studentCourse);
-    }
-
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(student);
-    //studentDetail.setCourseList(studentCourseList);
-    return studentDetail;
   }
 
   @GetMapping("/exception")
