@@ -23,19 +23,19 @@ import raisetech.student.management.repository.StudentRepository;
 public class StudentService {
 
   private StudentRepository repository;
-  private DataDomainConverter dataDomainConverter;
+  private DataDomainConverter converter;
 
   /**
    * コンストラクタ
    *
-   * @param repository          受講生テーブルと受講生コース情報テーブルと申し込み状況テーブルが紐づくリポジトリ
-   * @param dataDomainConverter 受講生詳細を受講生やコース詳細、コース詳細をコース情報や申し込み状況、もしくはその逆の変換を行うコンバーター
+   * @param repository 受講生テーブルと受講生コース情報テーブルと申し込み状況テーブルが紐づくリポジトリ
+   * @param converter  受講生詳細を受講生やコース詳細、コース詳細をコース情報や申し込み状況、もしくはその逆の変換を行うコンバーター
    */
   @Autowired
-  public StudentService(StudentRepository repository, DataDomainConverter dataDomainConverter
+  public StudentService(StudentRepository repository, DataDomainConverter converter
   ) {
     this.repository = repository;
-    this.dataDomainConverter = dataDomainConverter;
+    this.converter = converter;
   }
 
   /**
@@ -47,9 +47,9 @@ public class StudentService {
     List<Student> studentList = repository.searchStudentList();
     List<StudentCourse> courseList = repository.searchStudentCourseList();
     List<StudentCourseStatus> statusList = repository.searchStudentCourseStatusList();
-    List<CourseDetail> courseDetails = dataDomainConverter.toCourseWithStatus(courseList,
+    List<CourseDetail> courseDetails = converter.toCourseWithStatus(courseList,
         statusList);
-    return dataDomainConverter.toStudentDetail(studentList, courseDetails);
+    return converter.toStudentDetail(studentList, courseDetails);
   }
 
   /**
@@ -62,7 +62,7 @@ public class StudentService {
     Student student = repository.searchStudent(id);
     List<StudentCourse> courseList = repository.searchStudentCourse(student.getStudentId());
     List<StudentCourseStatus> statusList = repository.searchStudentCourseStatusList();
-    List<CourseDetail> courseDetails = dataDomainConverter.toCourseWithStatus(courseList,
+    List<CourseDetail> courseDetails = converter.toCourseWithStatus(courseList,
         statusList);
     return new StudentDetail(student, courseDetails);
   }
@@ -100,7 +100,7 @@ public class StudentService {
       courseDetails.addAll(studentDetail.getCourseList());
     }
 
-    return dataDomainConverter.toStudentDetail(students, courseDetails);
+    return converter.toFilteringStudentDetail(students, courseDetails);
 
   }
 

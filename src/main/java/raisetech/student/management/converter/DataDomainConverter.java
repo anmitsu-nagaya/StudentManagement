@@ -74,4 +74,38 @@ public class DataDomainConverter {
     });
     return studentDetails;
   }
+
+  /**
+   * 受講生に紐づくコース詳細をマッピングします。 コース詳細は受講生に対して複数存在するのでループを回して受講生詳細情報を組み立てます。
+   * 受講生：コース情報＝1:Nであることから、検索結果に同じIDの受講生が存在する可能性があるため、重複チェックを行います。
+   *
+   * @param studentList      受講生一覧
+   * @param courseDetailList コース詳細のリスト
+   * @return　受講生詳細情報のリスト
+   */
+  public List<StudentDetail> toFilteringStudentDetail(List<Student> studentList,
+      List<CourseDetail> courseDetailList) {
+    List<Student> students = studentList.stream()
+        .filter(student -> student.getStudentId() != null)
+        .collect(Collectors.collectingAndThen(
+            Collectors.toMap(Student::getStudentId, s -> s, (a, b) -> a),
+            map -> new ArrayList<>(map.values())
+        ));
+
+    List<StudentDetail> studentDetails = new ArrayList<>();
+    students.forEach(student -> {
+      StudentDetail studentDetail = new StudentDetail();
+      studentDetail.setStudent(student);
+
+      List<CourseDetail> convertStudentCourseList = courseDetailList.stream()
+          .filter(studentCourse -> student.getStudentId()
+              .equals(studentCourse.getCourse().getStudentId()))
+          .collect(Collectors.toList());
+
+      studentDetail.setCourseList(convertStudentCourseList);
+      studentDetails.add(studentDetail);
+    });
+    return studentDetails;
+  }
+
 }
