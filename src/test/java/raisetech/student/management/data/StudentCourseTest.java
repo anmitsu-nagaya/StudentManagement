@@ -24,7 +24,7 @@ class StudentCourseTest {
 
   @Test
   void 正常系_全項目が正しい場合はバリデーションエラーにならないこと() {
-    course.setId(1);
+    course.setCourseId(1);
     course.setStudentId("123e4567-e89b-12d3-a456-426614174000");
     course.setCourseName("Javaコース");
 

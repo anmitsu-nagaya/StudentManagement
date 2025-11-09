@@ -1,6 +1,7 @@
 package raisetech.student.management.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +23,19 @@ import raisetech.student.management.repository.StudentRepository;
 public class StudentService {
 
   private StudentRepository repository;
-  private DataDomainConverter converter;
+  private DataDomainConverter dataDomainConverter;
 
   /**
    * コンストラクタ
    *
-   * @param repository 受講生テーブルと受講生コース情報テーブルと申し込み状況テーブルが紐づくリポジトリ
-   * @param converter  受講生詳細を受講生やコース詳細、コース詳細をコース情報や申し込み状況、もしくはその逆の変換を行うコンバーター
+   * @param repository          受講生テーブルと受講生コース情報テーブルと申し込み状況テーブルが紐づくリポジトリ
+   * @param dataDomainConverter 受講生詳細を受講生やコース詳細、コース詳細をコース情報や申し込み状況、もしくはその逆の変換を行うコンバーター
    */
   @Autowired
-  public StudentService(StudentRepository repository, DataDomainConverter converter) {
+  public StudentService(StudentRepository repository, DataDomainConverter dataDomainConverter
+  ) {
     this.repository = repository;
-    this.converter = converter;
+    this.dataDomainConverter = dataDomainConverter;
   }
 
   /**
@@ -45,25 +47,61 @@ public class StudentService {
     List<Student> studentList = repository.searchStudentList();
     List<StudentCourse> courseList = repository.searchStudentCourseList();
     List<StudentCourseStatus> statusList = repository.searchStudentCourseStatusList();
-    List<CourseDetail> courseDetails = converter.toCourseWithStatus(courseList,
+    List<CourseDetail> courseDetails = dataDomainConverter.toCourseWithStatus(courseList,
         statusList);
-    return converter.toStudentDetail(studentList, courseDetails);
+    return dataDomainConverter.toStudentDetail(studentList, courseDetails);
   }
 
   /**
-   * 受講生詳細検索です。 IDに紐づく受講生情報を取得した後、その受講生に紐づくコース詳細を取得して設定します。
+   * 受講生に紐づく受講生詳細検索です。 IDに紐づく受講生情報を取得した後、その受講生に紐づくコース詳細を取得して設定します。
    *
    * @param id 受講生ID
-   * @return 受講生
+   * @return 指定したIDの受講生詳細
    */
-  @Transactional
   public StudentDetail findStudentDetailById(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentCourse> courseList = repository.searchStudentCourse(student.getId());
+    List<StudentCourse> courseList = repository.searchStudentCourse(student.getStudentId());
     List<StudentCourseStatus> statusList = repository.searchStudentCourseStatusList();
-    List<CourseDetail> courseDetails = converter.toCourseWithStatus(courseList,
+    List<CourseDetail> courseDetails = dataDomainConverter.toCourseWithStatus(courseList,
         statusList);
     return new StudentDetail(student, courseDetails);
+  }
+
+  /**
+   * 受講生詳細検索です。
+   *
+   * @return 検索された受講生詳細
+   */
+  public List<StudentDetail> getFilteredStudents(
+      String studentId,
+      String studentFullName,
+      String studentFurigana,
+      String studentNickname,
+      String email,
+      String prefecture,
+      String city,
+      Integer age,
+      String gender,
+      Boolean studentIsDeleted,
+      String courseName,
+      CourseStatus status
+  ) {
+
+    List<StudentDetail> filterStudentDetailDB = repository.searchFilterStudentList(studentId,
+        studentFullName,
+        studentFurigana, studentNickname,
+        email, prefecture, city, age, gender,
+        studentIsDeleted, courseName, status);
+
+    List<Student> students = new ArrayList<>();
+    List<CourseDetail> courseDetails = new ArrayList<>();
+    for (StudentDetail studentDetail : filterStudentDetailDB) {
+      students.add(studentDetail.getStudent());
+      courseDetails.addAll(studentDetail.getCourseList());
+    }
+
+    return dataDomainConverter.toStudentDetail(students, courseDetails);
+
   }
 
 
@@ -79,7 +117,7 @@ public class StudentService {
     String id = UUID.randomUUID().toString();
 
     Student student = studentDetail.getStudent();
-    student.setId(id);
+    student.setStudentId(id);
     repository.registerStudent(student);
 
     studentDetail.getCourseList().forEach(courseDetail -> {
@@ -88,7 +126,7 @@ public class StudentService {
       repository.registerStudentCourse(course);
 
       StudentCourseStatus status = new StudentCourseStatus();
-      status.setCourseId(course.getId());
+      status.setCourseId(course.getCourseId());
       status.setStatus(CourseStatus.仮申込);
       status.setTemporaryAppliedAt(LocalDateTime.now());
       repository.registerStudentCourseStatus(status);

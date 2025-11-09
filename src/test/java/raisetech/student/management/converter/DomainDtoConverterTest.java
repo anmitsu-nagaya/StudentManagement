@@ -51,7 +51,7 @@ class DomainDtoConverterTest {
     List<RegisterCourseDetailRequest> courseDetails = List.of(courseDetail);
 
     //実行
-    StudentDetail actual = sut.toRegisterStudentDetailDomain(
+    StudentDetail actual = sut.toRegisterStudentDetail(
         new RegisterStudentDetailRequest(student, courseDetails));
 
     //検証
@@ -80,7 +80,7 @@ class DomainDtoConverterTest {
 
     //事前準備
     Student student = new Student();
-    student.setId("550e8400-e29b-41d4-a716-446655440001");
+    student.setStudentId("550e8400-e29b-41d4-a716-446655440001");
     student.setStudentFullName("山田太郎");
     student.setStudentFurigana("ヤマダタロウ");
     student.setStudentNickname("たろちゃん");
@@ -93,7 +93,7 @@ class DomainDtoConverterTest {
     student.setStudentIsDeleted(false);
 
     StudentCourse course = new StudentCourse();
-    course.setId(1);
+    course.setCourseId(1);
     course.setStudentId("550e8400-e29b-41d4-a716-446655440001");
     course.setCourseName("Javaコース");
 
@@ -108,7 +108,7 @@ class DomainDtoConverterTest {
     List<UpdateCourseDetailRequest> courseDetails = List.of(courseDetail);
 
     //実行
-    StudentDetail actual = sut.toUpdateStudentDetailDomain(
+    StudentDetail actual = sut.toUpdateStudentDetail(
         new UpdateStudentDetailRequest(student, courseDetails));
 
     //検証
@@ -118,7 +118,7 @@ class DomainDtoConverterTest {
     StudentCourse actualCourse = actualCourseDetail.getCourse();
     StudentCourseStatus actualStatus = actualCourseDetail.getStatus();
 
-    assertThat(actualStudent.getId()).isEqualTo("550e8400-e29b-41d4-a716-446655440001");
+    assertThat(actualStudent.getStudentId()).isEqualTo("550e8400-e29b-41d4-a716-446655440001");
     assertThat(actualStudent.getStudentFullName()).isEqualTo("山田太郎");
     assertThat(actualStudent.getStudentFurigana()).isEqualTo("ヤマダタロウ");
     assertThat(actualStudent.getStudentNickname()).isEqualTo("たろちゃん");
@@ -130,11 +130,11 @@ class DomainDtoConverterTest {
     assertThat(actualStudent.getStudentRemark()).isEqualTo("積極的に質問する学生");
     assertThat(actualStudent.getStudentIsDeleted()).isEqualTo(false);
 
-    assertThat(actualCourse.getId()).isEqualTo(1);
+    assertThat(actualCourse.getCourseId()).isEqualTo(1);
     assertThat(actualCourse.getStudentId()).isEqualTo("550e8400-e29b-41d4-a716-446655440001");
     assertThat(actualCourse.getCourseName()).isEqualTo("Javaコース");
 
-    assertThat(actualStatus.getId()).isEqualTo(1);
+    assertThat(actualStatus.getStatusId()).isEqualTo(1);
     assertThat(actualStatus.getCourseId()).isEqualTo(1);
     assertThat(actualStatus.getStatus()).isEqualTo(CourseStatus.本申込);
   }

@@ -2,9 +2,12 @@ package raisetech.student.management.repository;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
+import raisetech.student.management.data.enums.CourseStatus;
+import raisetech.student.management.domain.StudentDetail;
 
 /**
  * 受講生テーブルと受講生コース情報テーブルと申し込み状況テーブルが紐づくリポジトリです。
@@ -26,6 +29,27 @@ public interface StudentRepository {
    * @return 受講生
    */
   Student searchStudent(String id);
+
+  /**
+   * 受講生の条件検索を行います。
+   *
+   * @return 検索された受講生一覧
+   */
+  List<StudentDetail> searchFilterStudentList(
+      @Param("studentId") String studentId,
+      @Param("studentFullName") String studentFullName,
+      @Param("studentFurigana") String studentFurigana,
+      @Param("studentNickname") String studentNickname,
+      @Param("email") String email,
+      @Param("prefecture") String prefecture,
+      @Param("city") String city,
+      @Param("age") Integer age,
+      @Param("gender") String gender,
+      @Param("studentIsDeleted") Boolean studentIsDeleted,
+      @Param("courseName") String courseName,
+      @Param("status") CourseStatus status
+  );
+
 
   /**
    * 受講生のコース情報の全件検索を行います。

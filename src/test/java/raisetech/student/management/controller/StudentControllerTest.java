@@ -122,7 +122,7 @@ class StudentControllerTest {
             ))
         .andExpect(status().isOk());
 
-    verify(converter, times(1)).toUpdateStudentDetailDomain(any());
+    verify(converter, times(1)).toUpdateStudentDetail(any());
     verify(service, times(1)).registerStudentDetailList(any());
 
   }

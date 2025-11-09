@@ -13,6 +13,7 @@ import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 import raisetech.student.management.data.StudentCourseStatus;
 import raisetech.student.management.data.enums.CourseStatus;
+import raisetech.student.management.domain.StudentDetail;
 
 @MybatisTest
 class StudentRepositoryTest {
@@ -30,6 +31,14 @@ class StudentRepositoryTest {
   void 受講生の単一検索が行えること() {
     Student actual = sut.searchStudent("550e8400-e29b-41d4-a716-446655440001");
     assertThat(actual.getStudentFullName()).isEqualTo("山田太郎");
+  }
+
+  @Test
+  void 受講生の条件検索が行えること() {
+    List<StudentDetail> actual = sut.searchFilterStudentList(null, null, null, null, null,
+        null, null,
+        null, "男性", null, null, null);
+    assertThat(actual.size()).isEqualTo(2);
   }
 
   @Test
@@ -63,7 +72,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生の登録が行えること() {
     Student student = new Student();
-    student.setId(UUID.randomUUID().toString());
+    student.setStudentId(UUID.randomUUID().toString());
     student.setStudentFullName("井上花子");
     student.setStudentFurigana("イノウエハナコ");
     student.setStudentNickname("はな");
@@ -84,7 +93,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生コース情報の登録が行えること() {
     StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setId(11);
+    studentCourse.setCourseId(11);
     studentCourse.setStudentId(UUID.randomUUID().toString());
     studentCourse.setCourseName("Javaコース");
     sut.registerStudentCourse(studentCourse);
@@ -97,7 +106,7 @@ class StudentRepositoryTest {
   @Test
   void コース申し込み状況の登録が行えること() {
     StudentCourseStatus studentCourseStatus = new StudentCourseStatus();
-    studentCourseStatus.setId(11);
+    studentCourseStatus.setStatusId(11);
     studentCourseStatus.setCourseId(11);
     studentCourseStatus.setStatus(CourseStatus.仮申込);
     studentCourseStatus.setTemporaryAppliedAt(LocalDateTime.parse("2025-10-01 09:00:00",
@@ -115,7 +124,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生の更新が行えること() {
     Student student = new Student();
-    student.setId("550e8400-e29b-41d4-a716-446655440001");
+    student.setStudentId("550e8400-e29b-41d4-a716-446655440001");
     student.setStudentFullName("山田太郎");
     student.setStudentFurigana("ヤマダタロウ");
     student.setStudentNickname("たろちゃん");
@@ -139,7 +148,7 @@ class StudentRepositoryTest {
   void 受講生コース情報の更新が行えること() {
 
     StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setId(1);
+    studentCourse.setCourseId(1);
     studentCourse.setStudentId("550e8400-e29b-41d4-a716-446655440001");
     studentCourse.setCourseName("AWSコース");
     sut.updateStudentCourse(studentCourse);
@@ -153,7 +162,7 @@ class StudentRepositoryTest {
   void コース申し込み状況の更新が行えること() {
 
     StudentCourseStatus studentCourseStatus = new StudentCourseStatus();
-    studentCourseStatus.setId(1);
+    studentCourseStatus.setStatusId(1);
     studentCourseStatus.setCourseId(1);
     studentCourseStatus.setStatus(CourseStatus.本申込);
     studentCourseStatus.setTemporaryAppliedAt(LocalDateTime.parse("2025-10-01 09:00:00",

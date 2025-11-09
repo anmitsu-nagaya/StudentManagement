@@ -18,7 +18,7 @@ public class StudentCourse {
   /**
    * コースID。
    */
-  private int id;
+  private int courseId;
   /**
    * 受講生ID。
    */

@@ -35,7 +35,7 @@ public class DataDomainConverter {
     for (StudentCourse course : courseList) {
       CourseDetail courseDetail = new CourseDetail();
       courseDetail.setCourse(course);
-      courseDetail.setStatus(statusMap.get(course.getId()));
+      courseDetail.setStatus(statusMap.get(course.getCourseId()));
       courseDetails.add(courseDetail);
     }
 
@@ -52,13 +52,21 @@ public class DataDomainConverter {
    */
   public List<StudentDetail> toStudentDetail(List<Student> studentList,
       List<CourseDetail> courseDetailList) {
+    List<Student> students = studentList.stream()
+        .filter(student -> student.getStudentId() != null)
+        .collect(Collectors.collectingAndThen(
+            Collectors.toMap(Student::getStudentId, s -> s, (a, b) -> a),
+            map -> new ArrayList<>(map.values())
+        ));
+
     List<StudentDetail> studentDetails = new ArrayList<>();
-    studentList.forEach(student -> {
+    students.forEach(student -> {
       StudentDetail studentDetail = new StudentDetail();
       studentDetail.setStudent(student);
 
       List<CourseDetail> convertStudentCourseList = courseDetailList.stream()
-          .filter(studentCourse -> student.getId().equals(studentCourse.getCourse().getStudentId()))
+          .filter(studentCourse -> student.getStudentId()
+              .equals(studentCourse.getCourse().getStudentId()))
           .collect(Collectors.toList());
 
       studentDetail.setCourseList(convertStudentCourseList);

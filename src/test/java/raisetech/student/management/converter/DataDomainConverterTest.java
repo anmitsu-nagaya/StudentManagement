@@ -26,12 +26,12 @@ class DataDomainConverterTest {
   @Test
   void リポジトリ層から得た受講生コース情報と申し込み状況がコース詳細に正しくマッピングされた状態で変換されること() {
     StudentCourse course = new StudentCourse();
-    course.setId(1);
+    course.setCourseId(1);
     course.setStudentId("550e8400-e29b-41d4-a716-446655440001");
     course.setCourseName("Javaコース");
     List<StudentCourse> courseList = List.of(course);
     StudentCourseStatus status = new StudentCourseStatus();
-    status.setId(1);
+    status.setStatusId(1);
     status.setCourseId(1);
     status.setStatus(CourseStatus.仮申込);
     LocalDateTime testTime = LocalDateTime.parse("2025-10-01 09:00:00",
@@ -42,11 +42,11 @@ class DataDomainConverterTest {
     List<CourseDetail> actual = sut.toCourseWithStatus(courseList, statusList);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getCourse().getId()).isEqualTo(1);
+    assertThat(actual.getFirst().getCourse().getCourseId()).isEqualTo(1);
     assertThat(actual.getFirst().getCourse().getStudentId()).isEqualTo(
         "550e8400-e29b-41d4-a716-446655440001");
     assertThat(actual.getFirst().getCourse().getCourseName()).isEqualTo("Javaコース");
-    assertThat(actual.getFirst().getStatus().getId()).isEqualTo(1);
+    assertThat(actual.getFirst().getStatus().getStatusId()).isEqualTo(1);
     assertThat(actual.getFirst().getStatus().getCourseId()).isEqualTo(1);
     assertThat(actual.getFirst().getStatus().getStatus()).isEqualTo(CourseStatus.仮申込);
     assertThat(actual.getFirst().getStatus().getTemporaryAppliedAt()).isEqualTo(testTime);
@@ -58,7 +58,7 @@ class DataDomainConverterTest {
     //事前準備
     Student student = new Student();
     String id = "550e8400-e29b-41d4-a716-446655440001";
-    student.setId(id);
+    student.setStudentId(id);
     List<Student> studentList = List.of(student);
 
     StudentCourse course1 = new StudentCourse();
@@ -93,7 +93,7 @@ class DataDomainConverterTest {
 
     //事前準備
     Student student = new Student();
-    student.setId("550e8400-e29b-41d4-a716-446655440001");
+    student.setStudentId("550e8400-e29b-41d4-a716-446655440001");
     student.setStudentFullName("山田太郎");
     student.setStudentFurigana("ヤマダタロウ");
     student.setStudentNickname("たろちゃん");
@@ -107,11 +107,11 @@ class DataDomainConverterTest {
     List<Student> studentList = List.of(student);
 
     StudentCourse course = new StudentCourse();
-    course.setId(1);
+    course.setCourseId(1);
     course.setStudentId("550e8400-e29b-41d4-a716-446655440001");
     course.setCourseName("Javaコース");
     StudentCourseStatus status = new StudentCourseStatus();
-    status.setId(1);
+    status.setStatusId(1);
     status.setCourseId(1);
     status.setStatus(CourseStatus.仮申込);
     status.setTemporaryAppliedAt(LocalDateTime.parse("2025-10-01 09:00:00",
@@ -137,7 +137,7 @@ class DataDomainConverterTest {
     StudentCourse actualCourse = actualCourseDetail.getCourse();
     StudentCourseStatus actualStatus = actualCourseDetail.getStatus();
 
-    assertThat(actualStudent.getId()).isEqualTo("550e8400-e29b-41d4-a716-446655440001");
+    assertThat(actualStudent.getStudentId()).isEqualTo("550e8400-e29b-41d4-a716-446655440001");
     assertThat(actualStudent.getStudentFullName()).isEqualTo("山田太郎");
     assertThat(actualStudent.getStudentFurigana()).isEqualTo("ヤマダタロウ");
     assertThat(actualStudent.getStudentNickname()).isEqualTo("たろちゃん");
@@ -149,11 +149,11 @@ class DataDomainConverterTest {
     assertThat(actualStudent.getStudentRemark()).isEqualTo("積極的に質問する学生");
     assertThat(actualStudent.getStudentIsDeleted()).isFalse();
 
-    assertThat(actualCourse.getId()).isEqualTo(1);
+    assertThat(actualCourse.getCourseId()).isEqualTo(1);
     assertThat(actualCourse.getStudentId()).isEqualTo("550e8400-e29b-41d4-a716-446655440001");
     assertThat(actualCourse.getCourseName()).isEqualTo("Javaコース");
 
-    assertThat(actualStatus.getId()).isEqualTo(1);
+    assertThat(actualStatus.getStatusId()).isEqualTo(1);
     assertThat(actualStatus.getCourseId()).isEqualTo(1);
     assertThat(actualStatus.getStatus()).isEqualTo(CourseStatus.仮申込);
     assertThat(actualStatus.getTemporaryAppliedAt()).isEqualTo(

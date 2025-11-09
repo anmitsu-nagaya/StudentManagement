@@ -25,7 +25,7 @@ class StudentTest {
 
   @Test
   void 正常系_全項目が正しい場合はバリデーションエラーにならないこと() {
-    student.setId("3b333f9d-993c-48c6-97ca-4a94bb7894b7");
+    student.setStudentId("3b333f9d-993c-48c6-97ca-4a94bb7894b7");
     student.setStudentFullName("山田太郎");
     student.setStudentFurigana("ヤマダタロウ");
     student.setStudentNickname("たろちゃん");
@@ -42,7 +42,7 @@ class StudentTest {
 
   @Test
   void 異常系_UUID形式が不正な場合にエラーになること() {
-    student.setId("1234");
+    student.setStudentId("1234");
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
 

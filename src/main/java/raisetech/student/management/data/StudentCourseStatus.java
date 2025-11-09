@@ -18,7 +18,7 @@ public class StudentCourseStatus {
   /**
    * 申し込み状況ID。
    */
-  private int id;
+  private int statusId;
   /**
    * コースID。
    */

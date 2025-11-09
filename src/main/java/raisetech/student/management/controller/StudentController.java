@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.student.management.converter.DomainDtoConverter;
+import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.StudentDetail;
 import raisetech.student.management.dto.RegisterStudentDetailRequest;
 import raisetech.student.management.dto.UpdateStudentDetailRequest;
@@ -99,6 +101,40 @@ public class StudentController {
     return service.findStudentDetailById(id);
   }
 
+  @Operation(
+      summary = "条件検索",
+      description = "受講生の一覧を検索します。クエリパラメータによる条件検索を行います。",
+      operationId = "getFilterStudentList",
+      responses = {
+          @ApiResponse(
+              responseCode = "200",
+              description = "検索結果一覧表示成功。検索された受講生のデータを返します。",
+              content = @Content(
+                  mediaType = "application/json",
+                  array = @ArraySchema(schema = @Schema(implementation = StudentDetail.class))
+              )
+          )
+      }
+  )
+  @GetMapping("/students/filter")
+  public List<StudentDetail> getFilterStudentList(
+      @RequestParam(required = false) String studentId,
+      @RequestParam(required = false) String studentFullName,
+      @RequestParam(required = false) String studentFurigana,
+      @RequestParam(required = false) String studentNickname,
+      @RequestParam(required = false) String email,
+      @RequestParam(required = false) String prefecture,
+      @RequestParam(required = false) String city,
+      @RequestParam(required = false) Integer age,
+      @RequestParam(required = false) String gender,
+      @RequestParam(required = false) Boolean studentIsDeleted,
+      @RequestParam(required = false) String courseName,
+      @RequestParam(required = false) CourseStatus status
+  ) {
+    return service.getFilteredStudents(studentId, studentFullName, studentFurigana, studentNickname,
+        email, prefecture, city, age, gender, studentIsDeleted, courseName, status);
+  }
+
 
   @Operation(
       summary = "受講生登録",
@@ -126,7 +162,7 @@ public class StudentController {
   @PostMapping("/register-student")
   public ResponseEntity<String> registerStudent(
       @RequestBody @Valid RegisterStudentDetailRequest request) {
-    StudentDetail studentDetail = converter.toRegisterStudentDetailDomain(request);
+    StudentDetail studentDetail = converter.toRegisterStudentDetail(request);
     service.registerStudentDetailList(studentDetail);
     return ResponseEntity.ok("登録処理が成功しました。");
   }
@@ -158,7 +194,7 @@ public class StudentController {
   @PutMapping("/update-student")
   public ResponseEntity<String> updateStudent(
       @RequestBody @Valid UpdateStudentDetailRequest request) {
-    StudentDetail studentDetail = converter.toUpdateStudentDetailDomain(request);
+    StudentDetail studentDetail = converter.toUpdateStudentDetail(request);
     service.updateStudentDetailList(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
   }

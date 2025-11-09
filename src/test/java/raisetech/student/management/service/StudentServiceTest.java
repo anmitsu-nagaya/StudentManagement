@@ -35,6 +35,7 @@ class StudentServiceTest {
   @Mock
   private DataDomainConverter dataDomainConverter;
 
+
   @Captor
   ArgumentCaptor<StudentCourse> courseCaptor;
 
@@ -88,9 +89,9 @@ class StudentServiceTest {
 
   @Test
   void 受講生詳細の検索_リポジトリとマッパーの処理が適切に呼び出せていること() {
-    student.setId(id);
+    student.setStudentId(id);
     when(repository.searchStudent(id)).thenReturn(student);
-    when(repository.searchStudentCourse(student.getId())).thenReturn(new ArrayList<>());
+    when(repository.searchStudentCourse(student.getStudentId())).thenReturn(new ArrayList<>());
     List<StudentCourse> courseList = new ArrayList<>();
     List<StudentCourseStatus> statusList = new ArrayList<>();
     List<CourseDetail> courseDetails = new ArrayList<>();
@@ -104,7 +105,7 @@ class StudentServiceTest {
     verify(repository, times(1)).searchStudentCourse(id);
     verify(repository, times(1)).searchStudentCourseStatusList();
     verify(dataDomainConverter, times(1)).toCourseWithStatus(courseList, statusList);
-    assertThat(actual.getStudent().getId()).isEqualTo(expected.getStudent().getId());
+    assertThat(actual.getStudent().getStudentId()).isEqualTo(expected.getStudent().getStudentId());
   }
 
   @Test
@@ -126,8 +127,8 @@ class StudentServiceTest {
     verify(repository, times(1)).registerStudent(student);
     verify(repository, times(1)).registerStudentCourse(studentCourse);
 
-    assertThat(studentDetail.getStudent().getId()).isNotNull();
-    assertThat(studentDetail.getStudent().getId()).matches(
+    assertThat(studentDetail.getStudent().getStudentId()).isNotNull();
+    assertThat(studentDetail.getStudent().getStudentId()).matches(
         "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
     assertThat(studentDetail.getCourseList().getFirst().getCourse().getStudentId()).isNotNull();
     assertThat(studentDetail.getCourseList().getFirst().getCourse().getStudentId()).matches(
@@ -144,10 +145,10 @@ class StudentServiceTest {
     verify(repository, times(1)).registerStudentCourseStatus(statusCaptor.capture());
 
     StudentCourse courseCaptured = courseCaptor.getValue();
-    assertThat(courseCaptured.getStudentId()).isEqualTo(studentDetail.getStudent().getId());
+    assertThat(courseCaptured.getStudentId()).isEqualTo(studentDetail.getStudent().getStudentId());
     assertThat(courseCaptured.getCourseName()).isEqualTo(courseDetail.getCourse().getCourseName());
     StudentCourseStatus statusCaptured = statusCaptor.getValue();
-    assertThat(statusCaptured.getCourseId()).isEqualTo(studentCourse.getId());
+    assertThat(statusCaptured.getCourseId()).isEqualTo(studentCourse.getCourseId());
     assertThat(statusCaptured.getStatus()).isEqualTo(CourseStatus.仮申込);
     LocalDateTime now = LocalDateTime.now();
     LocalDateTime actual = statusCaptured.getTemporaryAppliedAt();
@@ -183,7 +184,7 @@ class StudentServiceTest {
 
     assertThat(courseCaptor.getValue()).isEqualTo(studentCourse);
     StudentCourseStatus statusCaptured = statusCaptor.getValue();
-    assertThat(statusCaptured.getId()).isEqualTo(studentCourseStatus.getId());
+    assertThat(statusCaptured.getStatusId()).isEqualTo(studentCourseStatus.getStatusId());
     assertThat(statusCaptured.getCourseId()).isEqualTo(studentCourseStatus.getCourseId());
     assertThat(statusCaptured.getStatus()).isEqualTo(studentCourseStatus.getStatus());
     System.out.println(statusCaptured.getStatus());
