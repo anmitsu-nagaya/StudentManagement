@@ -88,7 +88,7 @@ class StudentServiceTest {
 
 
   @Test
-  void 受講生詳細の検索_リポジトリとマッパーの処理が適切に呼び出せていること() {
+  void IDに紐づく受講生詳細の検索_リポジトリとマッパーの処理が適切に呼び出せていること() {
     student.setStudentId(id);
     when(repository.searchStudent(id)).thenReturn(student);
     when(repository.searchStudentCourse(student.getStudentId())).thenReturn(new ArrayList<>());
@@ -106,6 +106,115 @@ class StudentServiceTest {
     verify(repository, times(1)).searchStudentCourseStatusList();
     verify(dataDomainConverter, times(1)).toCourseWithStatus(courseList, statusList);
     assertThat(actual.getStudent().getStudentId()).isEqualTo(expected.getStudent().getStudentId());
+  }
+
+  @Test
+  void 受講生詳細の条件検索_リポジトリとマッパーの処理が適切に呼び出せていること() {
+    List<Student> studentList = new ArrayList<>();
+    List<CourseDetail> courseDetails = new ArrayList<>();
+    List<StudentDetail> studentDetails = new ArrayList<>();
+    when(repository.searchFilterStudentList(null,
+        null,
+        null, null,
+        null, null, null, null, null,
+        null, null, null)).thenReturn(new ArrayList<>());
+    when(dataDomainConverter.toFilteringStudentDetail(studentList,
+        courseDetails)).thenReturn(
+        studentDetails);
+
+    sut.getFilteredStudents(null,
+        null,
+        null, null,
+        null, null, null, null, null,
+        null, null, null);
+
+    verify(repository, times(1)).searchFilterStudentList(null,
+        null,
+        null, null,
+        null, null, null, null, null,
+        null, null, null);
+    verify(dataDomainConverter, times(1)).toFilteringStudentDetail(studentList,
+        courseDetails);
+  }
+
+  @Test
+  void 受講生詳細の条件検索_正しく検索が行われていること() {
+    student.setStudentId(id);
+    studentCourse.setCourseName("test");
+    studentCourseStatus.setStatus(CourseStatus.本申込);
+    courseDetail.setCourse(studentCourse);
+    courseDetail.setStatus(studentCourseStatus);
+    List<Student> studentList = List.of(student);
+    List<CourseDetail> courseDetails = List.of(courseDetail);
+    studentDetail.setStudent(student);
+    studentDetail.setCourseList(courseDetails);
+    List<StudentDetail> studentDetails = List.of(studentDetail);
+    when(repository.searchFilterStudentList(id,
+        null,
+        null, null,
+        null, null, null, null, null,
+        null, "test", CourseStatus.本申込)).thenReturn(studentDetails);
+    when(dataDomainConverter.toFilteringStudentDetail(studentList,
+        courseDetails)).thenReturn(
+        studentDetails);
+
+    List<StudentDetail> actual = sut.getFilteredStudents(id,
+        null,
+        null, null,
+        null, null, null, null, null,
+        null, "test", CourseStatus.本申込);
+    List<StudentDetail> expected = List.of(studentDetail);
+
+    verify(repository, times(1)).searchFilterStudentList(id,
+        null,
+        null, null,
+        null, null, null, null, null,
+        null, "test", CourseStatus.本申込);
+    verify(dataDomainConverter, times(1)).toFilteringStudentDetail(studentList,
+        courseDetails);
+
+    StudentDetail actualDetail = actual.getFirst();
+    StudentDetail expectedDetail = expected.getFirst();
+
+    Student actualStudent = actualDetail.getStudent();
+    Student expectedStudent = expectedDetail.getStudent();
+
+    assertThat(actualStudent.getStudentId()).isEqualTo(expectedStudent.getStudentId());
+    assertThat(actualStudent.getStudentFullName()).isEqualTo(expectedStudent.getStudentFullName());
+    assertThat(actualStudent.getStudentFurigana()).isEqualTo(expectedStudent.getStudentFurigana());
+    assertThat(actualStudent.getStudentNickname()).isEqualTo(expectedStudent.getStudentNickname());
+    assertThat(actualStudent.getEmail()).isEqualTo(expectedStudent.getEmail());
+    assertThat(actualStudent.getPrefecture()).isEqualTo(expectedStudent.getPrefecture());
+    assertThat(actualStudent.getCity()).isEqualTo(expectedStudent.getCity());
+    assertThat(actualStudent.getAge()).isEqualTo(expectedStudent.getAge());
+    assertThat(actualStudent.getGender()).isEqualTo(expectedStudent.getGender());
+    assertThat(actualStudent.getStudentRemark()).isEqualTo(expectedStudent.getStudentRemark());
+    assertThat(actualStudent.getStudentIsDeleted()).isEqualTo(
+        expectedStudent.getStudentIsDeleted());
+
+    CourseDetail actualCourseDetail = actualDetail.getCourseList().getFirst();
+    CourseDetail expectedCourseDetail = expectedDetail.getCourseList().getFirst();
+
+    StudentCourse actualCourse = actualCourseDetail.getCourse();
+    StudentCourse expectedCourse = expectedCourseDetail.getCourse();
+
+    assertThat(actualCourse.getCourseId()).isEqualTo(expectedCourse.getCourseId());
+    assertThat(actualCourse.getStudentId()).isEqualTo(expectedCourse.getStudentId());
+    assertThat(actualCourse.getCourseName()).isEqualTo(expectedCourse.getCourseName());
+
+    StudentCourseStatus actualStatus = actualCourseDetail.getStatus();
+    StudentCourseStatus expectedStatus = expectedCourseDetail.getStatus();
+
+    assertThat(actualStatus.getStatusId()).isEqualTo(expectedStatus.getStatusId());
+    assertThat(actualStatus.getCourseId()).isEqualTo(expectedStatus.getCourseId());
+    assertThat(actualStatus.getStatus()).isEqualTo(expectedStatus.getStatus());
+    assertThat(actualStatus.getTemporaryAppliedAt()).isEqualTo(
+        expectedStatus.getTemporaryAppliedAt());
+    assertThat(actualStatus.getOfficialAppliedAt()).isEqualTo(
+        expectedStatus.getOfficialAppliedAt());
+    assertThat(actualStatus.getCourseStartedAt()).isEqualTo(expectedStatus.getCourseStartedAt());
+    assertThat(actualStatus.getCourseCompletedAt()).isEqualTo(
+        expectedStatus.getCourseCompletedAt());
   }
 
   @Test

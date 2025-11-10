@@ -1,11 +1,11 @@
-INSERT INTO students (id, student_full_name, student_furigana, student_nickname, email, prefecture, city, age, gender, student_remark, student_is_deleted) VALUES
+INSERT INTO StudentManagement.students (student_id, student_full_name, student_furigana, student_nickname, email, prefecture, city, age, gender, student_remark, student_is_deleted) VALUES
 ('550e8400-e29b-41d4-a716-446655440001', '山田太郎', 'ヤマダタロウ', 'たろちゃん', 'yamada.taro@example.com', '東京都', '渋谷区', 25, '男性', '積極的に質問する学生', 0),
 ('550e8400-e29b-41d4-a716-446655440002', '佐藤花子', 'サトウハナコ', 'はなちゃん', 'sato.hanako@example.com', '大阪府', '大阪市', 22, '女性', NULL, 0),
 ('550e8400-e29b-41d4-a716-446655440003', '鈴木健', 'スズキケン', 'けんちゃん', 'suzuki.ken@example.com', '神奈川県', '横浜市', 28, 'その他', 'プログラミング経験あり', 0),
 ('550e8400-e29b-41d4-a716-446655440004', '田中美咲', 'タナカミサキ', NULL, 'tanaka.misaki@example.com', '福岡県', '福岡市', 30, '回答しない', NULL, 0),
 ('550e8400-e29b-41d4-a716-446655440005', '高橋リオ', 'タカハシリオ', 'リオ', 'takahashi.rio@example.com', '北海道', '札幌市', 24, 'ノンバイナリー', '海外留学経験あり', 0);
 
-INSERT INTO students_courses (id, student_id, course_name) VALUES
+INSERT INTO StudentManagement.students_courses (course_id, student_id, course_name) VALUES
 (1, '550e8400-e29b-41d4-a716-446655440001', 'Javaコース'),
 (2, '550e8400-e29b-41d4-a716-446655440001', 'AWSコース'),
 (3, '550e8400-e29b-41d4-a716-446655440002', 'デザインコース'),
@@ -17,8 +17,8 @@ INSERT INTO students_courses (id, student_id, course_name) VALUES
 (9, '550e8400-e29b-41d4-a716-446655440005', 'デザインコース'),
 (10, '550e8400-e29b-41d4-a716-446655440005', 'マーケティングコース');
 
-INSERT INTO students_courses_status (id, course_id, status, temporary_applied_at, official_applied_at, course_started_at, course_completed_at) VALUES
-(1, 1, '仮申込', '2025-10-01 09:00:00', NULL, NULL, NULL),
+INSERT INTO StudentManagement.students_courses_status (status_id, course_id, status, temporary_applied_at, official_applied_at, course_started_at, course_completed_at) VALUES
+(1, 1, '本申込', '2025-10-01 09:00:00', NULL, NULL, NULL),
 (2, 2, '本申込', '2025-09-25 09:00:00', '2025-09-30 09:00:00', NULL, NULL),
 (3, 3, '受講中', '2025-08-20 09:00:00', '2025-08-25 09:00:00', '2025-09-01 09:00:00', '2026-06-28 09:00:00'),
 (4, 4, '受講修了', '2025-07-10 09:00:00', '2025-07-15 09:00:00', '2025-07-20 09:00:00', '2026-05-16 09:00:00'),

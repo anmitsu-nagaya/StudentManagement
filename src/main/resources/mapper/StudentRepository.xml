@@ -40,6 +40,7 @@
     SELECT * FROM students_courses_status WHERE course_id = #{courseId}
   </select>
 
+  <!-- 条件検索結果を明示的にマッピングする定義 -->
   <resultMap id="studentDetailMap" type="raisetech.student.management.domain.StudentDetail">
     <!-- Student -->
     <association property="student" javaType="raisetech.student.management.data.Student">
@@ -66,6 +67,7 @@
       <association property="status"
         javaType="raisetech.student.management.data.StudentCourseStatus">
         <result property="statusId" column="status_id"/>
+        <result property="courseId" column="course_id"/>
         <result property="status" column="status"/>
         <result property="temporaryAppliedAt" column="temporary_applied_at"/>
         <result property="officialAppliedAt" column="official_applied_at"/>
@@ -76,6 +78,7 @@
 
   </resultMap>
 
+  <!-- 受講生詳細の条件検索 -->
   <select id="searchFilterStudentList" resultMap="studentDetailMap">
     SELECT
     *

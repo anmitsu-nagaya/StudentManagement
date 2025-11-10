@@ -1,5 +1,7 @@
-CREATE TABLE students (
-  id char(36) PRIMARY KEY,
+CREATE SCHEMA IF NOT EXISTS StudentManagement;
+
+CREATE TABLE StudentManagement.Students (
+  student_id char(36) PRIMARY KEY,
   student_full_name varchar(100) NOT NULL,
   student_furigana varchar(100) NOT NULL,
   student_nickname varchar(50) DEFAULT NULL,
@@ -12,14 +14,14 @@ CREATE TABLE students (
   student_is_deleted boolean not null default false
 );
 
-CREATE TABLE students_courses (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE StudentManagement.students_courses (
+  course_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   student_id CHAR(36) NOT NULL,
   course_name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE students_courses_status (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE StudentManagement.students_courses_status (
+  status_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   course_id INT NOT NULL UNIQUE,
   status ENUM('仮申込', '本申込', '受講中', '受講修了') NOT NULL DEFAULT '仮申込',
   temporary_applied_at TIMESTAMP,

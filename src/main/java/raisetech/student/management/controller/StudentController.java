@@ -5,15 +5,20 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,9 +100,10 @@ public class StudentController {
           )
       }
   )
-  @GetMapping("/student/{id}")
+  @GetMapping("/student/{studentId}")
   public StudentDetail showStudentDetail(
-      @PathVariable("id") @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$") String id) {
+      @PathVariable("studentId") @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          message = "UUIDの形式が正しくありません。") String id) {
     return service.findStudentDetailById(id);
   }
 
@@ -113,22 +119,34 @@ public class StudentController {
                   mediaType = "application/json",
                   array = @ArraySchema(schema = @Schema(implementation = StudentDetail.class))
               )
+          ),
+          @ApiResponse(
+              responseCode = "400",
+              description = "検索結果一覧表示失敗。クエリパラメータに不正な値が入力されています。",
+              content = @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = ErrorResponse.class),
+                  examples = @ExampleObject(
+                      value = "getFilterStudentList.studentId: UUIDの形式が正しくありません。")
+              )
           )
       }
   )
   @GetMapping("/students/filter")
   public List<StudentDetail> getFilterStudentList(
-      @RequestParam(required = false) String studentId,
-      @RequestParam(required = false) String studentFullName,
-      @RequestParam(required = false) String studentFurigana,
-      @RequestParam(required = false) String studentNickname,
-      @RequestParam(required = false) String email,
-      @RequestParam(required = false) String prefecture,
-      @RequestParam(required = false) String city,
-      @RequestParam(required = false) Integer age,
-      @RequestParam(required = false) String gender,
+      @RequestParam(required = false) @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          message = "UUIDの形式が正しくありません。") String studentId,
+      @RequestParam(required = false) @Size(max = 100, message = "文字数が超過しています。") String studentFullName,
+      @RequestParam(required = false) @Size(max = 100, message = "文字数が超過しています。") String studentFurigana,
+      @RequestParam(required = false) @Size(max = 50, message = "文字数が超過しています。") String studentNickname,
+      @RequestParam(required = false) @Email(message = "電子メールアドレスとして正しい形式にしてください")
+      @Size(max = 254, message = "文字数が超過しています。") String email,
+      @RequestParam(required = false) @Size(max = 10, message = "文字数が超過しています。") String prefecture,
+      @RequestParam(required = false) @Size(max = 50, message = "文字数が超過しています。") String city,
+      @RequestParam(required = false) @Min(value = 1, message = "値は1以上で入力してください。") Integer age,
+      @RequestParam(required = false) @Size(max = 20, message = "文字数が超過しています。") String gender,
       @RequestParam(required = false) Boolean studentIsDeleted,
-      @RequestParam(required = false) String courseName,
+      @RequestParam(required = false) @Size(max = 50, message = "文字数が超過しています。") String courseName,
       @RequestParam(required = false) CourseStatus status
   ) {
     return service.getFilteredStudents(studentId, studentFullName, studentFurigana, studentNickname,
@@ -155,6 +173,37 @@ public class StudentController {
               content = @Content(
                   mediaType = "application/json",
                   schema = @Schema(implementation = StudentDetail.class)
+              )
+          ),
+          @ApiResponse(
+              responseCode = "400",
+              description = "リクエストボディに不正な値が入力されています。",
+              content = @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = ErrorResponse.class),
+                  examples = {
+                      @ExampleObject(
+                          name = "ValidationError",
+                          value = """
+                              {
+                                  "details": [
+                                      {
+                                          "field": "student.studentFullName",
+                                          "message": "入力は必須です。"
+                                      },
+                                      {
+                                          "field": "student.email",
+                                          "message": "電子メールアドレスとして正しい形式にしてください"
+                                      }
+                                  ],
+                                  "error": "入力値が不正です"
+                              }"""
+                      ),
+                      @ExampleObject(
+                          name = "JsonParseError",
+                          value = "リクエストのJson文法に問題があります：JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries"
+                      )
+                  }
               )
           )
       }
@@ -187,6 +236,37 @@ public class StudentController {
               content = @Content(
                   mediaType = "application/json",
                   schema = @Schema(implementation = StudentDetail.class)
+              )
+          ),
+          @ApiResponse(
+              responseCode = "400",
+              description = "リクエストボディに不正な値が入力されています。",
+              content = @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = ErrorResponse.class),
+                  examples = {
+                      @ExampleObject(
+                          name = "ValidationError",
+                          value = """
+                              {
+                                  "details": [
+                                      {
+                                          "field": "student.studentFullName",
+                                          "message": "入力は必須です。"
+                                      },
+                                      {
+                                          "field": "student.email",
+                                          "message": "電子メールアドレスとして正しい形式にしてください"
+                                      }
+                                  ],
+                                  "error": "入力値が不正です"
+                              }"""
+                      ),
+                      @ExampleObject(
+                          name = "JsonParseError",
+                          value = "リクエストのJson文法に問題があります：JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries"
+                      )
+                  }
               )
           )
       }

@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 
   /**
    *
-   * ConstraintViolationExceptionをハンドリングして、HTTP400のレスポンスを返します。HTTPメソッドに渡されたリクエストパラメータがバリデーションルールに違反した場合に発生します。
+   * ConstraintViolationExceptionをハンドリングして、HTTP400のレスポンスを返します。HTTPメソッドに渡されたクエリパラメータがバリデーションルールに違反した場合に発生します。
    *
    * @param e 発生したConstraintViolationException
    * @return　エラーメッセージを含むResponseEntity
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<String> handleConstraintViolation(ConstraintViolationException e) {
     return ResponseEntity.badRequest()
-        .body("リクエストのパラメータが正しくありません: " + e.getMessage());
+        .body(e.getMessage());
   }
 
   /**
@@ -77,7 +77,8 @@ public class GlobalExceptionHandler {
   public ResponseEntity<String> handleHttpMessageNotReadableException(
       HttpMessageNotReadableException e) {
 
-    return ResponseEntity.badRequest().body("リクエスト形式に問題があります：" + e.getMessage());
+    return ResponseEntity.badRequest()
+        .body("リクエストのJson文法に問題があります：" + e.getMessage());
 
   }
 }

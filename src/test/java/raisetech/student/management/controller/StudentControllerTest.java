@@ -84,11 +84,23 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生詳細の検索が実行できて空で返ってくること() throws Exception {
+  void IDに紐づく受講生詳細の検索が実行できて空で返ってくること() throws Exception {
     String id = UUID.randomUUID().toString();
     mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", id))
         .andExpect(status().isOk());
     verify(service, times(1)).findStudentDetailById(id);
+  }
+
+  @Test
+  void 受講生詳細の条件検索が実行できて空のリストが返ってくること() throws Exception {
+    String id = UUID.randomUUID().toString();
+    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentId=" + id))
+        .andExpect(status().isOk());
+    verify(service, times(1)).getFilteredStudents(id,
+        null,
+        null, null,
+        null, null, null, null, null,
+        null, null, null);
   }
 
 
@@ -122,7 +134,7 @@ class StudentControllerTest {
             ))
         .andExpect(status().isOk());
 
-    verify(converter, times(1)).toUpdateStudentDetail(any());
+    verify(converter, times(1)).toRegisterStudentDetail(any());
     verify(service, times(1)).registerStudentDetailList(any());
 
   }
@@ -181,21 +193,38 @@ class StudentControllerTest {
   }
 
   @Test
-  void リクエストのパラメータに不正な値が渡されたときにエラーレスポンスが返ること()
+  void リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること_1()
       throws Exception {
     String id = "ID";
-    mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", id))
+    mockMvc.perform(MockMvcRequestBuilders.get("/student/{studentId}", id))
         .andExpect(status().is4xxClientError())
         .andExpect(content().string(
-            "リクエストのパラメータが正しくありません: showStudentDetail.id: must match \"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$\""));
+            "showStudentDetail.id: UUIDの形式が正しくありません。"));
+    String name = "a".repeat(101);
+    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentFullName=" + name))
+        .andExpect(status().is4xxClientError())
+        .andExpect(content().string(
+            "getFilterStudentList.studentFullName: 文字数が超過しています。"));
+    String email = "aaa";
+    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?email=" + email))
+        .andExpect(status().is4xxClientError())
+        .andExpect(content().string(
+            "getFilterStudentList.email: 電子メールアドレスとして正しい形式にしてください"));
+    int age = 0;
+    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?age=" + age))
+        .andExpect(status().is4xxClientError())
+        .andExpect(content().string(
+            "getFilterStudentList.age: 値は1以上で入力してください。"));
   }
 
   @Test
-  void 不正な入力があるときにバリデーションエラーレスポンスが返ること() throws Exception {
+  void リクエストボディに不正な入力があるときにバリデーションエラーレスポンスが返ること()
+      throws Exception {
     String invalidJson = """
         {
           "student": {
             "studentFullName": "",
+            "studentFurigana": "",
             "email": "invalid-email"
           }
         }
@@ -214,7 +243,7 @@ class StudentControllerTest {
   }
 
   @Test
-  void リクエスト形式に問題があるときにエラーレスポンスが返ること() throws Exception {
+  void リクエストのJSON文法に問題があるときにエラーレスポンスが返ること() throws Exception {
     String invalidJson = """
         {
           "student": {
@@ -229,7 +258,7 @@ class StudentControllerTest {
             .content(invalidJson))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
-            "リクエスト形式に問題があります：JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries"));
+            "リクエストのJson文法に問題があります：JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries"));
 
   }
 

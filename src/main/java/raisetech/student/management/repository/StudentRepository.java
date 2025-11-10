@@ -30,26 +30,6 @@ public interface StudentRepository {
    */
   Student searchStudent(String id);
 
-  /**
-   * 受講生の条件検索を行います。
-   *
-   * @return 検索された受講生一覧
-   */
-  List<StudentDetail> searchFilterStudentList(
-      @Param("studentId") String studentId,
-      @Param("studentFullName") String studentFullName,
-      @Param("studentFurigana") String studentFurigana,
-      @Param("studentNickname") String studentNickname,
-      @Param("email") String email,
-      @Param("prefecture") String prefecture,
-      @Param("city") String city,
-      @Param("age") Integer age,
-      @Param("gender") String gender,
-      @Param("studentIsDeleted") Boolean studentIsDeleted,
-      @Param("courseName") String courseName,
-      @Param("status") CourseStatus status
-  );
-
 
   /**
    * 受講生のコース情報の全件検索を行います。
@@ -80,6 +60,26 @@ public interface StudentRepository {
    * @return コースIDに紐づくコース申し込み状況
    */
   StudentCourseStatus searchStudentCourseStatus(Integer courseId);
+
+  /**
+   * 受講生詳細の条件検索を行います。
+   *
+   * @return 検索された受講生詳細一覧
+   */
+  List<StudentDetail> searchFilterStudentList(
+      @Param("studentId") String studentId,
+      @Param("studentFullName") String studentFullName,
+      @Param("studentFurigana") String studentFurigana,
+      @Param("studentNickname") String studentNickname,
+      @Param("email") String email,
+      @Param("prefecture") String prefecture,
+      @Param("city") String city,
+      @Param("age") Integer age,
+      @Param("gender") String gender,
+      @Param("studentIsDeleted") Boolean studentIsDeleted,
+      @Param("courseName") String courseName,
+      @Param("status") CourseStatus status
+  );
 
   /**
    * 受講生を新規登録します。
