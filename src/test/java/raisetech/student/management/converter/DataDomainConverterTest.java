@@ -53,7 +53,7 @@ class DataDomainConverterTest {
   }
 
   @Test
-  void レポジトリ層から得た受講生とコース詳細が受講生詳細に正しく変換されること() {
+  void 全件検索_レポジトリ層から得た受講生とコース詳細が受講生詳細に正しく変換されること() {
 
     //事前準備
     Student student = new Student();
@@ -89,7 +89,7 @@ class DataDomainConverterTest {
   }
 
   @Test
-  void 受講生詳細に変換する際値が正しくマッピングされること() {
+  void 条件検索_受講生詳細に変換する際値が正しくマッピングされること() {
 
     //事前準備
     Student student = new Student();
