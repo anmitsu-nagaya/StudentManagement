@@ -1,9 +1,9 @@
 package raisetech.student.management.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,11 +16,11 @@ import lombok.Setter;
 public class StudentCourse {
 
   /**
-   * コースID。PRIMARY KEY (`student_id`,`course_id`)。
+   * コースID。
    */
   private int courseId;
   /**
-   * 受講生ID。PRIMARY KEY (`student_id`,`course_id`)
+   * 受講生ID。
    */
   @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
       message = "UUIDの形式が正しくありません。")
@@ -28,14 +28,9 @@ public class StudentCourse {
   /**
    * コース名。
    */
-  @Size(max = 50)
+  @NotBlank(message = "入力は必須です。")
+  @Size(max = 50, message = "文字数が超過しています。")
   private String courseName;
-  /**
-   * 受講開始日。
-   */
-  private LocalDateTime courseStartAt;
-  /**
-   * 受講修了日。
-   */
-  private LocalDateTime courseEndAt;
+
+
 }

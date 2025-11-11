@@ -5,32 +5,32 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
-import java.util.ArrayList;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raisetech.student.management.controller.requestformat.RegisterRequestFormat;
-import raisetech.student.management.controller.requestformat.UpdateRequestFormat;
-import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentCourseData;
-import raisetech.student.management.controller.requestformat.registerdata.RegisterStudentData;
-import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentCourseData;
-import raisetech.student.management.controller.requestformat.updatedata.UpdateStudentData;
-import raisetech.student.management.data.Student;
-import raisetech.student.management.data.StudentCourse;
+import raisetech.student.management.converter.DomainDtoConverter;
+import raisetech.student.management.data.enums.CourseStatus;
 import raisetech.student.management.domain.StudentDetail;
+import raisetech.student.management.dto.RegisterStudentDetailRequest;
+import raisetech.student.management.dto.UpdateStudentDetailRequest;
 import raisetech.student.management.service.StudentService;
 
 /**
@@ -42,6 +42,7 @@ import raisetech.student.management.service.StudentService;
 public class StudentController {
 
   private StudentService service;
+  private DomainDtoConverter converter;
 
   /**
    * コンストラクタ
@@ -49,8 +50,9 @@ public class StudentController {
    * @param service 受講生サービス
    */
   @Autowired
-  public StudentController(StudentService service) {
+  public StudentController(StudentService service, DomainDtoConverter converter) {
     this.service = service;
+    this.converter = converter;
   }
 
   @Operation(
@@ -98,10 +100,57 @@ public class StudentController {
           )
       }
   )
-  @GetMapping("/student/{id}")
+  @GetMapping("/student/{studentId}")
   public StudentDetail showStudentDetail(
-      @PathVariable("id") @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$") String id) {
+      @PathVariable("studentId") @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          message = "UUIDの形式が正しくありません。") String id) {
     return service.findStudentDetailById(id);
+  }
+
+  @Operation(
+      summary = "条件検索",
+      description = "受講生の一覧を検索します。クエリパラメータによる条件検索を行います。",
+      operationId = "getFilterStudentList",
+      responses = {
+          @ApiResponse(
+              responseCode = "200",
+              description = "検索結果一覧表示成功。検索された受講生のデータを返します。",
+              content = @Content(
+                  mediaType = "application/json",
+                  array = @ArraySchema(schema = @Schema(implementation = StudentDetail.class))
+              )
+          ),
+          @ApiResponse(
+              responseCode = "400",
+              description = "検索結果一覧表示失敗。クエリパラメータに不正な値が入力されています。",
+              content = @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = ErrorResponse.class),
+                  examples = @ExampleObject(
+                      value = "getFilterStudentList.studentId: UUIDの形式が正しくありません。")
+              )
+          )
+      }
+  )
+  @GetMapping("/students/filter")
+  public List<StudentDetail> getFilterStudentList(
+      @RequestParam(required = false) @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          message = "UUIDの形式が正しくありません。") String studentId,
+      @RequestParam(required = false) @Size(max = 100, message = "文字数が超過しています。") String studentFullName,
+      @RequestParam(required = false) @Size(max = 100, message = "文字数が超過しています。") String studentFurigana,
+      @RequestParam(required = false) @Size(max = 50, message = "文字数が超過しています。") String studentNickname,
+      @RequestParam(required = false) @Email(message = "電子メールアドレスとして正しい形式にしてください")
+      @Size(max = 254, message = "文字数が超過しています。") String email,
+      @RequestParam(required = false) @Size(max = 10, message = "文字数が超過しています。") String prefecture,
+      @RequestParam(required = false) @Size(max = 50, message = "文字数が超過しています。") String city,
+      @RequestParam(required = false) @Min(value = 1, message = "値は1以上で入力してください。") Integer age,
+      @RequestParam(required = false) @Size(max = 20, message = "文字数が超過しています。") String gender,
+      @RequestParam(required = false) Boolean studentIsDeleted,
+      @RequestParam(required = false) @Size(max = 50, message = "文字数が超過しています。") String courseName,
+      @RequestParam(required = false) CourseStatus status
+  ) {
+    return service.getFilteredStudents(studentId, studentFullName, studentFurigana, studentNickname,
+        email, prefecture, city, age, gender, studentIsDeleted, courseName, status);
   }
 
 
@@ -111,10 +160,10 @@ public class StudentController {
       operationId = "registerStudent",
       requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
           required = true,
-          description = "登録する受講生の詳細情報。受講生ID・コースID・コース開始日・コース修了日はservice層で自動採番・自動登録します。",
+          description = "登録する受講生の詳細情報。受講生ID・コースID・申込状況IDを自動採番・自動登録します。",
           content = @Content(
               mediaType = "application/json",
-              schema = @Schema(implementation = RegisterRequestFormat.class)
+              schema = @Schema(implementation = RegisterStudentDetailRequest.class)
           )
       ),
       responses = {
@@ -125,62 +174,59 @@ public class StudentController {
                   mediaType = "application/json",
                   schema = @Schema(implementation = StudentDetail.class)
               )
+          ),
+          @ApiResponse(
+              responseCode = "400",
+              description = "リクエストボディに不正な値が入力されています。",
+              content = @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = ErrorResponse.class),
+                  examples = {
+                      @ExampleObject(
+                          name = "ValidationError",
+                          value = """
+                              {
+                                  "details": [
+                                      {
+                                          "field": "student.studentFullName",
+                                          "message": "入力は必須です。"
+                                      },
+                                      {
+                                          "field": "student.email",
+                                          "message": "電子メールアドレスとして正しい形式にしてください"
+                                      }
+                                  ],
+                                  "error": "入力値が不正です"
+                              }"""
+                      ),
+                      @ExampleObject(
+                          name = "JsonParseError",
+                          value = "リクエストのJson文法に問題があります：JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries"
+                      )
+                  }
+              )
           )
       }
   )
   @PostMapping("/register-student")
-  public ResponseEntity<StudentDetail> registerStudent(
-      @RequestBody @Valid RegisterRequestFormat registerRequestFormat) {
-    StudentDetail studentDetail = registerStudentDetail(registerRequestFormat);
-    StudentDetail responseStudentDetail = service.registerStudentDetailList(studentDetail);
-    return ResponseEntity.ok(responseStudentDetail);
-  }
-
-  /**
-   * レスポンスされた受講生リストのデータ(不完全)を、受講生リストの型にマッピングします。OpenAPI用に作成したメソッドです。
-   *
-   * @param registerRequestFormat リクエスト側で必要な項目のみデータとして格納されている受講生リスト
-   * @return　Postする際に必要な形にマッピングをした受講生リスト
-   */
-  private StudentDetail registerStudentDetail(RegisterRequestFormat registerRequestFormat) {
-
-    RegisterStudentData formatStudent = registerRequestFormat.getStudent();
-    Student student = new Student();
-    student.setStudentFullName(formatStudent.getStudentFullName());
-    student.setStudentFurigana(formatStudent.getStudentFurigana());
-    student.setStudentNickname(formatStudent.getStudentNickname());
-    student.setEmail(formatStudent.getEmail());
-    student.setPrefecture(formatStudent.getPrefecture());
-    student.setCity(formatStudent.getCity());
-    student.setAge(formatStudent.getAge());
-    student.setGender(formatStudent.getGender());
-    student.setStudentRemark(formatStudent.getStudentRemark());
-
-    List<RegisterStudentCourseData> formatstudentCoursesList = registerRequestFormat.getStudentCoursesList();
-    List<StudentCourse> studentCourseList = new ArrayList<>();
-    for (RegisterStudentCourseData formatCourseData : formatstudentCoursesList) {
-      StudentCourse studentCourse = new StudentCourse();
-      studentCourse.setCourseName(formatCourseData.getCourseName());
-      studentCourseList.add(studentCourse);
-    }
-
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(student);
-    studentDetail.setStudentCoursesList(studentCourseList);
-    return studentDetail;
+  public ResponseEntity<String> registerStudent(
+      @RequestBody @Valid RegisterStudentDetailRequest request) {
+    StudentDetail studentDetail = converter.toRegisterStudentDetail(request);
+    service.registerStudentDetailList(studentDetail);
+    return ResponseEntity.ok("登録処理が成功しました。");
   }
 
 
   @Operation(
       summary = "受講生更新",
-      description = "受講生情報とコース情報を更新します。受講生IDが必要です。",
+      description = "受講生情報とコース情報を更新します。受講生IDとコースIDが必要です。",
       operationId = "updateStudent",
       requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
           required = true,
-          description = "更新する受講生の詳細情報",
+          description = "更新する受講生の詳細情報。申し込み状況を更新した日時を記録します。",
           content = @Content(
               mediaType = "application/json",
-              schema = @Schema(implementation = UpdateRequestFormat.class)
+              schema = @Schema(implementation = UpdateStudentDetailRequest.class)
           )
       ),
       responses = {
@@ -191,61 +237,51 @@ public class StudentController {
                   mediaType = "application/json",
                   schema = @Schema(implementation = StudentDetail.class)
               )
+          ),
+          @ApiResponse(
+              responseCode = "400",
+              description = "リクエストボディに不正な値が入力されています。",
+              content = @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = ErrorResponse.class),
+                  examples = {
+                      @ExampleObject(
+                          name = "ValidationError",
+                          value = """
+                              {
+                                  "details": [
+                                      {
+                                          "field": "student.studentFullName",
+                                          "message": "入力は必須です。"
+                                      },
+                                      {
+                                          "field": "student.email",
+                                          "message": "電子メールアドレスとして正しい形式にしてください"
+                                      }
+                                  ],
+                                  "error": "入力値が不正です"
+                              }"""
+                      ),
+                      @ExampleObject(
+                          name = "JsonParseError",
+                          value = "リクエストのJson文法に問題があります：JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries"
+                      )
+                  }
+              )
           )
       }
   )
   @PutMapping("/update-student")
   public ResponseEntity<String> updateStudent(
-      @RequestBody @Valid UpdateRequestFormat updateRequestFormat) {
-    StudentDetail studentDetail = updateStudentDetail(updateRequestFormat);
+      @RequestBody @Valid UpdateStudentDetailRequest request) {
+    StudentDetail studentDetail = converter.toUpdateStudentDetail(request);
     service.updateStudentDetailList(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
-  }
-
-  /**
-   * レスポンスされた受講生リストのデータ(不完全)を、受講生リストの型にマッピングします。OpenAPI用に作成したメソッドです。
-   *
-   * @param updateRequestFormat リクエスト側で必要な項目のみデータとして格納されている受講生リスト
-   * @return　Putする際に必要な形にマッピングをした受講生リスト
-   */
-  private StudentDetail updateStudentDetail(UpdateRequestFormat updateRequestFormat) {
-
-    UpdateStudentData formatStudent = updateRequestFormat.getStudent();
-    Student student = new Student();
-    student.setId(formatStudent.getId());
-    student.setStudentFullName(formatStudent.getStudentFullName());
-    student.setStudentFurigana(formatStudent.getStudentFurigana());
-    student.setStudentNickname(formatStudent.getStudentNickname());
-    student.setEmail(formatStudent.getEmail());
-    student.setPrefecture(formatStudent.getPrefecture());
-    student.setCity(formatStudent.getCity());
-    student.setAge(formatStudent.getAge());
-    student.setGender(formatStudent.getGender());
-    student.setStudentRemark(formatStudent.getStudentRemark());
-    student.setStudentIsDeleted(formatStudent.getStudentIsDeleted());
-
-    List<UpdateStudentCourseData> formatstudentCoursesList = updateRequestFormat.getStudentCoursesList();
-    List<StudentCourse> studentCourseList = new ArrayList<>();
-    for (UpdateStudentCourseData formatCourseData : formatstudentCoursesList) {
-      StudentCourse studentCourse = new StudentCourse();
-      studentCourse.setCourseName(formatCourseData.getCourseName());
-      studentCourseList.add(studentCourse);
-    }
-
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(student);
-    studentDetail.setStudentCoursesList(studentCourseList);
-    return studentDetail;
   }
 
   @GetMapping("/exception")
   public ResponseEntity<String> throwException() throws NotFoundException {
     throw new NotFoundException("このAPIは現在利用できません。古いURLとなっています。");
-  }
-
-  @ExceptionHandler(NotFoundException.class)
-  public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
-    return ResponseEntity.badRequest().body(ex.getMessage());
   }
 
 }
