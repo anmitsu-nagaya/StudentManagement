@@ -99,6 +99,7 @@ class StudentRepositoryTest {
     // --- course情報の検証 ---
     assertThat(courseDetail.getCourse().getCourseId()).isEqualTo(1);
     assertThat(courseDetail.getCourse().getCourseName()).isEqualTo("Javaコース");
+    assertThat(courseDetail.getStatus().getCourseId()).isEqualTo(1);
     assertThat(courseDetail.getStatus().getStatus()).isEqualTo(CourseStatus.本申込);
     assertThat(courseDetail.getStatus().getTemporaryAppliedAt())
         .isEqualTo(LocalDateTime.parse("2025-10-01T09:00:00"));
