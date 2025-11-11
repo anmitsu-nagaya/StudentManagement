@@ -25,10 +25,10 @@ public interface StudentRepository {
   /**
    * 受講生の検索を行います。
    *
-   * @param id 受講生ID
+   * @param studentId 受講生ID
    * @return 受講生
    */
-  Student searchStudent(String id);
+  Student searchStudent(String studentId);
 
 
   /**

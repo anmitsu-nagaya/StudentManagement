@@ -56,7 +56,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生コース申し込み状況の単一検索が行えること() {
     StudentCourseStatus actual = sut.searchStudentCourseStatus(1);
-    assertThat(actual.getStatus()).isEqualTo(CourseStatus.仮申込);
+    assertThat(actual.getStatus()).isEqualTo(CourseStatus.本申込);
     LocalDateTime expected = LocalDateTime.parse("2025-10-01 09:00:00",
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     assertThat(actual.getTemporaryAppliedAt()).isEqualTo(expected);

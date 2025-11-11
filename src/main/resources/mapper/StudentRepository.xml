@@ -6,38 +6,38 @@
   <!-- 受講生の全件検索 -->
   <select id="searchStudentList" resultType="raisetech.student.management.data.Student">
     SELECT *
-    FROM students
+    FROM StudentManagement.students
   </select>
 
   <!-- 受講生の単一検索 -->
   <select id="searchStudent" parameterType="String"
     resultType="raisetech.student.management.data.Student">
     SELECT *
-    FROM students
-    WHERE id = #{id}
+    FROM StudentManagement.students
+    WHERE student_id = #{studentId}
   </select>
 
   <!-- 受講生のコース情報の全件検索 -->
   <select id="searchStudentCourseList" resultType="raisetech.student.management.data.StudentCourse">
-    SELECT * FROM students_courses
+    SELECT * FROM StudentManagement.students_courses
   </select>
 
   <!-- 受講生IDに紐づく受講生コース情報を検索 -->
   <select id="searchStudentCourse" parameterType="String"
     resultType="raisetech.student.management.data.StudentCourse">
-    SELECT * FROM students_courses WHERE student_id = #{studentId}
+    SELECT * FROM StudentManagement.students_courses WHERE student_id = #{studentId}
   </select>
 
   <!-- 受講生のコース申し込み状況の全件検索 -->
   <select id="searchStudentCourseStatusList"
     resultType="raisetech.student.management.data.StudentCourseStatus">
-    SELECT * FROM students_courses_status
+    SELECT * FROM StudentManagement.students_courses_status
   </select>
 
   <!-- コースIDに紐づくコース申し込み状況を検索 -->
   <select id="searchStudentCourseStatus" parameterType="Integer"
     resultType="raisetech.student.management.data.StudentCourseStatus">
-    SELECT * FROM students_courses_status WHERE course_id = #{courseId}
+    SELECT * FROM StudentManagement.students_courses_status WHERE course_id = #{courseId}
   </select>
 
   <!-- 条件検索結果を明示的にマッピングする定義 -->
@@ -126,8 +126,9 @@
 
   <!-- 受講生を新規登録 -->
   <insert id="registerStudent" parameterType="raisetech.student.management.data.Student">
-    INSERT INTO students(id,student_full_name,student_furigana,student_nickname,email,prefecture,
-    city,age,gender,student_remark,student_is_deleted) VALUES(#{id}, #{studentFullName},
+    INSERT INTO
+    StudentManagement.students(student_id,student_full_name,student_furigana,student_nickname,email,prefecture,
+    city,age,gender,student_remark,student_is_deleted) VALUES(#{studentId}, #{studentFullName},
     #{studentFurigana}, #{studentNickname}, #{email}, #{prefecture}, #{city}, #{age}, #{gender},
     #{studentRemark}, false)
   </insert>
@@ -136,50 +137,51 @@
   <insert id="registerStudentCourse"
     parameterType="raisetech.student.management.data.StudentCourse"
     useGeneratedKeys="true"
-    keyProperty="id"
-    keyColumn="id">
-    INSERT INTO students_courses(id,student_id,course_name)
-    VALUES (#{id}, #{studentId}, #{courseName})
+    keyProperty="courseId"
+    keyColumn="course_id">
+    INSERT INTO StudentManagement.students_courses(course_id,student_id,course_name)
+    VALUES (#{courseId}, #{studentId}, #{courseName})
   </insert>
 
   <!-- コース申し込み状況を新規登録 -->
   <insert id="registerStudentCourseStatus"
     parameterType="raisetech.student.management.data.StudentCourseStatus"
     useGeneratedKeys="true"
-    keyProperty="id"
-    keyColumn="id">
-    INSERT INTO students_courses_status (id, course_id, status, temporary_applied_at,
+    keyProperty="statusId"
+    keyColumn="status_id">
+    INSERT INTO StudentManagement.students_courses_status (status_id, course_id, status,
+    temporary_applied_at,
     official_applied_at, course_started_at, course_completed_at)
-    VALUES (#{id}, #{courseId},
+    VALUES (#{statusId}, #{courseId},
     #{status},#{temporaryAppliedAt},#{officialAppliedAt},#{courseStartedAt},#{courseCompletedAt})
   </insert>
 
   <!-- 受講生を更新 -->
   <update id="updateStudent"
     parameterType="raisetech.student.management.data.Student">
-    UPDATE students SET student_full_name = #{studentFullName}, student_furigana =
+    UPDATE StudentManagement.students SET student_full_name = #{studentFullName}, student_furigana =
     #{studentFurigana}, student_nickname = #{studentNickname}, email = #{email}, prefecture =
     #{prefecture}, city = #{city}, age = #{age}, gender = #{gender}, student_remark =
-    #{studentRemark}, student_is_deleted = #{studentIsDeleted} WHERE id = #{id}
+    #{studentRemark}, student_is_deleted = #{studentIsDeleted} WHERE student_id = #{studentId}
   </update>
 
   <!-- 受講生コース情報のコース名を更新 -->
   <update id="updateStudentCourse"
     parameterType="raisetech.student.management.data.StudentCourse">
-    UPDATE students_courses
+    UPDATE StudentManagement.students_courses
     SET
     course_name = #{courseName}
-    WHERE id = #{id} AND student_id = #{studentId}
+    WHERE course_id = #{courseId} AND student_id = #{studentId}
   </update>
 
   <!-- コース申し込み状況の申し込み状況を更新 -->
   <update id="updateStudentCourseStatus"
     parameterType="raisetech.student.management.data.StudentCourseStatus">
-    UPDATE students_courses_status
+    UPDATE StudentManagement.students_courses_status
     SET
     status =
     #{status},temporary_applied_at=#{temporaryAppliedAt},official_applied_at=#{officialAppliedAt},course_started_at=#{courseStartedAt},course_completed_at=#{courseCompletedAt}
-    WHERE id = #{id} AND course_id = #{courseId}
+    WHERE status_id = #{statusId} AND course_id = #{courseId}
   </update>
 
 </mapper>
