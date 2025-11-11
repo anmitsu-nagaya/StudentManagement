@@ -28,7 +28,7 @@ public interface StudentRepository {
    * @param studentId 受講生ID
    * @return 受講生
    */
-  Student searchStudent(String studentId);
+  Student searchStudent(@Param("studentId") String studentId);
 
 
   /**
@@ -44,7 +44,7 @@ public interface StudentRepository {
    * @param studentId 受講生ID
    * @return 受講生IDに紐づく受講生コース情報
    */
-  List<StudentCourse> searchStudentCourse(String studentId);
+  List<StudentCourse> searchStudentCourse(@Param("studentId") String studentId);
 
   /**
    * 受講生のコース申し込み状況の全件検索を行います。
@@ -59,7 +59,7 @@ public interface StudentRepository {
    * @param courseId コースID
    * @return コースIDに紐づくコース申し込み状況
    */
-  StudentCourseStatus searchStudentCourseStatus(Integer courseId);
+  StudentCourseStatus searchStudentCourseStatus(@Param("courseId") Integer courseId);
 
   /**
    * 受講生詳細の条件検索を行います。
