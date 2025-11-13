@@ -53,21 +53,6 @@ public class StudentService {
   }
 
   /**
-   * 受講生に紐づく受講生詳細検索です。 IDに紐づく受講生情報を取得した後、その受講生に紐づくコース詳細を取得して設定します。
-   *
-   * @param id 受講生ID
-   * @return 指定したIDの受講生詳細
-   */
-  public StudentDetail findStudentDetailById(String id) {
-    Student student = repository.searchStudent(id);
-    List<StudentCourse> courseList = repository.searchStudentCourse(student.getStudentId());
-    List<StudentCourseStatus> statusList = repository.searchStudentCourseStatusList();
-    List<CourseDetail> courseDetails = converter.toCourseWithStatus(courseList,
-        statusList);
-    return new StudentDetail(student, courseDetails);
-  }
-
-  /**
    * 受講生詳細検索です。
    *
    * @return 検索された受講生詳細
@@ -152,10 +137,27 @@ public class StudentService {
       CourseStatus courseStatus = status.getStatus();
       LocalDateTime now = LocalDateTime.now();
       switch (courseStatus) {
-        case 本申込 -> status.setOfficialAppliedAt(now);
+        case 本申込 -> {
+          status.setTemporaryAppliedAt(repository.searchStudentCourseStatus(status.getCourseId())
+              .getTemporaryAppliedAt());
+          status.setOfficialAppliedAt(now);
+        }
         case 受講中 -> {
+          status.setTemporaryAppliedAt(repository.searchStudentCourseStatus(status.getCourseId())
+              .getTemporaryAppliedAt());
+          status.setOfficialAppliedAt(repository.searchStudentCourseStatus(status.getCourseId())
+              .getOfficialAppliedAt());
           status.setCourseStartedAt(now);
           status.setCourseCompletedAt(now.plusDays(300));
+        }
+        case 受講修了 -> {
+          status.setTemporaryAppliedAt(repository.searchStudentCourseStatus(status.getCourseId())
+              .getTemporaryAppliedAt());
+          status.setOfficialAppliedAt(repository.searchStudentCourseStatus(status.getCourseId())
+              .getOfficialAppliedAt());
+          status.setCourseStartedAt(repository.searchStudentCourseStatus(status.getCourseId())
+              .getCourseStartedAt());
+          status.setCourseCompletedAt(now);
         }
       }
       repository.updateStudentCourseStatus(status);
