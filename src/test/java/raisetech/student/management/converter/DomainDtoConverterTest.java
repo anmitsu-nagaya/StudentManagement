@@ -98,7 +98,7 @@ class DomainDtoConverterTest {
     course.setCourseName("Javaコース");
 
     UpdateStatusRequest status = new UpdateStatusRequest();
-    status.setId(1);
+    status.setStatusId(1);
     status.setCourseId(1);
     status.setStatus(CourseStatus.本申込);
 
