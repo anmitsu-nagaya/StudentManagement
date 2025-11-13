@@ -1,8 +1,6 @@
 package raisetech.student.management.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -20,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -73,38 +70,6 @@ public class StudentController {
   @GetMapping("/students")
   public List<StudentDetail> getStudentList() {
     return service.searchStudentList();
-  }
-
-
-  @Operation(
-      summary = "受講生検索",
-      description = "受講生詳細検索です。IDに紐づく任意の受講生の情報を取得します。",
-      operationId = "showStudentDetail",
-      parameters = {
-          @Parameter(
-              name = "id",
-              description = "検索したい受講生の受講生ID",
-              in = ParameterIn.PATH,
-              required = true,
-              example = "123a4567-b89c-12d3-e456-789123455678"
-          )
-      },
-      responses = {
-          @ApiResponse(
-              responseCode = "200",
-              description = "受講生検索成功。検索した受講生のデータを返します。",
-              content = @Content(
-                  mediaType = "application/json",
-                  schema = @Schema(implementation = StudentDetail.class)
-              )
-          )
-      }
-  )
-  @GetMapping("/student/{studentId}")
-  public StudentDetail showStudentDetail(
-      @PathVariable("studentId") @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
-          message = "UUIDの形式が正しくありません。") String id) {
-    return service.findStudentDetailById(id);
   }
 
   @Operation(
