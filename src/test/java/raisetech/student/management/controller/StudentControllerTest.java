@@ -188,10 +188,10 @@ class StudentControllerTest {
   void リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること_1()
       throws Exception {
     String id = "ID";
-    mockMvc.perform(MockMvcRequestBuilders.get("/student/{studentId}", id))
+    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentId=" + id))
         .andExpect(status().is4xxClientError())
         .andExpect(content().string(
-            "showStudentDetail.id: UUIDの形式が正しくありません。"));
+            "getFilterStudentList.studentId: UUIDの形式が正しくありません。"));
     String name = "a".repeat(101);
     mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentFullName=" + name))
         .andExpect(status().is4xxClientError())
