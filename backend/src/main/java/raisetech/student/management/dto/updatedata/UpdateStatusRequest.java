@@ -18,7 +18,7 @@ public class UpdateStatusRequest {
    * 申し込み状況ID。
    */
   @NotNull(message = "入力は必須です。")
-  private int id;
+  private int statusId;
   /**
    * コースID。
    */

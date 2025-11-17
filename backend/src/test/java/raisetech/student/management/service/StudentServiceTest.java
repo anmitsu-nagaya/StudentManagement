@@ -86,28 +86,6 @@ class StudentServiceTest {
 
   }
 
-
-  @Test
-  void IDに紐づく受講生詳細の検索_リポジトリとマッパーの処理が適切に呼び出せていること() {
-    student.setStudentId(id);
-    when(repository.searchStudent(id)).thenReturn(student);
-    when(repository.searchStudentCourse(student.getStudentId())).thenReturn(new ArrayList<>());
-    List<StudentCourse> courseList = new ArrayList<>();
-    List<StudentCourseStatus> statusList = new ArrayList<>();
-    List<CourseDetail> courseDetails = new ArrayList<>();
-    when(repository.searchStudentCourseStatusList()).thenReturn(new ArrayList<>());
-    when(dataDomainConverter.toCourseWithStatus(courseList, statusList)).thenReturn(courseDetails);
-
-    StudentDetail expected = new StudentDetail(student, new ArrayList<>());
-    StudentDetail actual = sut.findStudentDetailById(id);
-
-    verify(repository, times(1)).searchStudent(id);
-    verify(repository, times(1)).searchStudentCourse(id);
-    verify(repository, times(1)).searchStudentCourseStatusList();
-    verify(dataDomainConverter, times(1)).toCourseWithStatus(courseList, statusList);
-    assertThat(actual.getStudent().getStudentId()).isEqualTo(expected.getStudent().getStudentId());
-  }
-
   @Test
   void 受講生詳細の条件検索_リポジトリとマッパーの処理が適切に呼び出せていること() {
     List<Student> studentList = new ArrayList<>();
@@ -275,10 +253,13 @@ class StudentServiceTest {
   @Test
   void 受講生詳細の更新_リポジトリが適切に呼び出せていること() {
     updateExtracted();
+    when(repository.searchStudentCourseStatus(any(Integer.class))).thenReturn(studentCourseStatus);
+
     sut.updateStudentDetailList(studentDetail);
 
     verify(repository, times(1)).updateStudent(any(Student.class));
     verify(repository, times(1)).updateStudentCourse(any(StudentCourse.class));
+    verify(repository, times(2)).searchStudentCourseStatus(any(Integer.class));
     verify(repository, times(1)).updateStudentCourseStatus(any(StudentCourseStatus.class));
 
   }
@@ -286,23 +267,35 @@ class StudentServiceTest {
   @Test
   void 受講生詳細の更新_コース詳細のデータマッピングが正しいこと() {
     updateExtracted();
+    studentCourseStatus.setCourseId(3);
+    when(repository.searchStudentCourseStatus(3)).thenReturn(studentCourseStatus);
+
     sut.updateStudentDetailList(studentDetail);
 
     verify(repository, times(1)).updateStudentCourse(courseCaptor.capture());
+    verify(repository, times(2)).searchStudentCourseStatus(3);
     verify(repository, times(1)).updateStudentCourseStatus(statusCaptor.capture());
 
     assertThat(courseCaptor.getValue()).isEqualTo(studentCourse);
+
     StudentCourseStatus statusCaptured = statusCaptor.getValue();
     assertThat(statusCaptured.getStatusId()).isEqualTo(studentCourseStatus.getStatusId());
     assertThat(statusCaptured.getCourseId()).isEqualTo(studentCourseStatus.getCourseId());
     assertThat(statusCaptured.getStatus()).isEqualTo(studentCourseStatus.getStatus());
-    System.out.println(statusCaptured.getStatus());
+
+    assertThat(statusCaptured.getTemporaryAppliedAt()).isEqualTo(
+        studentCourseStatus.getTemporaryAppliedAt());
+    assertThat(statusCaptured.getOfficialAppliedAt()).isEqualTo(
+        studentCourseStatus.getOfficialAppliedAt());
+
     LocalDateTime now = LocalDateTime.now();
     LocalDateTime courseStartedAtActual = statusCaptured.getCourseStartedAt();
     assertThat(Duration.between(courseStartedAtActual, now).abs().getSeconds()).isLessThan(3);
     LocalDateTime courseCompletedAtActual = statusCaptured.getCourseCompletedAt();
     assertThat(Duration.between(courseCompletedAtActual, now.plusDays(300)).abs()
         .getSeconds()).isLessThan(3);
+
+
   }
 
   private void updateExtracted() {

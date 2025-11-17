@@ -74,7 +74,7 @@ public class DomainDtoConverter {
     for (UpdateCourseDetailRequest updateCourseRequest : request.getCourseList()) {
 
       StudentCourseStatus status = new StudentCourseStatus();
-      status.setStatusId(updateCourseRequest.getStatus().getId());
+      status.setStatusId(updateCourseRequest.getStatus().getStatusId());
       status.setCourseId(updateCourseRequest.getStatus().getCourseId());
       status.setStatus(updateCourseRequest.getStatus().getStatus());
 

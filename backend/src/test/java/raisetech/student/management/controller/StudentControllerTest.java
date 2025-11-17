@@ -84,14 +84,6 @@ class StudentControllerTest {
   }
 
   @Test
-  void IDに紐づく受講生詳細の検索が実行できて空で返ってくること() throws Exception {
-    String id = UUID.randomUUID().toString();
-    mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", id))
-        .andExpect(status().isOk());
-    verify(service, times(1)).findStudentDetailById(id);
-  }
-
-  @Test
   void 受講生詳細の条件検索が実行できて空のリストが返ってくること() throws Exception {
     String id = UUID.randomUUID().toString();
     mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentId=" + id))
@@ -196,10 +188,10 @@ class StudentControllerTest {
   void リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること_1()
       throws Exception {
     String id = "ID";
-    mockMvc.perform(MockMvcRequestBuilders.get("/student/{studentId}", id))
+    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentId=" + id))
         .andExpect(status().is4xxClientError())
         .andExpect(content().string(
-            "showStudentDetail.id: UUIDの形式が正しくありません。"));
+            "getFilterStudentList.studentId: UUIDの形式が正しくありません。"));
     String name = "a".repeat(101);
     mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentFullName=" + name))
         .andExpect(status().is4xxClientError())
@@ -292,7 +284,7 @@ class StudentControllerTest {
 
   @Test
   void 更新リクエストの申し込み状況で適切な値を入力したときに入力チェックが正しく実行されて異常が発生しないこと() {
-    updateStatusRequest.setId(1);
+    updateStatusRequest.setStatusId(1);
     updateStatusRequest.setCourseId(1);
     updateStatusRequest.setStatus(CourseStatus.本申込);
 
