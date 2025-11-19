@@ -1,6 +1,6 @@
-import { StudentResponse } from "../types/StudentResponce";
-import { NewStudentFormValues } from "../types/NewStudentFormValues";
-import { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
+import type { StudentResponse } from "../types/StudentResponce";
+import type { NewStudentFormValues } from "../types/NewStudentFormValues";
+import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 
 const BASE_URL = "http://localhost:8080";
 
@@ -12,16 +12,63 @@ export const getStudentList = async (): Promise<StudentResponse[]> => {
 };
 
 // 条件検索
+type FilterParams = {
+  studentId?: string;
+  studentFullName?: string;
+  studentFurigana?: string;
+  studentNickname?: string;
+  email?: string;
+  prefecture?: string;
+  city?: string;
+  age?: number;
+  gender?: string;
+  studentRemark?: string;
+  studentIsDeleted?: boolean;
+  courseName?: string;
+  status?: string;
+};
+
 export const getFilterStudentList = async (
-  params: Record<string, any>
+  params: FilterParams
 ): Promise<StudentResponse[]> => {
-  const query = new URLSearchParams(params).toString();
-  const res = await fetch(`${BASE_URL}/students/filter?${query}`);
+  const queryParams = new URLSearchParams();
+  if (params.studentId) queryParams.append("studentFullName", params.studentId);
+  if (params.studentFullName)
+    queryParams.append("studentFullName", params.studentFullName);
+  if (params.studentFurigana)
+    queryParams.append("studentFurigana", params.studentFurigana);
+  if (params.studentNickname)
+    queryParams.append("studentNickname", params.studentNickname);
+  if (params.email) queryParams.append("email", params.email);
+  if (params.prefecture) queryParams.append("prefecture", params.prefecture);
+  if (params.city) queryParams.append("city", params.city);
+  if (params.age !== undefined) queryParams.append("age", String(params.age));
+  if (params.gender) queryParams.append("gender", params.gender);
+  if (params.studentRemark)
+    queryParams.append("studentRemark", params.studentRemark);
+  if (params.studentIsDeleted !== undefined)
+    queryParams.append("studentIsDeleted", String(params.studentIsDeleted));
+  if (params.courseName) queryParams.append("courseName", params.courseName);
+  if (params.status) queryParams.append("status", params.status);
+
+  const res = await fetch(
+    `${BASE_URL}/students/filter?${queryParams.toString()}`
+  );
   if (!res.ok) throw new Error("条件検索に失敗しました");
   return await res.json();
 };
 
 // 新規登録
+type ValidationError = {
+  field: string;
+  message: string;
+};
+
+type ErrorResponse = {
+  error: string;
+  details: ValidationError[];
+};
+
 export const registerStudent = async (
   payload: NewStudentFormValues
 ): Promise<void> => {
@@ -34,14 +81,14 @@ export const registerStudent = async (
     let errMessage = "登録に失敗しました";
 
     try {
-      const err = await res.json(); // JSON 形式のレスポンスを取得
+      const err: string | ErrorResponse = await res.json();
 
       if (typeof err === "string") {
         errMessage = err; // HttpMessageNotReadableException の場合
       } else if (err && typeof err === "object" && "error" in err) {
         // バリデーションエラーの場合
         const messages = (err.details ?? [])
-          .map((d: any) => `${d.field}: ${d.message}`)
+          .map((d: ValidationError) => `${d.field}: ${d.message}`)
           .join("\n");
         errMessage = `${err.error}\n${messages}`;
       }

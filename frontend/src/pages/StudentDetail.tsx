@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { StudentResponse } from "../types/StudentResponce";
+import type { StudentResponse } from "../types/StudentResponce";
 import { getFilterStudentList } from "../api/student";
 
 export const StudentDetail = () => {

@@ -1,4 +1,4 @@
-import { CourseResponse } from "./CourseResponce";
+import type { CourseResponse } from "./CourseResponce";
 
 export type StudentResponse = {
   student: {
