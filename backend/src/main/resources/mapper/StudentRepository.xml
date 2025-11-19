@@ -102,16 +102,19 @@
       AND stu.email LIKE CONCAT('%', #{email}, '%')
     </if>
     <if test="prefecture != null and prefecture != ''">
-      AND stu.prefecture = #{prefecture}
+      AND stu.prefecture LIKE CONCAT('%', #{prefecture}, '%')
     </if>
     <if test="city != null and city != ''">
       AND stu.city LIKE CONCAT('%', #{city}, '%')
     </if>
-    <if test="age != null">
-      AND stu.age = #{age}
+    <if test="ageFrom != null">
+      AND stu.age &gt;= #{ageFrom}
+    </if>
+    <if test="ageTo != null">
+      AND stu.age &lt;= #{ageTo}
     </if>
     <if test="gender != null and gender != ''">
-      AND stu.gender = #{gender}
+      AND stu.gender LIKE CONCAT('%', #{gender}, '%')
     </if>
     <if test="studentIsDeleted != null">
       AND stu.student_is_deleted = #{studentIsDeleted}

@@ -109,14 +109,15 @@ public class StudentController {
       @Size(max = 254, message = "文字数が超過しています。") String email,
       @RequestParam(required = false) @Size(max = 10, message = "文字数が超過しています。") String prefecture,
       @RequestParam(required = false) @Size(max = 50, message = "文字数が超過しています。") String city,
-      @RequestParam(required = false) @Min(value = 1, message = "値は1以上で入力してください。") Integer age,
+      @RequestParam(required = false) @Min(value = 1, message = "値は1以上で入力してください。") Integer ageFrom,
+      @RequestParam(required = false) @Min(value = 1, message = "値は1以上で入力してください。") Integer ageTo,
       @RequestParam(required = false) @Size(max = 20, message = "文字数が超過しています。") String gender,
       @RequestParam(required = false) Boolean studentIsDeleted,
       @RequestParam(required = false) @Size(max = 50, message = "文字数が超過しています。") String courseName,
       @RequestParam(required = false) CourseStatus status
   ) {
     return service.getFilteredStudents(studentId, studentFullName, studentFurigana, studentNickname,
-        email, prefecture, city, age, gender, studentIsDeleted, courseName, status);
+        email, prefecture, city, ageFrom, ageTo, gender, studentIsDeleted, courseName, status);
   }
 
 

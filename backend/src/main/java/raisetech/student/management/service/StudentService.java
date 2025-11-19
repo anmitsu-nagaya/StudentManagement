@@ -65,7 +65,8 @@ public class StudentService {
       String email,
       String prefecture,
       String city,
-      Integer age,
+      Integer ageFrom,
+      Integer ageTo,
       String gender,
       Boolean studentIsDeleted,
       String courseName,
@@ -75,7 +76,7 @@ public class StudentService {
     List<StudentDetail> filterStudentDetailDB = repository.searchFilterStudentList(studentId,
         studentFullName,
         studentFurigana, studentNickname,
-        email, prefecture, city, age, gender,
+        email, prefecture, city, ageFrom, ageTo, gender,
         studentIsDeleted, courseName, status);
 
     List<Student> students = new ArrayList<>();

@@ -94,7 +94,7 @@ class StudentServiceTest {
     when(repository.searchFilterStudentList(null,
         null,
         null, null,
-        null, null, null, null, null,
+        null, null, null, null, null, null,
         null, null, null)).thenReturn(new ArrayList<>());
     when(dataDomainConverter.toFilteringStudentDetail(studentList,
         courseDetails)).thenReturn(
@@ -103,13 +103,13 @@ class StudentServiceTest {
     sut.getFilteredStudents(null,
         null,
         null, null,
-        null, null, null, null, null,
+        null, null, null, null, null, null,
         null, null, null);
 
     verify(repository, times(1)).searchFilterStudentList(null,
         null,
         null, null,
-        null, null, null, null, null,
+        null, null, null, null, null, null,
         null, null, null);
     verify(dataDomainConverter, times(1)).toFilteringStudentDetail(studentList,
         courseDetails);
@@ -130,7 +130,7 @@ class StudentServiceTest {
     when(repository.searchFilterStudentList(id,
         null,
         null, null,
-        null, null, null, null, null,
+        null, null, null, null, null, null,
         null, "test", CourseStatus.本申込)).thenReturn(studentDetails);
     when(dataDomainConverter.toFilteringStudentDetail(studentList,
         courseDetails)).thenReturn(
@@ -139,14 +139,14 @@ class StudentServiceTest {
     List<StudentDetail> actual = sut.getFilteredStudents(id,
         null,
         null, null,
-        null, null, null, null, null,
+        null, null, null, null, null, null,
         null, "test", CourseStatus.本申込);
     List<StudentDetail> expected = List.of(studentDetail);
 
     verify(repository, times(1)).searchFilterStudentList(id,
         null,
         null, null,
-        null, null, null, null, null,
+        null, null, null, null, null, null,
         null, "test", CourseStatus.本申込);
     verify(dataDomainConverter, times(1)).toFilteringStudentDetail(studentList,
         courseDetails);

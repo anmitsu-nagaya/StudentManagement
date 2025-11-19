@@ -53,6 +53,22 @@ export const StudentList = () => {
     setShowFilterModal(true);
   };
 
+  const handleClearFilter = async () => {
+    try {
+      setLoading(true);
+      const data = await getStudentList();
+      setStudens(data);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        alert(`データ取得に失敗しました: ${err.message}`);
+      } else {
+        alert("データ取得に失敗しました");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSearch = async (filters: {
     studentFullName: string;
     studentFurigana: string;
@@ -60,7 +76,8 @@ export const StudentList = () => {
     email: string;
     prefecture: string;
     city: string;
-    age: string;
+    ageFrom: string;
+    ageTo: string;
     gender: string;
     courseName: string;
     status: string;
@@ -74,7 +91,8 @@ export const StudentList = () => {
         email: filters.email || undefined,
         prefecture: filters.prefecture || undefined,
         city: filters.city || undefined,
-        age: filters.age ? parseInt(filters.age) : undefined,
+        ageFrom: filters.ageFrom ? parseInt(filters.ageFrom) : undefined,
+        ageTo: filters.ageTo ? parseInt(filters.ageTo) : undefined,
         gender: filters.gender || undefined,
         courseName: filters.courseName || undefined,
         status: filters.status || undefined,
@@ -103,6 +121,7 @@ export const StudentList = () => {
         onTabChange={setActiveTab}
         onRegisterClick={handleRegisterClick}
         onFilterClick={handleFilterClick}
+        onClearFilterClick={handleClearFilter}
       />
       <StudentsTable students={students} onStudentsUpdate={setStudens} />
       {showRegisterModal && (

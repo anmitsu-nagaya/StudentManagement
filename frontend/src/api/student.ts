@@ -20,7 +20,8 @@ type FilterParams = {
   email?: string;
   prefecture?: string;
   city?: string;
-  age?: number;
+  ageFrom?: number;
+  ageTo?: number;
   gender?: string;
   studentRemark?: string;
   studentIsDeleted?: boolean;
@@ -42,7 +43,10 @@ export const getFilterStudentList = async (
   if (params.email) queryParams.append("email", params.email);
   if (params.prefecture) queryParams.append("prefecture", params.prefecture);
   if (params.city) queryParams.append("city", params.city);
-  if (params.age !== undefined) queryParams.append("age", String(params.age));
+  if (params.ageFrom !== undefined)
+    queryParams.append("ageFrom", String(params.ageFrom));
+  if (params.ageTo !== undefined)
+    queryParams.append("ageTo", String(params.ageTo));
   if (params.gender) queryParams.append("gender", params.gender);
   if (params.studentRemark)
     queryParams.append("studentRemark", params.studentRemark);
@@ -72,11 +76,20 @@ type ErrorResponse = {
 export const registerStudent = async (
   payload: NewStudentFormValues
 ): Promise<void> => {
+  console.log(
+    "registerStudent関数に渡されたpayload:",
+    JSON.stringify(payload, null, 2)
+  ); // ← 追加
+
   const res = await fetch(`${BASE_URL}/register-student`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
+
+  console.log("送信したJSON:", JSON.stringify(payload)); // ← 追加
+  console.log("レスポンスステータス:", res.status); // ← 追加
+
   if (!res.ok) {
     let errMessage = "登録に失敗しました";
 
