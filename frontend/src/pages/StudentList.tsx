@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import type { StudentResponse } from "../types/StudentResponce";
-import {
-  getFilterStudentList,
-  getStudentList,
-  registerStudent,
-} from "../api/student";
+import { getFilterStudentList, registerStudent } from "../api/student";
 import { StudentsTable } from "../components/StudentsTable";
 import { Header } from "../components/StudentListHeader";
 import type { NewStudentFormValues } from "../types/NewStudentFormValues";
@@ -24,7 +20,7 @@ export const StudentList = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const data = await getStudentList();
+        const data = await getFilterStudentList({ studentIsDeleted: false });
         setStudens(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -41,7 +37,7 @@ export const StudentList = () => {
 
   const handleRegister = async (payload: NewStudentFormValues) => {
     await registerStudent(payload);
-    const updatedList = await getStudentList();
+    const updatedList = await getFilterStudentList({ studentIsDeleted: false });
     setStudens(updatedList);
   };
 
@@ -56,7 +52,7 @@ export const StudentList = () => {
   const handleClearFilter = async () => {
     try {
       setLoading(true);
-      const data = await getStudentList();
+      const data = await getFilterStudentList({ studentIsDeleted: false });
       setStudens(data);
     } catch (err: unknown) {
       if (err instanceof Error) {

@@ -3,11 +3,7 @@ import type { StudentResponse } from "../types/StudentResponce";
 import * as FaIcons from "react-icons/fa";
 //import { useNavigate } from "react-router-dom";
 import { StudentDetailModal } from "./StudentDetailModal";
-import {
-  getFilterStudentList,
-  getStudentList,
-  updateStudent,
-} from "../api/student";
+import { getFilterStudentList, updateStudent } from "../api/student";
 import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 import { StudentUpdateModal } from "./StudentUpdateModal";
 
@@ -78,7 +74,6 @@ type StudentsTableProps = {
 
 export const StudentsTable = (props: StudentsTableProps) => {
   const { students, onStudentsUpdate } = props;
-  //const navigate = useNavigate();
   const [selectedStudent, setSelectedStudent] =
     useState<StudentResponse | null>(null);
 
@@ -101,7 +96,7 @@ export const StudentsTable = (props: StudentsTableProps) => {
 
   const handleUpdate = async (payload: UpdateStudentFormValues) => {
     await updateStudent(payload);
-    const updatedList = await getStudentList();
+    const updatedList = await getFilterStudentList({ studentIsDeleted: false });
     onStudentsUpdate(updatedList);
   };
 
@@ -119,6 +114,7 @@ export const StudentsTable = (props: StudentsTableProps) => {
       }
 
       const studentDetail = results[0];
+      const courses = results[0].courseList;
 
       const updatePayload: UpdateStudentFormValues = {
         student: {
@@ -134,10 +130,12 @@ export const StudentsTable = (props: StudentsTableProps) => {
           studentRemark: studentDetail.student.studentRemark,
           studentIsDeleted: true, // ← trueに設定
         },
-        courseList: studentDetail.courseList.map((course) => ({
-          statusId: course.status.statusId,
-          courseId: course.status.courseId,
-          status: course.status.status,
+        courseList: courses.map((course) => ({
+          status: {
+            statusId: course.status.statusId,
+            courseId: course.status.courseId,
+            status: course.status.status,
+          },
         })),
       };
 
@@ -146,7 +144,9 @@ export const StudentsTable = (props: StudentsTableProps) => {
       alert("削除しました");
 
       // 一覧を再取得
-      const updatedList = await getStudentList();
+      const updatedList = await getFilterStudentList({
+        studentIsDeleted: false,
+      });
       onStudentsUpdate(updatedList);
     } catch (err: unknown) {
       if (err instanceof Error) {
