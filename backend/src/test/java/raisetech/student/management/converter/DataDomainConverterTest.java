@@ -126,7 +126,8 @@ class DataDomainConverterTest {
     List<CourseDetail> courseDetails = List.of(courseDetail);
 
     //実行
-    List<StudentDetail> actual = sut.toFilteringStudentDetail(studentList, courseDetails);
+    List<StudentDetail> actual = sut.toStudentDetailFromFilteringStudentDetail(studentList,
+        courseDetails);
 
     //検証
     assertThat(actual).hasSize(1);

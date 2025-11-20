@@ -26,7 +26,8 @@ public class DomainDtoConverter {
    * @param request 登録リクエストされた受講生詳細一覧
    * @return　ドメインで扱うための受講生詳細のリスト
    */
-  public StudentDetail toRegisterStudentDetail(RegisterStudentDetailRequest request) {
+  public StudentDetail toStudentDetailfromRegisterStudentDetail(
+      RegisterStudentDetailRequest request) {
 
     Student student = getStudent(request.getStudent());
 
@@ -66,7 +67,7 @@ public class DomainDtoConverter {
    * @param request 更新リクエストされた受講生詳細一覧
    * @return　ドメインで扱うための受講生詳細のリスト
    */
-  public StudentDetail toUpdateStudentDetail(UpdateStudentDetailRequest request) {
+  public StudentDetail toStudentDetailfromUpdateStudentDetail(UpdateStudentDetailRequest request) {
 
     Student student = request.getStudent();
 

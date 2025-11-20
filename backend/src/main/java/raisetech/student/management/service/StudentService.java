@@ -86,7 +86,7 @@ public class StudentService {
       courseDetails.addAll(studentDetail.getCourseList());
     }
 
-    return converter.toFilteringStudentDetail(students, courseDetails);
+    return converter.toStudentDetailFromFilteringStudentDetail(students, courseDetails);
 
   }
 

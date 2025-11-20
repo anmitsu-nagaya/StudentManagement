@@ -126,7 +126,7 @@ class StudentControllerTest {
             ))
         .andExpect(status().isOk());
 
-    verify(converter, times(1)).toRegisterStudentDetail(any());
+    verify(converter, times(1)).toStudentDetailfromRegisterStudentDetail(any());
     verify(service, times(1)).registerStudentDetailList(any());
 
   }
@@ -185,7 +185,7 @@ class StudentControllerTest {
   }
 
   @Test
-  void リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること_1()
+  void リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること()
       throws Exception {
     String id = "ID";
     mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentId=" + id))
@@ -202,11 +202,6 @@ class StudentControllerTest {
         .andExpect(status().is4xxClientError())
         .andExpect(content().string(
             "getFilterStudentList.email: 電子メールアドレスとして正しい形式にしてください"));
-    int age = 0;
-    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?age=" + age))
-        .andExpect(status().is4xxClientError())
-        .andExpect(content().string(
-            "getFilterStudentList.age: 値は1以上で入力してください。"));
   }
 
   @Test

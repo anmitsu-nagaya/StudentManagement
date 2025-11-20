@@ -96,7 +96,7 @@ class StudentServiceTest {
         null, null,
         null, null, null, null, null, null,
         null, null, null)).thenReturn(new ArrayList<>());
-    when(dataDomainConverter.toFilteringStudentDetail(studentList,
+    when(dataDomainConverter.toStudentDetailFromFilteringStudentDetail(studentList,
         courseDetails)).thenReturn(
         studentDetails);
 
@@ -111,7 +111,7 @@ class StudentServiceTest {
         null, null,
         null, null, null, null, null, null,
         null, null, null);
-    verify(dataDomainConverter, times(1)).toFilteringStudentDetail(studentList,
+    verify(dataDomainConverter, times(1)).toStudentDetailFromFilteringStudentDetail(studentList,
         courseDetails);
   }
 
@@ -132,7 +132,7 @@ class StudentServiceTest {
         null, null,
         null, null, null, null, null, null,
         null, "test", CourseStatus.本申込)).thenReturn(studentDetails);
-    when(dataDomainConverter.toFilteringStudentDetail(studentList,
+    when(dataDomainConverter.toStudentDetailFromFilteringStudentDetail(studentList,
         courseDetails)).thenReturn(
         studentDetails);
 
@@ -148,7 +148,7 @@ class StudentServiceTest {
         null, null,
         null, null, null, null, null, null,
         null, "test", CourseStatus.本申込);
-    verify(dataDomainConverter, times(1)).toFilteringStudentDetail(studentList,
+    verify(dataDomainConverter, times(1)).toStudentDetailFromFilteringStudentDetail(studentList,
         courseDetails);
 
     StudentDetail actualDetail = actual.getFirst();
