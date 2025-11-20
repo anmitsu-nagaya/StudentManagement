@@ -1,11 +1,11 @@
-import { StudentResponce } from "../types/StudentResponce";
+import { StudentResponse } from "../types/StudentResponce";
 import { NewStudentFormValues } from "../types/NewStudentFormValues";
 import { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 
 const BASE_URL = "http://localhost:8080";
 
 // 一覧取得
-export const getStudentList = async (): Promise<StudentResponce[]> => {
+export const getStudentList = async (): Promise<StudentResponse[]> => {
   const res = await fetch(`${BASE_URL}/students`);
   if (!res.ok) throw new Error("一覧取得に失敗しました");
   return await res.json();
@@ -14,7 +14,7 @@ export const getStudentList = async (): Promise<StudentResponce[]> => {
 // 条件検索
 export const getFilterStudentList = async (
   params: Record<string, any>
-): Promise<StudentResponce[]> => {
+): Promise<StudentResponse[]> => {
   const query = new URLSearchParams(params).toString();
   const res = await fetch(`${BASE_URL}/students/filter?${query}`);
   if (!res.ok) throw new Error("条件検索に失敗しました");
