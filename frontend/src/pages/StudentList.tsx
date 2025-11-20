@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import type { StudentResponse } from "../types/StudentResponce";
 import { getStudentList } from "../api/student";
 import { StudentsTable } from "../components/StudentsTable";
-import * as FaIcons from "react-icons/fa";
+import { Header } from "../components/StudentListHeader";
 
 export const StudentList = () => {
   const [students, setStudens] = useState<StudentResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"students" | "courses">(
+    "students"
+  );
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -42,23 +45,7 @@ export const StudentList = () => {
 
   return (
     <div>
-      <div className="header-container">
-        <div className="tabs">
-          <button className="tab active">受講生一覧</button>
-          <button className="tab">コース一覧</button>
-        </div>
-        <div className="header-actions">
-          <button
-            className="icon-button"
-            onClick={() => console.log("新規登録")}
-          >
-            <FaIcons.FaPlus />
-          </button>
-          <button className="icon-button" onClick={() => console.log("検索")}>
-            <FaIcons.FaFilter />
-          </button>
-        </div>
-      </div>
+      <Header activeTab={activeTab} onTabChange={setActiveTab} />
       <StudentsTable students={students} />
     </div>
   );

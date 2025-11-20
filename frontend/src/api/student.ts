@@ -32,7 +32,7 @@ export const getFilterStudentList = async (
   params: FilterParams
 ): Promise<StudentResponse[]> => {
   const queryParams = new URLSearchParams();
-  if (params.studentId) queryParams.append("studentFullName", params.studentId);
+  if (params.studentId) queryParams.append("studentId", params.studentId);
   if (params.studentFullName)
     queryParams.append("studentFullName", params.studentFullName);
   if (params.studentFurigana)
