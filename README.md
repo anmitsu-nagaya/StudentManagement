@@ -77,10 +77,9 @@ https://github.com/user-attachments/assets/6496a131-aaf4-449d-a289-4806e3c6b276
 https://github.com/user-attachments/assets/6401f9d6-a052-4b8a-818b-4fb44914e7cd
 
 ### 削除
-
+https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 
 ## 設計書
-
 ### API仕様書
 https://github.com/user-attachments/assets/b7d6f6a9-2015-40b7-9228-ddb45f6fcbc5
 
@@ -132,6 +131,25 @@ erDiagram
 
 ### シーケンス図
 
+#### 受講生の条件検索フロー
+```mermaid
+sequenceDiagram
+    actor User
+    participant API as Spring Boot API
+    participant DB as Database
+    Note right of User: 受講生の条件検索フロー
+    User ->>+ API: GET /students/filter (クエリパラメータ: 受講生詳細フィールドの項目)
+    API ->> API: 入力データ検証
+    alt 入力データが有効な場合
+        API ->> DB: SELECT受講生詳細(条件検索)
+        DB -->> API: 検索結果用受講生詳細
+        API ->> API: 受講生詳細型にコンバート
+        API -->> User: 200 受講生詳細
+    else 入力データが無効な場合
+        API -->>- User: 400 エラーメッセージ
+    end
+```
+
 #### 受講生詳細の登録フロー
 ```mermaid
 sequenceDiagram
@@ -148,25 +166,6 @@ sequenceDiagram
         API ->> DB: INSERT受講コース
         API ->> DB: INSERT申込状況
         API -->> User: 200 登録処理が成功しました。
-    else 入力データが無効な場合
-        API -->>- User: 400 エラーメッセージ
-    end
-```
-
-#### 受講生の条件検索フロー
-```mermaid
-sequenceDiagram
-    actor User
-    participant API as Spring Boot API
-    participant DB as Database
-    Note right of User: 受講生の条件検索フロー
-    User ->>+ API: GET /students/filter (クエリパラメータ: 受講生詳細フィールドの項目)
-    API ->> API: 入力データ検証
-    alt 入力データが有効な場合
-        API ->> DB: SELECT受講生詳細(条件検索)
-        DB -->> API: 検索結果用受講生詳細
-        API ->> API: 受講生詳細型にコンバート
-        API -->> User: 200 受講生詳細
     else 入力データが無効な場合
         API -->>- User: 400 エラーメッセージ
     end
@@ -286,6 +285,7 @@ sequenceDiagram
       - コンポーネント設計の見直し（再利用性・保守性の向上）
       - 命名規則の統一とコードの整理
       - 状態管理の最適化
+
 
 
 
