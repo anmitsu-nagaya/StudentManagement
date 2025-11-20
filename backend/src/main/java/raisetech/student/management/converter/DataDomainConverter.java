@@ -83,7 +83,7 @@ public class DataDomainConverter {
    * @param courseDetailList コース詳細のリスト
    * @return　受講生詳細情報のリスト
    */
-  public List<StudentDetail> toFilteringStudentDetail(List<Student> studentList,
+  public List<StudentDetail> toStudentDetailFromFilteringStudentDetail(List<Student> studentList,
       List<CourseDetail> courseDetailList) {
     List<Student> students = studentList.stream()
         .filter(student -> student.getStudentId() != null)

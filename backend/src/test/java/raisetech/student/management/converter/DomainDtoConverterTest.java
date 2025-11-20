@@ -51,7 +51,7 @@ class DomainDtoConverterTest {
     List<RegisterCourseDetailRequest> courseDetails = List.of(courseDetail);
 
     //実行
-    StudentDetail actual = sut.toRegisterStudentDetail(
+    StudentDetail actual = sut.toStudentDetailfromRegisterStudentDetail(
         new RegisterStudentDetailRequest(student, courseDetails));
 
     //検証
@@ -108,7 +108,7 @@ class DomainDtoConverterTest {
     List<UpdateCourseDetailRequest> courseDetails = List.of(courseDetail);
 
     //実行
-    StudentDetail actual = sut.toUpdateStudentDetail(
+    StudentDetail actual = sut.toStudentDetailfromUpdateStudentDetail(
         new UpdateStudentDetailRequest(student, courseDetails));
 
     //検証

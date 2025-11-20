@@ -158,7 +158,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生詳細の条件検索_受講生フリガナが部分一致で検索されること() {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
-        null, null, "ヤマ", null, null,
+        null, "ヤマ", null, null, null,
         null, null,
         null, null, null, null, null);
     assertThat(actual.getFirst().getStudent().getStudentFurigana()).isEqualTo("ヤマダタロウ");
@@ -167,7 +167,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生詳細の条件検索_受講生ニックネームが部分一致で検索されること() {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
-        null, null, null, "たろ", null,
+        null, null, "たろ", null, null,
         null, null,
         null, null, null, null, null);
     assertThat(actual.getFirst().getStudent().getStudentNickname()).isEqualTo("たろちゃん");
@@ -176,7 +176,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生詳細の条件検索_emailが部分一致で検索されること() {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
-        null, null, null, null, "taro",
+        null, null, null, "taro", null,
         null, null,
         null, null, null, null, null);
     assertThat(actual.getFirst().getStudent().getEmail()).isEqualTo("yamada.taro@example.com");

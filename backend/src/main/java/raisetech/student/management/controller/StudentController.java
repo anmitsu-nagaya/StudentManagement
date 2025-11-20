@@ -178,7 +178,7 @@ public class StudentController {
   @PostMapping("/register-student")
   public ResponseEntity<String> registerStudent(
       @RequestBody @Valid RegisterStudentDetailRequest request) {
-    StudentDetail studentDetail = converter.toRegisterStudentDetail(request);
+    StudentDetail studentDetail = converter.toStudentDetailfromRegisterStudentDetail(request);
     service.registerStudentDetailList(studentDetail);
     return ResponseEntity.ok("登録処理が成功しました。");
   }
@@ -241,7 +241,7 @@ public class StudentController {
   @PutMapping("/update-student")
   public ResponseEntity<String> updateStudent(
       @RequestBody @Valid UpdateStudentDetailRequest request) {
-    StudentDetail studentDetail = converter.toUpdateStudentDetail(request);
+    StudentDetail studentDetail = converter.toStudentDetailfromUpdateStudentDetail(request);
     service.updateStudentDetailList(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
   }
