@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { StudentResponse } from "../types/StudentResponce";
+import type { StudentResponse } from "../types/StudentResponce";
 import { getStudentList } from "../api/student";
-import { Link } from "react-router-dom";
+import { StudentsTable } from "../components/StudentsTable";
+import * as FaIcons from "react-icons/fa";
 
 export const StudentList = () => {
   const [students, setStudens] = useState<StudentResponse[]>([]);
@@ -13,65 +14,52 @@ export const StudentList = () => {
       try {
         const data = await getStudentList();
         setStudens(data);
-      } catch (err: any) {
-        setError(err.message || "一覧取得に失敗しました");
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("一覧取得に失敗しました");
+        }
       } finally {
         setLoading(false);
       }
     };
-
     fetchStudents();
   }, []);
 
   if (loading) return <div>読み込み中...</div>;
   if (error) return <div>エラー: {error}</div>;
 
+  // const handleRegister = () => {
+  //   // ここに新規登録画面へ遷移する処理やモーダルを開く処理を書く
+  //   console.log("新規登録ボタンが押されました");
+  // };
+
+  // const handleUpdate = () => {
+  //   // 選択した学生を更新する処理を書く
+  //   console.log("更新ボタンが押されました");
+  // };
+
   return (
     <div>
-      <h1>学生一覧</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>名前</th>
-            <th>ふりがな</th>
-            <th>ニックネーム</th>
-            <th>メール</th>
-            <th>都道府県</th>
-            <th>市区町村</th>
-            <th>年齢</th>
-            <th>性別</th>
-            <th>備考</th>
-            <th>コース情報</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((studentDetail) => (
-            <tr key={studentDetail.student.studentId}>
-              <td>
-                <Link to={`/students/${studentDetail.student.studentId}`}>
-                  {studentDetail.student.studentFullName}
-                </Link>
-              </td>
-              <td>{studentDetail.student.studentFurigana}</td>
-              <td>{studentDetail.student.studentNickname ?? "-"}</td>
-              <td>{studentDetail.student.email}</td>
-              <td>{studentDetail.student.prefecture ?? "-"}</td>
-              <td>{studentDetail.student.city ?? "-"}</td>
-              <td>{studentDetail.student.age ?? "-"}</td>
-              <td>{studentDetail.student.gender ?? "-"}</td>
-              <td>{studentDetail.student.studentRemark ?? "-"}</td>
-              <td>
-                {studentDetail.courseList.map((courseDetail) => (
-                  <div key={courseDetail.course.courseId}>
-                    {courseDetail.course.courseName} (
-                    {courseDetail.status.status})
-                  </div>
-                ))}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="header-container">
+        <div className="tabs">
+          <button className="tab active">受講生一覧</button>
+          <button className="tab">コース一覧</button>
+        </div>
+        <div className="header-actions">
+          <button
+            className="icon-button"
+            onClick={() => console.log("新規登録")}
+          >
+            <FaIcons.FaPlus />
+          </button>
+          <button className="icon-button" onClick={() => console.log("検索")}>
+            <FaIcons.FaFilter />
+          </button>
+        </div>
+      </div>
+      <StudentsTable students={students} />
     </div>
   );
 };
