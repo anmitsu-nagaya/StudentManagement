@@ -1,9 +1,10 @@
 import * as FaIcons from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
   activeTab: "students" | "courses";
   onTabChange: (tab: "students" | "courses") => void;
+  onRegisterClick: () => void;
+  onFilterClick: () => void;
 };
 
 const styles = {
@@ -57,20 +58,7 @@ const styles = {
 };
 
 export const Header = (props: HeaderProps) => {
-  const { activeTab, onTabChange } = props;
-  const navigate = useNavigate();
-
-  const handleRegisterClick = () => {
-    console.log("新規登録ボタンがクリックされました");
-    console.log("遷移先: /students/register");
-    navigate("/students/register");
-  };
-
-  const handleFilterClick = () => {
-    console.log("検索ボタンがクリックされました");
-    console.log("遷移先: /students/filter");
-    navigate("/students/filter");
-  };
+  const { activeTab, onTabChange, onRegisterClick, onFilterClick } = props;
 
   return (
     <div style={styles.headerContainer}>
@@ -89,10 +77,10 @@ export const Header = (props: HeaderProps) => {
         </button>
       </div>
       <div style={styles.headerActions}>
-        <button style={styles.iconButton} onClick={handleRegisterClick}>
+        <button style={styles.iconButton} onClick={onRegisterClick}>
           <FaIcons.FaPlus />
         </button>
-        <button style={styles.iconButton} onClick={handleFilterClick}>
+        <button style={styles.iconButton} onClick={onFilterClick}>
           <FaIcons.FaFilter />
         </button>
       </div>
