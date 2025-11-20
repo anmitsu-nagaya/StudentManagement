@@ -29,7 +29,7 @@ const styles = {
     padding: "24px",
     maxWidth: "800px",
     width: "90%",
-    maxHeight: "80vh",
+    maxHeight: "95vh",
     overflow: "auto",
     position: "relative" as const,
   },
@@ -209,7 +209,13 @@ export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
           studentRemark: formData.studentRemark || null,
           studentIsDeleted: student.student.studentIsDeleted,
         },
-        courseList: courseStatuses,
+        courseList: courseStatuses.map((courseStatus) => ({
+          status: {
+            statusId: courseStatus.statusId,
+            courseId: courseStatus.courseId,
+            status: courseStatus.status,
+          },
+        })),
       };
 
       await onUpdate(payload);

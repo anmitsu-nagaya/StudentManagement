@@ -1,3 +1,5 @@
 export type NewCourseFormValues = {
-  courseName: string;
+  course: {
+    courseName: string;
+  };
 };

@@ -9,7 +9,8 @@ type FilterFormValues = {
   email: string;
   prefecture: string;
   city: string;
-  age: string;
+  ageFrom: string;
+  ageTo: string;
   gender: string;
   courseName: string;
   status: CourseStatus | "";
@@ -39,7 +40,7 @@ const styles = {
     padding: "24px",
     maxWidth: "700px",
     width: "90%",
-    maxHeight: "80vh",
+    maxHeight: "95vh",
     overflow: "auto",
     position: "relative" as const,
   },
@@ -139,7 +140,8 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
     email: "",
     prefecture: "",
     city: "",
-    age: "",
+    ageFrom: "",
+    ageTo: "",
     gender: "",
     courseName: "",
     status: "",
@@ -160,7 +162,8 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
       email: "",
       prefecture: "",
       city: "",
-      age: "",
+      ageFrom: "",
+      ageTo: "",
       gender: "",
       courseName: "",
       status: "",
@@ -247,7 +250,7 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
                 value={formData.prefecture}
                 onChange={handleInputChange}
                 style={styles.input}
-                placeholder="完全一致で検索"
+                placeholder="部分一致で検索"
               />
 
               <label style={styles.label}>市区町村</label>
@@ -261,15 +264,29 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
               />
 
               <label style={styles.label}>年齢</label>
-              <input
-                type="number"
-                name="age"
-                value={formData.age}
-                onChange={handleInputChange}
-                style={styles.input}
-                min="0"
-                placeholder="完全一致で検索"
-              />
+              <div
+                style={{ display: "flex", gap: "8px", alignItems: "center" }}
+              >
+                <input
+                  type="number"
+                  name="ageFrom"
+                  value={formData.ageFrom}
+                  onChange={handleInputChange}
+                  style={styles.input}
+                  min="0"
+                  placeholder="20"
+                />
+                <span>〜</span>
+                <input
+                  type="number"
+                  name="ageTo"
+                  value={formData.ageTo}
+                  onChange={handleInputChange}
+                  style={styles.input}
+                  min="0"
+                  placeholder="29"
+                />
+              </div>
 
               <label style={styles.label}>性別</label>
               <input
@@ -278,7 +295,7 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
                 value={formData.gender}
                 onChange={handleInputChange}
                 style={styles.input}
-                placeholder="完全一致で検索"
+                placeholder="部分一致で検索"
               />
             </div>
           </div>

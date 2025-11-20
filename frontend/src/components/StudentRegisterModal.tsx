@@ -26,7 +26,7 @@ const styles = {
     padding: "24px",
     maxWidth: "800px",
     width: "90%",
-    maxHeight: "80vh",
+    maxHeight: "95vh",
     overflow: "auto",
     position: "relative" as const,
   },
@@ -162,9 +162,9 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
     studentRemark: "",
   });
 
-  const [courses, setCourses] = useState<{ courseName: string }[]>([
-    { courseName: "" },
-  ]);
+  const [course, setCourse] = useState<{ courseName: string }>({
+    courseName: "",
+  });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -175,16 +175,8 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCourseChange = (index: number, value: string) => {
-    setCourses((prev) =>
-      prev.map((course, i) => (i === index ? { courseName: value } : course))
-    );
-  };
-
-  const handleRemoveCourse = (index: number) => {
-    if (courses.length > 1) {
-      setCourses((prev) => prev.filter((_, i) => i !== index));
-    }
+  const handleCourseChange = (value: string) => {
+    setCourse({ courseName: value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -204,7 +196,7 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
           gender: formData.gender || undefined,
           studentRemark: formData.studentRemark || undefined,
         },
-        courseList: courses.filter((course) => course.courseName.trim() !== ""),
+        courseList: [{ course: course }],
       };
 
       await onRegister(payload);
@@ -330,26 +322,16 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
 
           <div style={styles.section}>
             <h3 style={styles.sectionTitle}>受講コース</h3>
-            {courses.map((course, index) => (
-              <div key={index} style={styles.courseItem}>
-                <input
-                  type="text"
-                  value={course.courseName}
-                  onChange={(e) => handleCourseChange(index, e.target.value)}
-                  style={styles.courseInput}
-                  placeholder="コース名を入力"
-                />
-                {courses.length > 1 && (
-                  <button
-                    type="button"
-                    style={styles.removeCourseButton}
-                    onClick={() => handleRemoveCourse(index)}
-                  >
-                    <FaIcons.FaTrash />
-                  </button>
-                )}
-              </div>
-            ))}
+            <div style={styles.courseItem}>
+              <input
+                type="text"
+                value={course.courseName}
+                onChange={(e) => handleCourseChange(e.target.value)}
+                style={styles.courseInput}
+                placeholder="コース名を入力"
+                required
+              />
+            </div>
           </div>
 
           <div style={styles.buttonContainer}>

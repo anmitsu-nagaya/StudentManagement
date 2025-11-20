@@ -66,7 +66,7 @@ class StudentRepositoryTest {
   void 受講生詳細の条件検索_実行されてStudentDetail型の空のリストが返ること() {
     List<StudentDetail> actual = sut.searchFilterStudentList(null, null, null, null, null,
         null, null,
-        null, null, null, null, null);
+        null, null, null, null, null, null);
     assertThat(actual).isNotNull();
   }
 
@@ -75,7 +75,7 @@ class StudentRepositoryTest {
     List<StudentDetail> actual = sut.searchFilterStudentList("550e8400-e29b-41d4-a716-446655440001",
         null, null, null, null,
         null, null,
-        null, null, null, "Javaコース", null);
+        null, null, null, null, "Javaコース", null);
 
     assertThat(actual).hasSize(1);
 
@@ -113,7 +113,7 @@ class StudentRepositoryTest {
     List<StudentDetail> actual = sut.searchFilterStudentList("550e8400-e29b-41d4-a716-446655440001",
         null, null, null, null,
         null, null,
-        null, null, null, null, null);
+        null, null, null, null, null, null);
     assertThat(actual.getFirst().getCourseList()).isNotNull();
   }
 
@@ -122,7 +122,7 @@ class StudentRepositoryTest {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
         null, null, null, null,
         null, null,
-        null, null, null, "Javaコース", null);
+        null, null, null, null, "Javaコース", null);
     assertThat(actual.getFirst().getStudent()).isNotNull();
     assertThat(actual.getFirst().getCourseList().getFirst().getStatus()).isNotNull();
   }
@@ -132,7 +132,7 @@ class StudentRepositoryTest {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
         null, null, null, null,
         null, null,
-        null, null, null, "Javaコース", null);
+        null, null, null, null, "Javaコース", null);
     assertThat(actual.getFirst().getStudent()).isNotNull();
     assertThat(actual.getFirst().getCourseList().getFirst().getCourse()).isNotNull();
   }
@@ -142,7 +142,7 @@ class StudentRepositoryTest {
     List<StudentDetail> actual = sut.searchFilterStudentList("550e8400-e29b-41d4-a716-446655440001",
         null, null, null, null,
         null, null,
-        null, null, null, null, null);
+        null, null, null, null, null, null);
     assertThat(actual.size()).isEqualTo(2);
   }
 
@@ -150,7 +150,7 @@ class StudentRepositoryTest {
   void 受講生詳細の条件検索_受講生フルネームが部分一致で検索されること() {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
         "山", null, null, null,
-        null, null,
+        null, null, null,
         null, null, null, null, null);
     assertThat(actual.getFirst().getStudent().getStudentFullName()).isEqualTo("山田太郎");
   }
@@ -158,7 +158,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生詳細の条件検索_受講生フリガナが部分一致で検索されること() {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
-        null, "ヤマ", null, null,
+        null, null, "ヤマ", null, null,
         null, null,
         null, null, null, null, null);
     assertThat(actual.getFirst().getStudent().getStudentFurigana()).isEqualTo("ヤマダタロウ");
@@ -167,7 +167,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生詳細の条件検索_受講生ニックネームが部分一致で検索されること() {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
-        null, null, "たろ", null,
+        null, null, null, "たろ", null,
         null, null,
         null, null, null, null, null);
     assertThat(actual.getFirst().getStudent().getStudentNickname()).isEqualTo("たろちゃん");
@@ -176,10 +176,19 @@ class StudentRepositoryTest {
   @Test
   void 受講生詳細の条件検索_emailが部分一致で検索されること() {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
-        null, null, null, "taro",
+        null, null, null, null, "taro",
         null, null,
         null, null, null, null, null);
     assertThat(actual.getFirst().getStudent().getEmail()).isEqualTo("yamada.taro@example.com");
+  }
+
+  @Test
+  void 受講生詳細の条件検索_都道府県が部分一致で検索されること() {
+    List<StudentDetail> actual = sut.searchFilterStudentList(null,
+        null, null, null, null,
+        "県", null,
+        null, null, null, null, null, null);
+    assertThat(actual.size()).isEqualTo(4);
   }
 
   @Test
@@ -187,8 +196,26 @@ class StudentRepositoryTest {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
         null, null, null, null,
         null, "市",
-        null, null, null, null, null);
+        null, null, null, null, null, null);
     assertThat(actual.size()).isEqualTo(8);
+  }
+
+  @Test
+  void 受講生詳細の条件検索_年齢が指定した範囲で正しく検索されること() {
+    List<StudentDetail> actual = sut.searchFilterStudentList(null,
+        null, null, null, null,
+        null, null,
+        25, 30, null, null, null, null);
+    assertThat(actual.size()).isEqualTo(6);
+  }
+
+  @Test
+  void 受講生詳細の条件検索_性別が部分一致で検索されること() {
+    List<StudentDetail> actual = sut.searchFilterStudentList(null,
+        null, null, null, null,
+        null, null,
+        null, null, "男", null, null, null);
+    assertThat(actual.size()).isEqualTo(2);
   }
 
   @Test
@@ -196,7 +223,7 @@ class StudentRepositoryTest {
     List<StudentDetail> actual = sut.searchFilterStudentList(null,
         null, null, null, null,
         null, null,
-        null, null, null, "コース", null);
+        null, null, null, null, "コース", null);
     assertThat(actual.size()).isEqualTo(10);
   }
 
