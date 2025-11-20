@@ -65,24 +65,24 @@ JavaやSpring Bootの学習成果を形にするために作成しました。
 ![image](https://github.com/user-attachments/assets/151681f8-5103-4f62-adbe-3524342d4979)
 
 #### 受講生詳細画面
-https://github.com/user-attachments/assets/49ec77cb-ab73-4f1d-8c17-48cdeb4c4271
+https://github.com/user-attachments/assets/10ec51f3-40cf-4051-bac3-33178116f553
 
 ### 条件検索
-https://github.com/user-attachments/assets/96dda897-8d98-40d1-a308-3cf069549b0b
+https://github.com/user-attachments/assets/e6285355-fe4e-47d5-ac0f-03acbd22c322
 
 ### 新規登録
-https://github.com/user-attachments/assets/5ed07a38-caac-42a2-b6f4-24eb155bcac6
+https://github.com/user-attachments/assets/6496a131-aaf4-449d-a289-4806e3c6b276
 
 ### 更新
-https://github.com/user-attachments/assets/6ba13e7a-e9ce-4a1c-b707-30358ed7632c
+https://github.com/user-attachments/assets/6401f9d6-a052-4b8a-818b-4fb44914e7cd
 
 ### 削除
-https://github.com/user-attachments/assets/7d1ea15c-5611-4718-b476-2f1baac7d210
+
 
 ## 設計書
 
 ### API仕様書
-https://github.com/user-attachments/assets/5ab5d5fa-b7e3-4ae5-9d5b-78a864bbae77
+https://github.com/user-attachments/assets/b7d6f6a9-2015-40b7-9228-ddb45f6fcbc5
 
 ### ER図
 ```mermaid
@@ -286,5 +286,6 @@ sequenceDiagram
       - コンポーネント設計の見直し（再利用性・保守性の向上）
       - 命名規則の統一とコードの整理
       - 状態管理の最適化
+
 
 
