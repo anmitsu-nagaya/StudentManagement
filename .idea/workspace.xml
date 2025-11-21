@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="56ff698f-f14f-4bd0-94f0-2d3a846156d2" name="変更" comment="backendフォルダに移動">
+      <change beforePath="$PROJECT_DIR$/backend/students.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;anmitsu-nagaya&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/anmitsu-nagaya/StudentManagement.git&quot;,
+    &quot;accountId&quot;: &quot;75453f32-3503-4050-ba73-5bff537c8b5f&quot;
+  }
+}</component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="33lCrlSDAjOplk2PG6qvdkfFlyW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Gradle.'student.management.test' のテスト.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DataDomainConverterTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DataDomainConverterTest.全件検索_レポジトリ層から得た受講生とコース詳細が受講生詳細に正しく変換されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DataDomainConverterTest.受講生詳細に変換する際値が正しくマッピングされること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DataDomainConverterTest.条件検索_受講生詳細に変換する際値が正しくマッピングされること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DomainDtoConverterTest.更新リクエストされたデータを受講生詳細に変換する際値が正しくマッピングされること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DomainDtoConverterTest.登録リクエストされたデータを受講生詳細に変換する際値が正しくマッピングされること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RegisterCourseRequestTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RegisterStudentRequestTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RegisterStudentRequestTest.必須項目が空だとバリデーションエラーになること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RegisterStudentRequestTest.文字数超過でバリデーションエラーになること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RegisterStudentRequestTest.登録リクエストの受講生詳細の受講生で適切な値を入力したときに入力チェックに異常が発生しないこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.exceptionエンドポイントでNotFoundExceptionがハンドリングされて400が返ること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.リクエストのJSON文法に問題があるときにエラーレスポンスが返ること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること_1.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.リクエストのパラメータに不正な値が渡されたときにエラーレスポンスが返ること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.リクエストボディに不正な入力があるときにバリデーションエラーレスポンスが返ること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.リクエスト形式に問題があるときにエラーレスポンスが返ること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.不正な入力があるときにバリデーションエラーレスポンスが返ること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生の登録が実行できてレスポンスされたデータが登録されていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生の登録が実行できて空のリストが返ってくること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生検索のIDにUUID以外が渡されたときにエラーがでること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生登録のレスポンス内容が正しいこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生登録時にサービスが正しく呼び出されて正しい引数が渡されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生登録時にサービス呼び出しとレスポンス内容が正しいこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細のコース詳細でコースIDに数字以外を用いたときに入力チェックに掛かること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細のメールアドレスでアドレス型以外を用いたときに入力チェックに掛かること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の一覧検索が実行できて空のリストが返ってくること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の受講生で1o文字以上の都道府県を用いたときに入力チェックに掛かること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の受講生でIDに数字以外を用いたときに入力チェックに掛かること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の受講生で入力チェックに異常が発生しないこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の受講生で適切な値を入力したときに入力チェックに異常が発生しないこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の更新が実行できて空で返ってくること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の更新が実行できること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の条件検索が実行できて空のリストが返ってくること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の検索が実行できて空で返ってくること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.受講生詳細の登録が実行できて空で返ってくること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.存在しないURLにアクセスしたときにエラーレスポンスが返ること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.更新リクエストの申し込み状況で適切な値を入力したときに入力チェックが正しく実行されて異常が発生しないこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.登録リクエストのコース詳細で適切な値を入力したときに入力チェックが正しく実行されて異常が発生しないこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentControllerTest.登録リクエストの受講生詳細の受講生で適切な値を入力したときに入力チェックが正しく実行されて異常が発生しないこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentConverterTest.レポジトリ層から得たDBデータがStudentList型に正しくコンバートされること.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.StudentConverterTest.レポジトリ層から得たDBデータが正しくコンバートされること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentCourseMapperTest.受講生詳細の検索_受講生コース情報に申し込み状況が正しくマッピングされていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentCourseStatusTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentCourseTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentManagement [:raisetech.student.management.Application.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentManagement のビルド.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.test.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.コース申し込み状況の更新が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.コース申し込み状況の登録が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生の全件検索が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生の単一検索が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生の更新が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生の条件検索が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生の登録が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生コース情報の全件検索が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生コース情報の単一検索が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生コース情報の更新が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生コース情報の登録が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生コース申し込み状況の全件検索が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生コース申し込み状況の単一検索が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_コース名が部分一致で検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_コース申し込み状況データのパラメータ検索で受講生データと受講生コース情報データも紐づいて検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_受講生コース情報データのパラメータ検索で受講生データと受講生申し込み状況データも紐づいて検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_受講生コース情報データのパラメータ検索で受講生データも紐づいて検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_受講生データのパラメータ検索でコース詳細データも紐づいて検索されるか.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_受講生データのパラメータ検索でコース詳細データも紐づいて検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_受講生ニックネームが部分一致で検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_受講生フリガナが部分一致で検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_受講生フルネームが部分一致で検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_同一の受講生に対し複数コースが検索されたときコースと同じ数の受講生が検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_同一の受講生に対し複数コースが検索されたとき同じ数の受講生が検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_市区町村が部分一致で検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索_正しく条件検索されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索が行えること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentRepositoryTest.受講生詳細の条件検索が行なわれてStudentDetail型の空のリストが返ること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.IDに紐づく受講生詳細の検索_リポジトリとマッパーの処理が適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の一覧検索_リポジトリとコンバーターとマッパーの処理が適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の一覧検索_リポジトリとコンバーターの処理が適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の一覧検索_リポジトリとコンバーター処理が適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の更新_コース詳細のデータマッピングが正しいこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の更新_リポジトリが適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の条件検索_リポジトリとマッパーの処理が適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の条件検索_正しく検索が行われていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の検索_リポジトリとマッパーの処理が適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の検索_リポジトリの処理が適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の検索_受講生コース情報に申し込み状況が正しくマッピングされていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の登録_コースとステータスの関連付けが正しいこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の登録_コース申し込み状況に正しくコースIDが登録されていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の登録_コース詳細のデータマッピングが正しいこと.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の登録_リポジトリの処理が適切に呼び出せていること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の登録_初期情報の設定が適切に動作していること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentServiceTest.受講生詳細の登録_受講生IDに正しいIDが設定されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StudentTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UpdateStatusRequestTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.dataDomainConverterTest.リポジトリ層から得た受講生コース情報と申し込み状況がコース詳細に正しく変換されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.dataDomainConverterTest.レポジトリ層から得た受講生とその受講生のコースリストがStudentDetail型に正しく変換されること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.dataDomainConverterTest.受講生詳細に変換する際値が正しくマッピングされること.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.student.management [:raisetech.student.management.Application.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ソースのダウンロード.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/forPF&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nagay/IdeaProjects/StudentManagement/src/test/resources&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;モジュール&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Java&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="raisetech.student.management.repository" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nagay\IdeaProjects\StudentManagement\src\test\resources" />
+      <recent name="C:\Users\nagay\IdeaProjects\StudentManagement\src\main\java\raisetech\student\management\controller\requesterdto\updatadata" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="raisetech.student.management.converter" />
+      <recent name="raisetech.student.management.dto.updatedata" />
+      <recent name="raisetech.student.management.data" />
+      <recent name="raisetech.student.management.dto.registerdata" />
+      <recent name="raisetech.student.management.service.mapping" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="raisetech.student.management.controller.requesterdto" />
+      <recent name="raisetech.student.management.controller.requesterdto.updatadata" />
+    </key>
+  </component>
+  <component name="RunManager" selected="アプリケーション.Application">
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="raisetech.student.management.Application" />
+      <module name="student.management.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="raisetech.student.management.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentControllerTest.受講生詳細の更新が実行できること" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;raisetech.student.management.controller.StudentControllerTest.受講生詳細の更新が実行できること&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="StudentControllerTest.リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること_1" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;raisetech.student.management.controller.StudentControllerTest.リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること_1&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="StudentControllerTest.受講生登録時にサービスが正しく呼び出されて正しい引数が渡されること" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;raisetech.student.management.controller.StudentControllerTest.受講生登録時にサービスが正しく呼び出されて正しい引数が渡されること&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="StudentRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;raisetech.student.management.repository.StudentRepositoryTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="StudentRepositoryTest.受講生コース情報の単一検索が行えること" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;raisetech.student.management.repository.StudentRepositoryTest.受講生コース情報の単一検索が行えること&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="StudentRepositoryTest.受講生コース情報の登録が行えること" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;raisetech.student.management.repository.StudentRepositoryTest.受講生コース情報の登録が行えること&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="StudentServiceTest.受講生詳細の更新_リポジトリが適切に呼び出せていること" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;raisetech.student.management.service.StudentServiceTest.受講生詳細の更新_リポジトリが適切に呼び出せていること&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="StudentServiceTest.受講生詳細の更新_コース詳細のデータマッピングが正しいこと" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;raisetech.student.management.service.StudentServiceTest.受講生詳細の更新_コース詳細のデータマッピングが正しいこと&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="'student.management.test' のテスト" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="アプリケーション.Application" />
+        <item itemvalue="Gradle.'student.management.test' のテスト" />
+        <item itemvalue="Gradle.StudentControllerTest.リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること_1" />
+        <item itemvalue="Gradle.StudentServiceTest.受講生詳細の更新_リポジトリが適切に呼び出せていること" />
+        <item itemvalue="Gradle.StudentRepositoryTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="デフォルトタスク">
+      <changelist id="56ff698f-f14f-4bd0-94f0-2d3a846156d2" name="変更" comment="" />
+      <created>1759882472622</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759882472622</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Studentのバリデーションに変更を加えた">
+      <option name="closed" value="true" />
+      <created>1761821093878</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1761821093878</updated>
+    </task>
+    <task id="LOCAL-00023" summary="JavaDogの追加、例外処理の追加">
+      <option name="closed" value="true" />
+      <created>1761821203707</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1761821203707</updated>
+    </task>
+    <task id="LOCAL-00024" summary="StudentCourseのバリデーションの追加">
+      <option name="closed" value="true" />
+      <created>1761821252283</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1761821252283</updated>
+    </task>
+    <task id="LOCAL-00025" summary="コントローラのテストを作成">
+      <option name="closed" value="true" />
+      <created>1761821274090</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1761821274090</updated>
+    </task>
+    <task id="LOCAL-00026" summary="講義を見ながら修正">
+      <option name="closed" value="true" />
+      <created>1761999895657</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1761999895657</updated>
+    </task>
+    <task id="LOCAL-00027" summary="受講生検索のIDにUUID以外が渡されたときにエラーが出るかのテストを作成">
+      <option name="closed" value="true" />
+      <created>1762217492237</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1762217492237</updated>
+    </task>
+    <task id="LOCAL-00028" summary="受講生検索のテスト作成">
+      <option name="closed" value="true" />
+      <created>1762217563772</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1762217563772</updated>
+    </task>
+    <task id="LOCAL-00029" summary="登録・更新を、講義を見ながら正しい実装に修正">
+      <option name="closed" value="true" />
+      <created>1762217600317</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1762217600317</updated>
+    </task>
+    <task id="LOCAL-00030" summary="バリデーションの追加">
+      <option name="closed" value="true" />
+      <created>1762217638096</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1762217638096</updated>
+    </task>
+    <task id="LOCAL-00031" summary="コンバータのテスト作成">
+      <option name="closed" value="true" />
+      <created>1762217665190</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1762217665190</updated>
+    </task>
+    <task id="LOCAL-00032" summary="リポジトリテストの環境設定">
+      <option name="closed" value="true" />
+      <created>1762262920142</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1762262920142</updated>
+    </task>
+    <task id="LOCAL-00033" summary="courseIDをintに変更">
+      <option name="closed" value="true" />
+      <created>1762262977149</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1762262977149</updated>
+    </task>
+    <task id="LOCAL-00034" summary="不要なアノテーションを削除">
+      <option name="closed" value="true" />
+      <created>1762263007441</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1762263007441</updated>
+    </task>
+    <task id="LOCAL-00035" summary="リポジトリのテスト作成">
+      <option name="closed" value="true" />
+      <created>1762263024518</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1762263024518</updated>
+    </task>
+    <task id="LOCAL-00036" summary="courseIdをintにしたため不必要なバリデーションを削除">
+      <option name="closed" value="true" />
+      <created>1762316114264</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1762316114264</updated>
+    </task>
+    <task id="LOCAL-00037" summary="可読性の高いコードに修正">
+      <option name="closed" value="true" />
+      <created>1762316144190</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1762316144190</updated>
+    </task>
+    <task id="LOCAL-00038" summary="リポジトリ層_申し込み状況の全件検索、単一検索のテストまで完了">
+      <option name="closed" value="true" />
+      <created>1762331698938</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1762331698938</updated>
+    </task>
+    <task id="LOCAL-00039" summary="リポジトリ層_申し込み状況の全件検索、単一検索のテストまで完了">
+      <option name="closed" value="true" />
+      <created>1762331861909</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1762331861909</updated>
+    </task>
+    <task id="LOCAL-00040" summary="申し込み状況を含んだ受講生詳細の一覧検索・受講生ID検索の実装が完了">
+      <option name="closed" value="true" />
+      <created>1762344918704</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1762344918704</updated>
+    </task>
+    <task id="LOCAL-00041" summary="コース申し込み状況の登録の実装">
+      <option name="closed" value="true" />
+      <created>1762353446290</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1762353446290</updated>
+    </task>
+    <task id="LOCAL-00042" summary="全体的にリファクタリング。domainとconverterを変更。また仕様変更に伴いdataを変更。">
+      <option name="closed" value="true" />
+      <created>1762402616267</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1762402616267</updated>
+    </task>
+    <task id="LOCAL-00043" summary="検索のリポジトリテスト6つ合格。テストを通すためにエラー個所を一度コメント化した。">
+      <option name="closed" value="true" />
+      <created>1762404368873</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1762404368873</updated>
+    </task>
+    <task id="LOCAL-00044" summary="受講生詳細の一覧検索(サービス)の実装・テスト完了">
+      <option name="closed" value="true" />
+      <created>1762405554954</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1762405554954</updated>
+    </task>
+    <task id="LOCAL-00045" summary="受講生詳細のID紐づけ検索(サービス)の実装・テスト完了。mapperは削除。">
+      <option name="closed" value="true" />
+      <created>1762408926994</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1762408926994</updated>
+    </task>
+    <task id="LOCAL-00046" summary="コンバータのテスト完了">
+      <option name="closed" value="true" />
+      <created>1762413616003</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1762413616003</updated>
+    </task>
+    <task id="LOCAL-00047" summary="検索(コンバータ)の実装・テスト完了">
+      <option name="closed" value="true" />
+      <created>1762414077104</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1762414077104</updated>
+    </task>
+    <task id="LOCAL-00048" summary="登録(リポジトリ)の実装・テスト完了">
+      <option name="closed" value="true" />
+      <created>1762414804602</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1762414804602</updated>
+    </task>
+    <task id="LOCAL-00049" summary="登録(サービス)の実装・テスト完了">
+      <option name="closed" value="true" />
+      <created>1762430938525</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1762430938525</updated>
+    </task>
+    <task id="LOCAL-00050" summary="登録(コントローラ)の実装完了、テストはこれから。">
+      <option name="closed" value="true" />
+      <created>1762440342693</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1762440342694</updated>
+    </task>
+    <task id="LOCAL-00051" summary="登録(コントローラ)のテスト完了。バリデーションチェックとそのテスト、例外処理とそのテストも行った。">
+      <option name="closed" value="true" />
+      <created>1762485806394</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1762485806394</updated>
+    </task>
+    <task id="LOCAL-00052" summary="更新(リポジトリ)の実装・テスト完了">
+      <option name="closed" value="true" />
+      <created>1762490925631</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1762490925631</updated>
+    </task>
+    <task id="LOCAL-00053" summary="更新(サービス)の実装・テスト完了">
+      <option name="closed" value="true" />
+      <created>1762496608776</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1762496608776</updated>
+    </task>
+    <task id="LOCAL-00054" summary="更新(コントローラ)の実装・テスト完了">
+      <option name="closed" value="true" />
+      <created>1762502805274</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1762502805275</updated>
+    </task>
+    <task id="LOCAL-00055" summary="ドキュメント修正完了">
+      <option name="closed" value="true" />
+      <created>1762503743864</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1762503743864</updated>
+    </task>
+    <task id="LOCAL-00056" summary="JavaDog編集完了">
+      <option name="closed" value="true" />
+      <created>1762505336712</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1762505336712</updated>
+    </task>
+    <task id="LOCAL-00057" summary="検索GET処理Postman動作確認まで完了。次はテスト。">
+      <option name="closed" value="true" />
+      <created>1762654143269</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1762654143269</updated>
+    </task>
+    <task id="LOCAL-00058" summary="全件検索結果と条件検索結果の責務の違いによる保守性の観点から、それぞれ専用のコンバーターに別けた">
+      <option name="closed" value="true" />
+      <created>1762654849117</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1762654849117</updated>
+    </task>
+    <task id="LOCAL-00059" summary="条件検索GET処理テスト、ドキュメント完了">
+      <option name="closed" value="true" />
+      <created>1762765753649</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1762765753649</updated>
+    </task>
+    <task id="LOCAL-00060" summary="申し込み状況のコースIDのテスト漏れ修正">
+      <option name="closed" value="true" />
+      <created>1762823834670</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1762823834670</updated>
+    </task>
+    <task id="LOCAL-00061" summary="テスト名を変更">
+      <option name="closed" value="true" />
+      <created>1762826905093</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1762826905093</updated>
+    </task>
+    <task id="LOCAL-00062" summary="id名の変更・H2 でStudentManagementスキーマの設定をしたため起こっていたテスト不合格問題を解決">
+      <option name="closed" value="true" />
+      <created>1762830694607</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1762830694607</updated>
+    </task>
+    <task id="LOCAL-00063" summary="単一検索の方で@Paramをつけ忘れていたのを修正">
+      <option name="closed" value="true" />
+      <created>1762833409143</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1762833409143</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Controllerから単一検索Get処理を削除">
+      <option name="closed" value="true" />
+      <created>1763032956159</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1763032956159</updated>
+    </task>
+    <task id="LOCAL-00065" summary="statusIdに変更">
+      <option name="closed" value="true" />
+      <created>1763033042977</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1763033042977</updated>
+    </task>
+    <task id="LOCAL-00066" summary="サービス層の更新処理で日付を正しく設定した">
+      <option name="closed" value="true" />
+      <created>1763036347067</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1763036347067</updated>
+    </task>
+    <task id="LOCAL-00067" summary="単一検索がなくなったため変更">
+      <option name="closed" value="true" />
+      <created>1763036362088</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1763036362088</updated>
+    </task>
+    <task id="LOCAL-00068" summary="e-r図を書こうとしている">
+      <option name="closed" value="true" />
+      <created>1763374087908</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1763374087908</updated>
+    </task>
+    <task id="LOCAL-00069" summary="backendフォルダに移動">
+      <option name="closed" value="true" />
+      <created>1763374794396</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1763374794396</updated>
+    </task>
+    <task id="LOCAL-00070" summary="backendフォルダに移動">
+      <option name="closed" value="true" />
+      <created>1763374815474</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1763374815474</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="90" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="89" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="コンバータのテスト完了" />
+    <MESSAGE value="検索(コントローラ)の実装・テスト完了" />
+    <MESSAGE value="検索(コントローラ)の実装・テスト完了" />
+    <MESSAGE value="登録(リポジトリ)の実装・テスト完了" />
+    <MESSAGE value="登録(サービス)の実装・テスト完了" />
+    <MESSAGE value="登録(コントローラ)の実装完了、テストはこれから。" />
+    <MESSAGE value="登録(コントローラ)のテスト完了。バリデーションチェックとそのテスト、例外処理とそのテストも行った。" />
+    <MESSAGE value="更新(リポジトリ)の実装・テスト完了" />
+    <MESSAGE value="更新(サービス)の実装・テスト完了" />
+    <MESSAGE value="更新(コントローラ)の実装・テスト完了" />
+    <MESSAGE value="ドキュメント修正完了" />
+    <MESSAGE value="JavaDog編集完了" />
+    <MESSAGE value="検索GET処理Postman動作確認まで完了。次はテスト。" />
+    <MESSAGE value="全件検索結果と条件検索結果の責務の違いによる保守性の観点から、それぞれ専用のコンバーターに別けた" />
+    <MESSAGE value="条件検索GET処理テスト、ドキュメント完了" />
+    <MESSAGE value="申し込み状況のコースIDのテスト漏れ修正" />
+    <MESSAGE value="テスト名を変更" />
+    <MESSAGE value="id名の変更・H2 でStudentManagementスキーマの設定をしたため起こっていたテスト不合格問題を解決" />
+    <MESSAGE value="単一検索の方で@Paramをつけ忘れていたのを修正" />
+    <MESSAGE value="Controllerから単一検索Get処理を削除" />
+    <MESSAGE value="statusIdに変更" />
+    <MESSAGE value="サービス層の更新処理で日付を正しく設定した" />
+    <MESSAGE value="単一検索がなくなったため変更" />
+    <MESSAGE value="e-r図を書こうとしている" />
+    <MESSAGE value="backendフォルダに移動" />
+    <option name="LAST_COMMIT_MESSAGE" value="backendフォルダに移動" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/raisetech/student/management/service/StudentService.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/raisetech/student/management/service/StudentService.java</url>
+          <line>79</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/raisetech/student/management/service/StudentServiceTest.java</url>
+          <line>107</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/raisetech/student/management/converter/DataDomainConverter.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/raisetech/student/management/service/StudentServiceTest.java</url>
+          <line>222</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/raisetech/student/management/controller/StudentControllerTest.java</url>
+          <line>232</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/raisetech/student/management/service/StudentService.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/raisetech/student/management/controller/StudentController.java</url>
+          <line>178</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/raisetech/student/management/service/StudentService.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/raisetech/student/management/controller/StudentController.java</url>
+          <line>251</line>
+          <properties class="raisetech.student.management.controller.StudentController">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="studentDetail.studentsCoursesList" />
+        <watch expression="studentDetail.studentsCoursesList" />
+        <watch expression="studentDetail.studentsCoursesList" />
+        <watch expression="dtoList.get(3)" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
