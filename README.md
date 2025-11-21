@@ -5,18 +5,18 @@
 
 ## 作成背景
 
-JavaやSpring Bootの学習成果を形にするために作成しました。  
-実務で頻繁に使用される以下の技術やツールを採用しています。
+Java / Spring Bootを教えるプログラミングスクールの課題として作成しました。  
+「先に自分で実装→その後に講師の解説」というスタイルで、プルリクエストによるレビューを受けながら開発を進め、REST API設計やテスト駆動開発など実務で頻繁に使用される技術を習得しました。<br>
+後半では、講師から提示された追加機能の要件定義をもとに、解説なしの独自実装も行っています。<br>
 
-- REST APIの設計と実装: データのCRUD操作をサポート
-- 自動テスト: JUnitを使用して単体テストを実装
-- AWSを使用したデプロイ: クラウド環境へのアプリケーション展開
+また、バックエンドAPIの動作確認用として、TypeScript/Reactでフロントエンドも実装しました（基礎文法を独学後、AIを活用して実装）。
 
 ## 主な使用技術
 
 ### バックエンド
 ![badge](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=ED8B00)
 ![badge](https://img.shields.io/badge/SpringBoot-3.5.6-%236DB33F?logo=spring)
+![badge](https://img.shields.io/badge/Gradle-8.14.3-02303A?logo=gradle&logoColor=white)
 
 ### フロントエンド
 ![badge](https://shields.io/badge/TypeScript-5.9.3-3178C6?logo=TypeScript&logoColor=3178C6)
@@ -34,44 +34,46 @@ JavaやSpring Bootの学習成果を形にするために作成しました。
 ![badge](https://img.shields.io/badge/Junit5-%2325A162?logo=junit5&logoColor=white)
 ![badge](https://img.shields.io/badge/Postman-%23FF6C37?logo=postman&logoColor=white)
 ![badge](https://img.shields.io/badge/Swagger-%2385EA2D?logo=swagger&logoColor=white)
-![badge](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)
 ![badge](https://img.shields.io/badge/ESLint-3A33D1?logo=eslint)
 ![badge](https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=Prettier&logoColor=white)
 ![badge](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)
 ![badge](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)
 ![badge](https://img.shields.io/badge/GitHub-%23181717?logo=github&logoColor=white)
-![badge](https://img.shields.io/badge/-intellij%20IDEA-000.svg?logo=intellij-idea&style=flat)
-![badge](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?logo=visualstudiocode&logoColor=fff)
+![badge](https://img.shields.io/badge/-IntelliJ%20IDEA-000.svg?logo=intellij-idea&style=flat)
+![badge](https://img.shields.io/badge/VS%20Code-007ACC?logo=visualstudiocode&logoColor=fff)
+
 
 ## 機能一覧
+※💡：独自追加機能
 
 | 機能       | 詳細                                                              |
 |:---------|:----------------------------------------------------------------|
-| 受講生の全件検索 | 全ての受講生詳細を取得します                                           |
-| 受講生詳細の条件検索 | 氏名・居住地域・コース・申込状況などの検索条件を指定し、条件に該当する受講生詳細を取得します　                          |                                      |
-| 受講生詳細の登録 | 氏名や居住地域などの受講生の情報と、受講コース・申込状況をセットで登録します                          |
-| 受講生詳細の更新 | IDを指定し、任意の受講生詳細を更新します<br/>※削除処理については論理削除として実装しているため、更新処理として行います |
-
+| 受講生の全件検索 | すべての**受講生詳細**を取得します                                               |
+| 受講生詳細の条件検索 💡 | 氏名・コース・申込状況など複数テーブルを跨ぐ検索条件を指定し、条件に該当する**受講生詳細**を取得します<br/>※リクエストはクエリパラメータで個別フィールドを指定                          |                                      |
+| 受講生詳細の新規登録 | 氏名や居住地域などの**受講生**の情報と、**受講コース**・**申込状況** をセットで登録します<br/>※リクエストには**登録用受講生詳細**を使用                            |
+| 受講生詳細の更新 | IDを指定し、任意の**受講生詳細**を更新します<br/>※リクエストには**更新用受講生詳細**を使用<br/>※削除処理については論理削除として実装しているため、更新処理として行います |
 
 ※ 言葉の定義は以下のとおりです
 
-- 受講生： 氏名、居住地域、年齢などをもつオブジェクト
-- 受講コース： 受講コース名をもつオブジェクト
-- 申込状況： 仮申込,本申込といった申込状況、開始日などをもつオブジェクト
-- 受講生詳細： 受講生、受講コース（申込状況含む）をもつオブジェクト　受講生と受講コースは1：多の関係を持つ
+- **受講生**：氏名、居住地域、年齢などをもつオブジェクト
+- **受講コース**：受講コース名をもつオブジェクト（受講生に対して1：多の関係）
+- **申込状況** 💡：仮申込、本申込といった申込状況、開始日などをもつオブジェクト
+- **受講生詳細**：上記3つを統合したオブジェクト ※DBでは正規化されて3テーブルに分離していますが、APIでは統合した形で扱います
+- **登録用受講生詳細**：新規登録時のリクエストボディ
+- **更新用受講生詳細**：更新時のリクエストボディ
 
 ## 使用イメージ
 ### 受講生一覧画面
-![image](https://github.com/user-attachments/assets/151681f8-5103-4f62-adbe-3524342d4979)
+![一覧画面](https://github.com/user-attachments/assets/151681f8-5103-4f62-adbe-3524342d4979)
 
-### 受講生詳細画面
+#### 受講生詳細画面
 https://github.com/user-attachments/assets/10ec51f3-40cf-4051-bac3-33178116f553
 
 ### 条件検索
 https://github.com/user-attachments/assets/e6285355-fe4e-47d5-ac0f-03acbd22c322
 
 ### 新規登録
-https://github.com/user-attachments/assets/6496a131-aaf4-449d-a289-4806e3c6b276
+https://github.com/user-attachments/assets/7ad96b5d-b17e-4108-9346-9c9808d0b051
 
 ### 更新
 https://github.com/user-attachments/assets/6401f9d6-a052-4b8a-818b-4fb44914e7cd
@@ -80,8 +82,36 @@ https://github.com/user-attachments/assets/6401f9d6-a052-4b8a-818b-4fb44914e7cd
 https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 
 ## 設計書
+
 ### API仕様書
-https://github.com/user-attachments/assets/b7d6f6a9-2015-40b7-9228-ddb45f6fcbc5
+![report表紙](https://github.com/user-attachments/assets/37ff6931-e8a5-4814-8eae-335d6ed21558)
+<details><summary>全件検索の仕様書画面</summary>
+
+![全件取得](https://github.com/user-attachments/assets/a203531f-014b-4f88-962a-af8adca89176)
+</details>
+
+<details><summary>条件検索の仕様書画面</summary>
+
+![条件検索1](https://github.com/user-attachments/assets/01e0a302-bb4e-4a55-bd61-ba38a7aba92c)
+![条件検索2](https://github.com/user-attachments/assets/cbb11853-f6db-4cf9-bf9a-e711109727bb)
+</details>
+
+<details><summary>新規登録の仕様書画面</summary>
+
+![登録1](https://github.com/user-attachments/assets/371b5fd7-aad5-4570-966d-0309cf57f1ad)
+![登録2](https://github.com/user-attachments/assets/1321c655-eb7c-4daa-b500-aaa7234567c1)
+![登録3](https://github.com/user-attachments/assets/14f0d780-187d-45c9-ba53-3b3376b4e78d)
+![登録4](https://github.com/user-attachments/assets/6d37bcdb-4426-4a9e-9f06-1f95bbfc4913)
+</details>
+
+<details><summary>更新の仕様書画面</summary>
+
+![更新1](https://github.com/user-attachments/assets/f2792de9-e0ba-495b-ab75-fc00fa6c729c)
+![更新2](https://github.com/user-attachments/assets/177d7075-eadf-40d4-8080-95d4dfd08de1)
+![更新3](https://github.com/user-attachments/assets/4b0eb020-c970-4839-bf22-93a46cbbc7ff)
+![更新4](https://github.com/user-attachments/assets/5959f612-7f25-4c70-9ace-4ca2fa25b6c8)
+</details>
+
 
 ### ER図
 ```mermaid
@@ -113,10 +143,10 @@ erDiagram
     int status_id PK
     int course_id FK
     enum status FK "('仮申込', '本申込', '受講中', '受講終了')"
-    timestamp temporary_applied_at
-    timestamp official_applied_at
-    timestamp course_started_at
-    timestamp course_completed_at
+    timestamp temporary_applied_at "仮登録日"
+    timestamp official_applied_at "本申込日"
+    timestamp course_started_at "受講開始日"
+    timestamp course_completed_at "受講終了日（予定日）"
   }
 ```
 
@@ -124,9 +154,9 @@ erDiagram
 
 | HTTP<br/>メソッド | URL                                 | 処理内容                                  | 
 |---------------|-------------------------------------|---------------------------------------|
-| POST          | /register-student                           | 受講生詳細の作成                              |
 | GET           | /students                           | 受講生詳細の取得 | 
-| GET           | /students/filter                      | 条件検索後の受講生詳細の取得  <br/>クエリパラメータで指定します                     |
+| GET           | /students/filter                      | 条件検索後の受講生詳細の取得　クエリパラメータで指定します                     |
+| POST          | /register-student                           | 新規受講生と新規受講コースの登録                              |
 | PUT           | /update-student                           | 受講生詳細の更新                              |
 
 ### シーケンス図
@@ -139,14 +169,14 @@ sequenceDiagram
     participant DB as Database
     Note right of User: 受講生の条件検索フロー
     User ->>+ API: GET /students/filter (クエリパラメータ: 受講生詳細フィールドの項目)
-    API ->> API: 入力データ検証
-    alt 入力データが有効な場合
-        API ->> DB: SELECT受講生詳細(条件検索)
-        DB -->> API: 検索結果用受講生詳細
-        API ->> API: 受講生詳細型にコンバート
-        API -->> User: 200 受講生詳細
-    else 入力データが無効な場合
+    API ->> API: 入力データ検証(バリデーションチェック)
+    alt 入力データが無効な場合
         API -->>- User: 400 エラーメッセージ
+    else 入力データが有効な場合
+        API ->> DB: SELECT受講生詳細(条件検索)
+        DB -->> API: 検索結果（JOIN結果・受講生ごとに複数行）
+        API ->> API: 重複を削除し受講生詳細型に統合
+        API -->> User: 200 受講生詳細
     end
 ```
 
@@ -158,17 +188,26 @@ sequenceDiagram
     participant DB as Database
     Note right of User: 受講生詳細の登録フロー
     User ->>+ API: POST /register-student (リクエストボディ：登録用受講生詳細)
-    API ->> API: 入力データ検証
-    alt 入力データが有効な場合
-        API ->> API: 受講生詳細型にコンバート
-        API ->> API: UUIDなどのデフォルト値を設定
-        API ->> DB: INSERT受講生
-        API ->> DB: INSERT受講コース
-        API ->> DB: INSERT申込状況
-        API -->> User: 200 登録処理が成功しました。
-    else 入力データが無効な場合
-        API -->>- User: 400 エラーメッセージ
+    API ->> API: 入力データ検証(JSON文法チェック)
+    
+    alt JSONパース失敗
+        API -->> User: 400 JSON文法エラー
+    else JSONパース成功
+        API ->> API: 入力データ検証(バリデーションチェック)
+        
+        alt バリデーション失敗
+            API -->> User: 400 入力値が不正です
+        else バリデーション成功
+            API ->> API: 受講生詳細型にコンバート
+            API ->> API: UUIDなどのデフォルト値を設定
+            API ->> DB: INSERT受講生
+            API ->> DB: INSERT受講コース
+            API ->> DB: INSERT申込状況
+            API -->> User: 200 登録処理が成功しました
+        end
     end
+    
+    deactivate API
 ```
 
 #### 受講生詳細の更新フロー
@@ -179,82 +218,107 @@ sequenceDiagram
     participant DB as Database
     Note right of User: 受講生詳細の更新フロー
     User ->>+ API: PUT /update-student（リクエストボディ：更新用受講生詳細）
-    API ->> API: 入力データ検証
-    alt 入力データが正しい場合
-        API ->> API: 受講生詳細型にコンバート
-        API ->> DB: UPDATE受講生
-        API ->> DB: UPDATE受講コース
-        API ->> API: 申込状況を抽出
-        alt 申込状況：本申込
-            API ->> DB: SELECT受講生(コースID検索)
-            API ->> API: 仮申込日(検索結果)と本申込日(処理時点)をセット
-        else 申込状況：受講中
-            API ->> DB: SELECT受講生(コースID検索)
-            API ->> API: 仮申込日・本申込日(検索結果)と受講開始日(処理時点)・受講終了日(300日後)をセット
-        else 申込状況：受講修了
-            API ->> DB: SELECT受講生(コースID検索)
-            API ->> API: 仮申込日・本申込日・受講開始日(検索結果)と受講終了日(処理時点)をセット
+    API ->> API: 入力データ検証(JSON文法チェック)
+    
+    alt JSONパース失敗
+        API -->> User: 400 JSON文法エラー
+    else JSONパース成功
+        API ->> API: 入力データ検証(バリデーションチェック)
+        
+        alt バリデーション失敗
+            API -->> User: 400 入力値が不正です
+        else バリデーション成功
+            API ->> API: 受講生詳細型にコンバート
+            API ->> DB: UPDATE受講生
+            API ->> DB: UPDATE受講コース
+            
+            Note over API: ステータスに応じて日付を自動設定
+            
+            alt ステータス：本申込
+                API ->> DB: SELECT申込状況（前回データ取得）
+                API ->> API: 仮申込日：前回データを保持<br/>本申込日：現在時刻を設定
+            else ステータス：受講中
+                API ->> DB: SELECT申込状況（前回データ取得）
+                API ->> API: 仮申込日・本申込日：前回データを保持<br/>受講開始日：現在時刻<br/>受講終了日：300日後を設定
+            else ステータス：受講終了
+                API ->> DB: SELECT申込状況（前回データ取得）
+                API ->> API: 仮申込日・本申込日・受講開始日：前回データを保持<br/>受講終了日：現在時刻を設定
+            end
+            
+            API ->> DB: UPDATE申込状況
+            API -->> User: 200 更新処理が成功しました
         end
-        API ->> DB: UPDATE申込状況
-        API -->> User: 200 更新処理が成功しました。
-    else 入力データが無効な場合
-        API -->>- User: 400 エラーメッセージ
     end
+    
+    deactivate API
 
 ```
 
 ## テスト
 以下のテストをJUnit5で実装し、動作を検証しています。<br>
-![image](https://github.com/user-attachments/assets/e775bbc0-7f9f-47aa-be10-ce927b3c67dc)
+![testreport](https://github.com/user-attachments/assets/e775bbc0-7f9f-47aa-be10-ce927b3c67dc)
+
 
 ## 力をいれたところ
 ### 🔶仕様の妥当性検証と変更提案
-自作課題として与えられた要件定義に対し、以下のフローで変更の提案を行いました。
-- **疑問**：受講生コース情報と申込状況のDBが1：1であるならば、これらを分ける必要性は何か？
-- **責務を整理**
-  - 受講生コース情報：受講生とコースの関係が1：多であることを想定して管理するために必要。静的なコース属性。
-  - 申し込み状況：更新頻度が高いDBであり、動的に変化する。<br>管理者はこのDBから、業務上のトリガー判断（申し込みリマインド送信、教材送付など）をすることが多いと想定。<br>申し込み状況の拡張もしやすい。
-- **自己判断**：ユーザー視点から考えると、受講生コース情報と申込状況の定義の変更が必要ではないか？
-- **相談**：講師・メンターに直接質問
-- **結果**：仕様の一部を課題とは異なる独自の仕様に変更
-    <details><summary>🔄仕様変更結果</summary>
+自作課題として与えられた要件定義に対し、以下のプロセスで仕様変更の提案を行いました。
 
-    - 受講生コース情報の定義
-        - ID
-        - 受講生情報のID
-        - コース名
-        - ❌削除：~~受講開始日~~
-        - ❌削除：~~受講修了予定日~~
-    - 申し込み状況の定義
-        - ID
-        - 受講生コース情報のID
-        - 申込状況
-        - ✅追加：仮申込日
-        - ✅追加：本申込日
-        - ✅追加：受講開始日
-        - ✅追加：受講終了日
-    </details>
+**1. 課題の発見**  
+受講生コース情報と申込状況が1：1の関係であることに着目し、「テーブルを統合できるのではないか」という疑問を持ちました。
+
+**2. 責務の分析**  
+両テーブルの役割を整理し、分離の妥当性を検証しました。
+- **受講生コース情報**：受講生とコースの1：多の関係を管理。静的なコース属性（コース名など）を保持。
+- **申込状況**：更新頻度が高く、動的に変化するデータを管理。業務上のトリガー判断（リマインド送信、教材送付など）の基準として使用される想定。拡張性も必要。
+
+**3. 改善案の検討**  
+分析の結果、日付情報は「申込状況」で一元管理すべきと判断しました。
+- **変更内容**：受講開始日・受講終了日を受講生コース情報から申込状況に移動
+- **理由**：日付は申込の進行状況に紐づく動的データであり、コースの静的属性とは性質が異なる
+
+**4. メンターへの相談**  
+講師・メンターに変更案を提示し、技術的妥当性とビジネス要件への適合性を確認しました。
+
+**5. 最終決定**  
+承認を得て、課題の要件定義から一部仕様を変更し、独自の設計を採用しました。
+<details><summary>仕様変更詳細</summary>
+
+- 受講生コース情報の定義
+  - ID
+  - 受講生情報のID
+  - コース名
+  - ❌削除：~~受講開始日~~
+  - ❌削除：~~受講修了予定日~~
+- 申し込み状況の定義
+  - ID
+  - 受講生コース情報のID
+  - 申込状況
+  - ✅追加：仮申込日
+  - ✅追加：本申込日
+  - ✅追加：受講開始日
+  - ✅追加：受講終了日
+</details>
 
 ### 🔶ユースケースに基づいた設計
-- **データ活用**<br>
-分析に活用することを想定し、既存のレコードを保持するようなDB処理を行っています。<br>
-具体的には、「受講生の削除機能をUPDATE処理を使い論理削除として実装」といった対応をしています。これにより、以下のようなデータ活用が可能です。
+- **データ活用の観点からの設計**  <br>
+分析に活用することを想定し、既存のレコードを保持するようなDB処理を行っています。  <br>
+具体的には、「受講生の削除機能をUPDATE処理を使い論理削除として実装」といった対応をしており、以下のようなデータ活用が可能です。
   - 退会者属性の傾向を分析し、マーケティングに役立てる
   - 退会者数をKPIとしてモニタリングし、一定水準を下回った場合に早期に着手できるようにする
 
-- **業務フロー**<br>
-また、ヒューマンエラーの起きにくいシステムを想定した実装をすることで、ユーザーの業務フローに対しニーズの高い開発を意識しています。具体的には、「各ステータスの日付の自動取得」、「3つのIDの自動採番・自動取得」を行っています。
-  - 問い合わせが来たら自動で仮申込状態に登録
-  - 教材システムに初めて受講生がアクセスしたら自動で受講中に更新
-  - 登録時に自動でプライマリーキーを設定
+- **業務効率化とヒューマンエラー防止**  <br>
+運営管理者の業務フローを想定し、手動入力によるミスを防ぐ設計を実装しています。  <br>
+具体的には、以下の自動化処理により、データの正確性を担保しています。
+  - ステータス変更時の日付自動設定：申込状況が更新されると、該当する日付（仮申込日・本申込日・受講開始日など）を更新時点の日付に自動で記録
+  - プライマリーキーの自動採番：登録時にUUID・連番IDを自動生成し、管理者の入力負担を軽減
 
 ### 🔶コード品質・保守性を考慮した設計
 - **効果的なバリデーション、例外処理**<br>
 バリデーションに正規表現などを活用し、データの整合性を確保しました。<br>
-また、エラーがあった際にユーザーが適切に修正できるよう、 バリデーションエラー、意図していない操作をされた際のBadRequestエラーなどのハンドリングを行い、クライエント側にエラーメッセージが表示されるようにしました。
+また、エラーがあった際にユーザーが適切に修正できるよう、 バリデーションエラー(クエリパラメータ、リクエストボディ)、JSON文法エラーなどのハンドリングを行い、クライアント側にエラーメッセージが表示されるようにしました。
 
 - **実装意図が伝わりやすいコーディング・ドキュメント作成**<br>
-具体的には以下の3点を行いました
+具体的には以下の3点を行いました。
     - コード内でのドキュメント作成：主要なクラス・メソッドにJavadocやOpenAPIアノテーションを利用したドキュメントを記述しました
     - 命名へのこだわり: クラス名やメソッド名に挙動が想像しやすい言葉を選定し、可読性を向上させました
     - 読みやすいレビュー依頼: プルリクエストでのレビュー依頼時に概要を把握しやすいよう、変更点・変更目的・特にレビューいただきたい箇所などを明示しました
@@ -267,27 +331,26 @@ sequenceDiagram
 ## 今後の展望
 - 全体に関わる改修
   - 受講コース追加機能の実装
-  - 日付の手動設定・変更の実装
+  - 日付の手動変更の実装
   - 登録・更新に専用のDTOが本当に必要か検討
+  - コース名をenum型に変更、enumにコース追加・削除できるようにする
 
-- インフラ環境の構築（学習予定）
+- インフラ環境の構築（スクールにて現在学習中）
     - AWSへのデプロイ（EC2、RDS、ELB）
     - CI/CDパイプライン構築（GitHub Actions）
     - Docker導入
 
 - バックエンドの修正
   - 認証機能の実装
+  - エラーハンドリングの見直し
 
 - フロントエンドの修正
-    - コース一覧画面の追加
-    - フィルター機能の追加
-    - AIを活用し短期間で作成したため、以下のリファクタリングが必要
-      - コンポーネント設計の見直し（再利用性・保守性の向上）
-      - 命名規則の統一とコードの整理
-      - 状態管理の最適化
-
-
-
+  - コース一覧画面の追加
+  - フィルター機能の追加
+  - AIを活用し短期間で作成したため、以下のリファクタリングが必要
+    - コンポーネント設計の見直し（再利用性・保守性の向上）
+    - 命名規則の統一とコードの整理
+    - 状態管理の最適化
 
 
 
