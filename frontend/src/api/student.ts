@@ -2,14 +2,14 @@ import type { StudentResponse } from "../types/StudentResponce";
 import type { NewStudentFormValues } from "../types/NewStudentFormValues";
 import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://localhost:8080/api";
 
 // 一覧取得
-export const getStudentList = async (): Promise<StudentResponse[]> => {
-  const res = await fetch(`${BASE_URL}/students`);
-  if (!res.ok) throw new Error("一覧取得に失敗しました");
-  return await res.json();
-};
+// export const getStudentList = async (): Promise<StudentResponse[]> => {
+//   const res = await fetch(`${BASE_URL}/students`);
+//   if (!res.ok) throw new Error("一覧取得に失敗しました");
+//   return await res.json();
+// };
 
 // 条件検索
 type FilterParams = {
@@ -55,9 +55,7 @@ export const getFilterStudentList = async (
   if (params.courseName) queryParams.append("courseName", params.courseName);
   if (params.status) queryParams.append("status", params.status);
 
-  const res = await fetch(
-    `${BASE_URL}/students/filter?${queryParams.toString()}`
-  );
+  const res = await fetch(`${BASE_URL}/students?${queryParams.toString()}`);
   if (!res.ok) throw new Error("条件検索に失敗しました");
   return await res.json();
 };
@@ -76,19 +74,11 @@ type ErrorResponse = {
 export const registerStudent = async (
   payload: NewStudentFormValues
 ): Promise<void> => {
-  console.log(
-    "registerStudent関数に渡されたpayload:",
-    JSON.stringify(payload, null, 2)
-  ); // ← 追加
-
-  const res = await fetch(`${BASE_URL}/register-student`, {
+  const res = await fetch(`${BASE_URL}/students`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
-
-  console.log("送信したJSON:", JSON.stringify(payload)); // ← 追加
-  console.log("レスポンスステータス:", res.status); // ← 追加
 
   if (!res.ok) {
     let errMessage = "登録に失敗しました";
@@ -116,9 +106,10 @@ export const registerStudent = async (
 
 // 更新
 export const updateStudent = async (
+  studentId: string,
   payload: UpdateStudentFormValues
 ): Promise<void> => {
-  const res = await fetch(`${BASE_URL}/update-student`, {
+  const res = await fetch(`${BASE_URL}/students/${studentId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

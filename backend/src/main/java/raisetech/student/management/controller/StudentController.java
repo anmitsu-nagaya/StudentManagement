@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,26 +54,33 @@ public class StudentController {
     this.converter = converter;
   }
 
-  @Operation(
-      summary = "一覧検索",
-      description = "受講生の一覧を検索します。全件検索を行うので、条件指定は行いません。",
-      operationId = "getStudentList",
-      responses = {
-          @ApiResponse(
-              responseCode = "200",
-              description = "一覧表示検索成功。検索した全受講生のデータを返します。",
-              content = @Content(
-                  mediaType = "application/json",
-                  array = @ArraySchema(schema = @Schema(implementation = StudentDetail.class))
-              )
-          )
-      }
-  )
-  @GetMapping("/students")
-  public List<StudentDetail> getStudentList() {
-    return service.searchStudentList();
-  }
-
+  /**
+   *
+   * 講座では頻繁に使用しましたが、以下の理由により、コメントアウトします。 1.全件取得と条件取得はRESTAPI設計の観点からまとめるべきである
+   * 2.実際フロントでは論理削除されたテーブルのみ受け取っており、このGETエンドポイントは使用していない
+   * 3.必要になった際は、クエリパラメータの値がすべてnullである条件処理を条件検索用のGET処理内で行い、service.searchStudentList();を呼び出す
+   *
+   * @return List<StudentDetail>
+   */
+//  @Operation(
+//      summary = "一覧検索",
+//      description = "受講生の一覧を検索します。全件検索を行うので、条件指定は行いません。",
+//      operationId = "getStudentList",
+//      responses = {
+//          @ApiResponse(
+//              responseCode = "200",
+//              description = "一覧表示検索成功。検索した全受講生のデータを返します。",
+//              content = @Content(
+//                  mediaType = "application/json",
+//                  array = @ArraySchema(schema = @Schema(implementation = StudentDetail.class))
+//              )
+//          )
+//      }
+//  )
+//  @GetMapping("/api/students")
+//  public List<StudentDetail> getStudentList() {
+//    return service.searchStudentList();
+//  }
   @Operation(
       summary = "条件検索",
       description = "受講生の一覧を検索します。クエリパラメータによる条件検索を行います。",
@@ -98,7 +106,7 @@ public class StudentController {
           )
       }
   )
-  @GetMapping("/students/filter")
+  @GetMapping("/api/students")
   public List<StudentDetail> getFilterStudentList(
       @RequestParam(required = false) @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
           message = "UUIDの形式が正しくありません。") String studentId,
@@ -175,7 +183,7 @@ public class StudentController {
           )
       }
   )
-  @PostMapping("/register-student")
+  @PostMapping("/api/students")
   public ResponseEntity<String> registerStudent(
       @RequestBody @Valid RegisterStudentDetailRequest request) {
     StudentDetail studentDetail = converter.toStudentDetailfromRegisterStudentDetail(request);
@@ -238,18 +246,26 @@ public class StudentController {
           )
       }
   )
-  @PutMapping("/update-student")
+  @PutMapping("/api/students/{studentId}")
   public ResponseEntity<String> updateStudent(
-      @RequestBody @Valid UpdateStudentDetailRequest request) {
+      @PathVariable String studentId, @RequestBody @Valid UpdateStudentDetailRequest request) {
+
     StudentDetail studentDetail = converter.toStudentDetailfromUpdateStudentDetail(request);
+
     service.updateStudentDetailList(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
   }
 
-  @GetMapping("/exception")
-  public ResponseEntity<String> throwException() throws NotFoundException {
-    throw new NotFoundException("このAPIは現在利用できません。古いURLとなっています。");
-  }
+  /**
+   * エラーハンドリングのテスト用APIです。
+   * 常にNotFoundExceptionをスローします。
+   *
+   * @throws NotFoundException
+   */
+//  @GetMapping("/exception")
+//  public ResponseEntity<String> throwException() throws NotFoundException {
+//    throw new NotFoundException("このAPIは現在利用できません。古いURLとなっています。");
+//  }
 
 }
 
