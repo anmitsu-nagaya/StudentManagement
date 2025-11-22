@@ -95,7 +95,7 @@ export const StudentsTable = (props: StudentsTableProps) => {
   };
 
   const handleUpdate = async (payload: UpdateStudentFormValues) => {
-    await updateStudent(payload);
+    await updateStudent(payload.student.studentId, payload);
     const updatedList = await getFilterStudentList({ studentIsDeleted: false });
     onStudentsUpdate(updatedList);
   };
@@ -139,7 +139,7 @@ export const StudentsTable = (props: StudentsTableProps) => {
         })),
       };
 
-      await updateStudent(updatePayload);
+      await updateStudent(updatePayload.student.studentId, updatePayload);
 
       alert("削除しました");
 
