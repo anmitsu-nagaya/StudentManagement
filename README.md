@@ -181,7 +181,7 @@ sequenceDiagram
     participant API as Spring Boot API
     participant DB as Database
     Note right of User: 受講生の条件検索フロー
-    User ->>+ API: GET /students/filter (クエリパラメータ: 受講生詳細フィールドの項目)
+    User ->>+ API: GET /api/students (クエリパラメータ: 受講生詳細フィールドの項目)
     API ->> API: 入力データ検証(バリデーションチェック)
     alt 入力データが無効な場合
         API -->>- User: 400 エラーメッセージ
@@ -200,7 +200,7 @@ sequenceDiagram
     participant API as Spring Boot API
     participant DB as Database
     Note right of User: 受講生詳細の登録フロー
-    User ->>+ API: POST /register-student (リクエストボディ：登録用受講生詳細)
+    User ->>+ API: POST /api/students (リクエストボディ：登録用受講生詳細)
     API ->> API: 入力データ検証(JSON文法チェック)
     
     alt JSONパース失敗
@@ -230,7 +230,7 @@ sequenceDiagram
     participant API as Spring Boot API
     participant DB as Database
     Note right of User: 受講生詳細の更新フロー
-    User ->>+ API: PUT /update-student（リクエストボディ：更新用受講生詳細）
+    User ->>+ API: PUT /api/students（リクエストボディ：更新用受講生詳細）
     API ->> API: 入力データ検証(JSON文法チェック)
     
     alt JSONパース失敗
@@ -350,6 +350,7 @@ sequenceDiagram
     - コンポーネント設計の見直し（再利用性・保守性の向上）
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
+
 
 
 
