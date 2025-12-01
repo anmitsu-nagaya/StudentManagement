@@ -121,7 +121,7 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 ```mermaid
 erDiagram
   STUDENTS ||--|{ STUDENTS_COURSES : "enrolls"
-  STUDENTS_COURSES ||--||STUDENTS_COURCES_STATUS: "has"
+  STUDENTS_COURSES ||--||STUDENTS_COURSES_STATUS: "has"
   
   STUDENTS {
     char(36) student_id PK
@@ -143,7 +143,7 @@ erDiagram
     varchar(50) course_name
   }
 
-  STUDENTS_COURCES_STATUS {
+  STUDENTS_COURSES_STATUS {
     int status_id PK
     int course_id FK
     enum status "('仮申込', '本申込', '受講中', '受講終了')"
@@ -341,6 +341,7 @@ sequenceDiagram
     - コンポーネント設計の見直し（再利用性・保守性の向上）
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
+
 
 
 
