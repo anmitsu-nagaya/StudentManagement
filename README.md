@@ -68,8 +68,8 @@
 ### 受講生一覧画面（赤字：ボタン押下による実行内容）
 <img width="1320" height="598" alt="一覧画面_ボタン説明 drawio" src="https://github.com/user-attachments/assets/62eaddd9-4f03-463e-8c56-76f6c0285f80" />
 
-### フォーム一覧
-<img width="850" height="941" alt="フォーム一覧 drawio" src="https://github.com/user-attachments/assets/18f0cd41-09e5-4a4a-afbc-edc5c096d0ca" />
+### モーダル一覧
+![モーダル一覧](https://github.com/user-attachments/assets/af304804-ff4e-46be-b8f4-33965799b7f6)
 
 ### 実行動画
 <details><summary>条件検索</summary>
@@ -341,6 +341,7 @@ sequenceDiagram
     - コンポーネント設計の見直し（再利用性・保守性の向上）
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
+
 
 
 
