@@ -75,18 +75,22 @@ class StudentControllerTest {
     updateStatusRequest = new UpdateStatusRequest();
   }
 
-  @Test
-  void 受講生詳細の一覧検索が実行できて空のリストが返ってくること() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/students"))
-        .andExpect(status().isOk());
-
-    verify(service, times(1)).searchStudentList();
-  }
-
+  /**
+   * 全件取得エンドポイントをコメントアウトしたのに伴いテストもコメントアウトします
+   *
+   * @throws Exception
+   */
+//  @Test
+//  void 受講生詳細の一覧検索が実行できて空のリストが返ってくること() throws Exception {
+//    mockMvc.perform(MockMvcRequestBuilders.get("/api/students"))
+//        .andExpect(status().isOk());
+//
+//    verify(service, times(1)).searchStudentList();
+//  }
   @Test
   void 受講生詳細の条件検索が実行できて空のリストが返ってくること() throws Exception {
     String id = UUID.randomUUID().toString();
-    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentId=" + id))
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/students?studentId=" + id))
         .andExpect(status().isOk());
     verify(service, times(1)).getFilteredStudents(id,
         null,
@@ -98,7 +102,7 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の登録が実行できて空で返ってくること() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/register-student")
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/students")
             .contentType(MediaType.APPLICATION_JSON)
             .content(
                 """
@@ -134,13 +138,13 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の更新が実行できて空で返ってくること() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.put("/update-student")
+    mockMvc.perform(MockMvcRequestBuilders.put("/api/students/550e8400-e29b-41d4-a716-446655440001")
             .contentType(MediaType.APPLICATION_JSON)
             .content(
                 """
                     {
                         "student":{
-                            "id" : "550e8400-e29b-41d4-a716-446655440001",
+                            "studentId" : "550e8400-e29b-41d4-a716-446655440001",
                             "studentFullName": "山田太郎",
                             "studentFurigana": "ヤマダタロウ",
                             "studentNickname": "たろちゃん",
@@ -155,16 +159,16 @@ class StudentControllerTest {
                         "courseList": [
                                 {
                                     "course": {
-                                        "id": 1,
+                                        "courseId": 1,
                                         "studentId" : "550e8400-e29b-41d4-a716-446655440001",
                                         "courseName": "Javaコース"
                                     }
                                 },
                                 {
                                     "status": {
-                                        "id": 1,
+                                        "statusId": 1,
                                         "courseId": 1,
-                                        "status": "本申込"
+                                        "status": "受講中"
                                     }
                                 }
                         ]
@@ -175,30 +179,33 @@ class StudentControllerTest {
     verify(service, times(1)).updateStudentDetailList(any());
   }
 
-
-  @Test
-  void 存在しないURLにアクセスしたときにエラーレスポンスが返ること()
-      throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/exception"))
-        .andExpect(status().is4xxClientError())
-        .andExpect(content().string("このAPIは現在利用できません。古いURLとなっています。"));
-  }
-
+  /**
+   * このエンドポイントはコメントアウトしたためテストでもコメントアウトします
+   *
+   * @throws Exception
+   */
+//  @Test
+//  void 存在しないURLにアクセスしたときにエラーレスポンスが返ること()
+//      throws Exception {
+//    mockMvc.perform(MockMvcRequestBuilders.get("/exception"))
+//        .andExpect(status().is4xxClientError())
+//        .andExpect(content().string("このAPIは現在利用できません。古いURLとなっています。"));
+//  }
   @Test
   void リクエストのクエリパラメータに不正な値が渡されたときにエラーレスポンスが返ること()
       throws Exception {
     String id = "ID";
-    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentId=" + id))
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/students?studentId=" + id))
         .andExpect(status().is4xxClientError())
         .andExpect(content().string(
             "getFilterStudentList.studentId: UUIDの形式が正しくありません。"));
     String name = "a".repeat(101);
-    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?studentFullName=" + name))
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/students?studentFullName=" + name))
         .andExpect(status().is4xxClientError())
         .andExpect(content().string(
             "getFilterStudentList.studentFullName: 文字数が超過しています。"));
     String email = "aaa";
-    mockMvc.perform(MockMvcRequestBuilders.get("/students/filter?email=" + email))
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/students?email=" + email))
         .andExpect(status().is4xxClientError())
         .andExpect(content().string(
             "getFilterStudentList.email: 電子メールアドレスとして正しい形式にしてください"));
@@ -217,7 +224,7 @@ class StudentControllerTest {
         }
         """;
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/register-student")
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/students")
             .contentType(MediaType.APPLICATION_JSON)
             .content(invalidJson))
         .andExpect(status().isBadRequest())
@@ -240,7 +247,7 @@ class StudentControllerTest {
         }
         """;
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/register-student")
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/students")
             .contentType(MediaType.APPLICATION_JSON)
             .content(invalidJson))
         .andExpect(status().isBadRequest())
