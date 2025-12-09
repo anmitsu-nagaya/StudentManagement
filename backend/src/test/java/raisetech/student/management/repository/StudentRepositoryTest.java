@@ -103,7 +103,8 @@ class StudentRepositoryTest {
     assertThat(courseDetail.getStatus().getStatus()).isEqualTo(CourseStatus.本申込);
     assertThat(courseDetail.getStatus().getTemporaryAppliedAt())
         .isEqualTo(LocalDateTime.parse("2025-10-01T09:00:00"));
-    assertThat(courseDetail.getStatus().getOfficialAppliedAt()).isNull();
+    assertThat(courseDetail.getStatus().getOfficialAppliedAt())
+        .isEqualTo(LocalDateTime.parse("2025-10-05T09:00:00"));
     assertThat(courseDetail.getStatus().getCourseStartedAt()).isNull();
     assertThat(courseDetail.getStatus().getCourseCompletedAt()).isNull();
   }
