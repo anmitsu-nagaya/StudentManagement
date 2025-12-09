@@ -1,6 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS StudentManagement;
 
-CREATE TABLE StudentManagement.Students (
+CREATE TABLE StudentManagement.students (
   student_id char(36) PRIMARY KEY,
   student_full_name varchar(100) NOT NULL,
   student_furigana varchar(100) NOT NULL,

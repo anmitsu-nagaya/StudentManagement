@@ -18,7 +18,7 @@ INSERT INTO StudentManagement.students_courses (course_id, student_id, course_na
 (10, '550e8400-e29b-41d4-a716-446655440005', 'マーケティングコース');
 
 INSERT INTO StudentManagement.students_courses_status (status_id, course_id, status, temporary_applied_at, official_applied_at, course_started_at, course_completed_at) VALUES
-(1, 1, '本申込', '2025-10-01 09:00:00', NULL, NULL, NULL),
+(1, 1, '本申込', '2025-10-01 09:00:00', '2025-10-05 09:00:00', NULL, NULL),
 (2, 2, '本申込', '2025-09-25 09:00:00', '2025-09-30 09:00:00', NULL, NULL),
 (3, 3, '受講中', '2025-08-20 09:00:00', '2025-08-25 09:00:00', '2025-09-01 09:00:00', '2026-06-28 09:00:00'),
 (4, 4, '受講修了', '2025-07-10 09:00:00', '2025-07-15 09:00:00', '2025-07-20 09:00:00', '2026-05-16 09:00:00'),
