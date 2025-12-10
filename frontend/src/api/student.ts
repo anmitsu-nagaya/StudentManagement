@@ -2,7 +2,8 @@ import type { StudentResponse } from "../types/StudentResponce";
 import type { NewStudentFormValues } from "../types/NewStudentFormValues";
 import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 
-const BASE_URL = "http://localhost:8080/api";
+const BASE_URL =
+  "http://StudentManagementALB-169106329.ap-northeast-1.elb.amazonaws.com/api";
 
 // 一覧取得
 // export const getStudentList = async (): Promise<StudentResponse[]> => {
