@@ -2,9 +2,7 @@ import type { StudentResponse } from "../types/StudentResponce";
 import type { NewStudentFormValues } from "../types/NewStudentFormValues";
 import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 
-const BASE_URL =
-  "http://StudentManagementALB-169106329.ap-northeast-1.elb.amazonaws.com/api";
-
+const BASE_URL = import.meta.env.VITE_API_URL;
 // 一覧取得
 // export const getStudentList = async (): Promise<StudentResponse[]> => {
 //   const res = await fetch(`${BASE_URL}/students`);
