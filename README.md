@@ -267,6 +267,9 @@ sequenceDiagram
 以下のテストをJUnit5で実装し、動作を検証しています。<br>
 ![testreport](https://github.com/user-attachments/assets/e775bbc0-7f9f-47aa-be10-ce927b3c67dc)
 
+## インフラ構成図
+<img width="947" height="826" alt="インフラ構成図" src="https://github.com/user-attachments/assets/14526694-4f46-4577-8983-f9269d26b277" />
+
 
 ## 力をいれたところ
 ### 🔶要件定義の見直し：クライアントが使いやすく、かつ保守性の高い仕様の追求
@@ -347,6 +350,7 @@ sequenceDiagram
     - コンポーネント設計の見直し（再利用性・保守性の向上）
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
+
 
 
 
