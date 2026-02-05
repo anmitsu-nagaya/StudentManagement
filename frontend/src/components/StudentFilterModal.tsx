@@ -211,7 +211,7 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
   };
 
   /**
-   * マウスがモーダル外をクリックしたときにモーダルを閉じる処理
+   * モーダル外をクリックしたときにモーダルを閉じる処理
    */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
