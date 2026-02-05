@@ -1,6 +1,4 @@
-# 受講生管理システム
-
-
+<img width="722" height="435" alt="無題" src="https://github.com/user-attachments/assets/7836a801-9b40-4498-b03e-e9862929024a" />
 
 ## コンセプト
 
@@ -340,6 +338,7 @@ sequenceDiagram
     - コンポーネント設計の見直し（再利用性・保守性の向上）
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
+
 
 
 
