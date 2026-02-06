@@ -3,7 +3,13 @@ import type { NewStudentFormValues } from "../types/NewStudentFormValues";
 import * as FaIcons from "react-icons/fa";
 
 type StudentRegisterModalProps = {
+  /**
+   * モーダルを閉じるためのコールバック関数
+   */
   onClose: () => void;
+  /**
+   * モーダルに入力された新規登録受講生データを渡すためのコールバック関数
+   */
   onRegister: (payload: NewStudentFormValues) => Promise<void>;
 };
 
@@ -147,6 +153,9 @@ const styles = {
   },
 };
 
+/**
+ * 受講生新規登録モーダルを管理するコンポーネント
+ */
 export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
   const { onClose, onRegister } = props;
 
@@ -168,51 +177,55 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  /**
+   * 登録項目の入力状態に変更があったらStateを更新する。
+   * すべての登録項目に入力されるわけではないため、スプレッド構文を使用して入力された登録項目のみstateを更新する。
+   */
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  /**
+   * コース名の入力状態に変更があったらstateを更新する。
+   * @param value コース名
+   */
   const handleCourseChange = (value: string) => {
     setCourse({ courseName: value });
   };
 
+  /**
+   * 登録フォーム送信時の処理。
+   * 現在の登録上表を親コンポーネントに渡し、その後モーダルを閉じる。
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    try {
-      const payload: NewStudentFormValues = {
-        student: {
-          studentFullName: formData.studentFullName,
-          studentFurigana: formData.studentFurigana,
-          studentNickname: formData.studentNickname || undefined,
-          email: formData.email,
-          prefecture: formData.prefecture || undefined,
-          city: formData.city || undefined,
-          age: formData.age ? parseInt(formData.age) : undefined,
-          gender: formData.gender || undefined,
-          studentRemark: formData.studentRemark || undefined,
-        },
-        courseList: [{ course: course }],
-      };
-
-      await onRegister(payload);
-      alert("登録しました");
-      onClose();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        alert(`登録に失敗しました: ${err.message}`);
-      } else {
-        alert("登録に失敗しました");
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
+    const payload: NewStudentFormValues = {
+      student: {
+        studentFullName: formData.studentFullName,
+        studentFurigana: formData.studentFurigana,
+        studentNickname: formData.studentNickname || undefined,
+        email: formData.email,
+        prefecture: formData.prefecture || undefined,
+        city: formData.city || undefined,
+        age: formData.age ? parseInt(formData.age) : undefined,
+        gender: formData.gender || undefined,
+        studentRemark: formData.studentRemark || undefined,
+      },
+      courseList: [{ course: course }],
+    };
+    await onRegister(payload);
+    alert("登録しました");
+    onClose();
+    setIsSubmitting(false);
   };
 
+  /**
+   * モーダル外をクリックしたときにモーダルを閉じる処理
+   */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();

@@ -5,8 +5,17 @@ import type { CourseStatus } from "../types/CourseStatus";
 import * as FaIcons from "react-icons/fa";
 
 type StudentUpdateModalProps = {
+  /**
+   * APIから受け取る受講生詳細型
+   */
   student: StudentResponse;
+  /**
+   * モーダルを閉じるためのコールバック
+   */
   onClose: () => void;
+  /**
+   * モーダルで入力された受講生更新情報を渡すためのコールバック関数
+   */
   onUpdate: (payload: UpdateStudentFormValues) => Promise<void>;
 };
 
@@ -147,10 +156,12 @@ const styles = {
   },
 };
 
+/**
+ * 受講生更新モーダルの表示・動作を管理するコンポーネント
+ */
 export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
   const { student, onClose, onUpdate } = props;
 
-  // フォームの状態管理
   const [formData, setFormData] = useState({
     studentFullName: student.student.studentFullName,
     studentFurigana: student.student.studentFurigana,
@@ -170,26 +181,37 @@ export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
       statusId: course.status.statusId,
       courseId: course.status.courseId,
       status: course.status.status,
-    }))
+    })),
   );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  /**
+   * 入力状態に変化があった際にその情報を保持してstateを更新する
+   */
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  /**
+   * コース情報が新しく更新された際にその譲歩を保持してstateを更新する
+   */
   const handleStatusChange = (index: number, newStatus: CourseStatus) => {
     setCourseStatuses((prev) =>
       prev.map((course, i) =>
-        i === index ? { ...course, status: newStatus } : course
-      )
+        i === index ? { ...course, status: newStatus } : course,
+      ),
     );
   };
 
+  /**
+   * 更新フォーム送信時の処理。
+   * 現在の更新情報を親コンポーネントに渡し、その後モーダルを閉じる。
+   * @param e
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -232,6 +254,9 @@ export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
     }
   };
 
+  /**
+   * モーダル外を押下した際にモーダルを閉じる
+   */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();

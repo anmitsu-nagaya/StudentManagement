@@ -172,7 +172,6 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
   /**
    * 検索項目の入力状態に変更があったらStateを更新する。
    * すべての検索項目に入力されるわけではないため、スプレッド構文を使用して入力された検索項目のみstateを更新する。
-   * @param e
    */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
