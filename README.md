@@ -6,7 +6,7 @@ https://app.mitsuyonagaya-dev.com/
 ※ 就活用のためデータはダミーです
 # 目次
 
-<details><summary>クリックして開く</summary>
+
  
 - [1. 受講生管理システムの概要](#1-受講生管理システムの概要)
 - [2. 技術スタック](#2-技術スタック)
@@ -24,13 +24,15 @@ https://app.mitsuyonagaya-dev.com/
 - [8. インフラ構成図](#8-インフラ構成図)
 - [9. 工夫した点・力を入れた点](#9-工夫した点力を入れた点)
 - [10. 今後の展望](#10-今後の展望)
-</details>
+
 
 # 1. 受講生管理システムの概要
 
 Webアプリケーションを開発する中で一通りのスキルセットを身に着けるために、参考アプリとして作成しました。<br>
 IT技術を教える学校が受講生の情報を保持・分析するための管理システムです。  <br>
 学校運営者が使用することを想定しており、CRUD操作中心のシンプルで使いやすい設計を目指しています。
+
+
 
 # 2. 技術スタック
 
@@ -82,6 +84,8 @@ IT技術を教える学校が受講生の情報を保持・分析するための
 - **更新用受講生詳細**：更新時のリクエストボディ
 </details>
 
+[目次に戻る](#目次)
+
 # 4. 画面・操作イメージ
 ## 4-1. 受講生一覧画面（赤字：ボタン押下による実行内容）
 <img width="1320" height="598" alt="一覧画面_ボタン説明 drawio" src="https://github.com/user-attachments/assets/62eaddd9-4f03-463e-8c56-76f6c0285f80" />
@@ -106,6 +110,8 @@ https://github.com/user-attachments/assets/6401f9d6-a052-4b8a-818b-4fb44914e7cd
  
 https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 </details>
+
+[目次に戻る](#目次)
 
 # 5. システム設計
 
@@ -134,6 +140,8 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
          ├─ dto/                    # フロントエンドとの受け渡し用DTO
          └─ exceptionhandler/       # 例外ハンドリング
 ```
+
+[目次に戻る](#目次)
 
 ## 5-2. API設計
 
@@ -170,6 +178,8 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 | POST          | /api/students                           | 新規受講生と新規受講コースの登録               |
 | PUT           | /api/students                           | 受講生詳細の更新                              |
 
+
+[目次に戻る](#目次)
 
 ## 5-3. データ設計：ER図
 
@@ -208,6 +218,8 @@ erDiagram
     timestamp course_completed_at "受講終了日（予定日）"
   }
 ```
+
+[目次に戻る](#目次)
 
 ## 5-4. 処理設計：シーケンス図
 
@@ -303,6 +315,9 @@ sequenceDiagram
     deactivate API
 
 ```
+
+[目次に戻る](#目次)
+
 # 6. 開発・実行方法
 
 ## 6-1. 環境構築・起動方法
@@ -330,6 +345,8 @@ npm run dev
 ```bash
 npm run build
 ```
+
+[目次に戻る](#目次)
 
 ## 6-2. 使用ライブラリとその選定理由
 
@@ -361,9 +378,13 @@ npm run build
 | Prettier（ESLint 経由） | コードフォーマットを統一するため                      |
 
 
+[目次に戻る](#目次)
+
 # 7. テスト
 以下のテストをJUnit5で実装し、動作を検証しています。<br>
 ![testreport](https://github.com/user-attachments/assets/e775bbc0-7f9f-47aa-be10-ce927b3c67dc)
+
+[目次に戻る](#目次)
 
 # 8. インフラ構成図
 <img width="947" height="826" alt="インフラ構成図" src="https://github.com/user-attachments/assets/14526694-4f46-4577-8983-f9269d26b277" />
@@ -371,6 +392,8 @@ npm run build
 ▶ デモサイト
 https://app.mitsuyonagaya-dev.com/
 
+
+[目次に戻る](#目次)
 
 # 9. 工夫した点・力を入れた点
 ## 🔶要件定義の見直し：クライアントが使いやすく、かつ保守性の高い仕様の追求
@@ -427,6 +450,8 @@ https://app.mitsuyonagaya-dev.com/
   - DTOクラス：正常系はコントローラ層、異常系はDTOクラス単位
   - 内部処理用クラス：すべてオブジェクトクラス単位
 
+[目次に戻る](#目次)
+
 # 10. 今後の展望
 - 全体に関わる改修
   - 2つ目以降の受講コース追加機能の実装
@@ -451,6 +476,7 @@ https://app.mitsuyonagaya-dev.com/
     - 状態管理の最適化
 
 
+[目次に戻る](#目次)
 
 
 
