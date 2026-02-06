@@ -2,6 +2,10 @@ import { useState } from "react";
 import type { CourseStatus } from "../types/CourseStatus";
 import * as FaIcons from "react-icons/fa";
 
+/**
+ * 受講生検索モーダルで使用する検索条件の入力値。
+ * 各項目は部分一致検索や範囲検索のため文字列で保持する。
+ */
 type FilterFormValues = {
   studentFullName: string;
   studentFurigana: string;
@@ -17,7 +21,15 @@ type FilterFormValues = {
 };
 
 type StudentFilterModalProps = {
+  /**
+   * モーダルを閉じるためのコールバック関数
+   */
   onClose: () => void;
+
+  /**
+   * モーダルに入力された検索条件を渡すためのコールバック関数
+   * @param filters 入力された検索条件
+   */
   onSearch: (filters: FilterFormValues) => void;
 };
 
@@ -130,9 +142,19 @@ const styles = {
   },
 };
 
+/**
+ * 受講生詳細検索が入力されるモーダルの動作を管理するコンポーネント。
+ *
+ * @param props onClose onSearch
+ * @returns モーダルHTML
+ */
 export const StudentFilterModal = (props: StudentFilterModalProps) => {
   const { onClose, onSearch } = props;
 
+  /**
+   * 検索フォームの入力状態を管理するstate。
+   * 入力途中の値を保持し、確定後にonSerchの引数として親コンポーネントに渡る。
+   */
   const [formData, setFormData] = useState<FilterFormValues>({
     studentFullName: "",
     studentFurigana: "",
@@ -147,13 +169,20 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
     status: "",
   });
 
+  /**
+   * 検索項目の入力状態に変更があったらStateを更新する。
+   * すべての検索項目に入力されるわけではないため、スプレッド構文を使用して入力された検索項目のみstateを更新する。
+   */
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  /**
+   * 全項目を未入力の状態でstateを更新する。
+   */
   const handleClear = () => {
     setFormData({
       studentFullName: "",
@@ -170,12 +199,19 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
     });
   };
 
+  /**
+   * 検索フォーム送信時の処理。
+   * 現在の検索条件を親コンポーネントに渡し、その後モーダルを閉じる。
+   */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch(formData);
     onClose();
   };
 
+  /**
+   * モーダル外をクリックしたときにモーダルを閉じる処理
+   */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();

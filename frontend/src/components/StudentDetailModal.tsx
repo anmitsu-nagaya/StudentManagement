@@ -2,7 +2,13 @@ import type { StudentResponse } from "../types/StudentResponce";
 import * as FaIcons from "react-icons/fa";
 
 type StudentDetailModalProps = {
+  /**
+   * 受講生詳細／一覧取得APIから返却されるレスポンスデータ
+   */
   student: StudentResponse;
+  /**
+   * モーダルを閉じるためのコールバック関数
+   */
   onClose: () => void;
 };
 
@@ -88,10 +94,17 @@ const styles = {
   },
 };
 
+/**
+ * 受講生詳細モーダルの表示・動作を管理するコンポーネント
+ * @param props student onClose
+ * @returns
+ */
 export const StudentDetailModal = (props: StudentDetailModalProps) => {
   const { student, onClose } = props;
 
-  // 背景クリックで閉じる
+  /**
+   * モーダル外をクリックしたときにモーダルを閉じる処理
+   */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();

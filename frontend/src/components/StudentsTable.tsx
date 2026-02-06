@@ -68,38 +68,49 @@ const styles = {
 };
 
 type StudentsTableProps = {
+  /**
+   * APIから受け取る受講生詳細データ型
+   */
   students: StudentResponse[];
+  /**
+   * 更新された受講生詳細データを渡すコールバック関数
+   */
   onStudentsUpdate: (students: StudentResponse[]) => void;
 };
 
+/**
+ * 受講生詳細リストテーブルの表示・動作を管理するコンポーネント
+ */
 export const StudentsTable = (props: StudentsTableProps) => {
   const { students, onStudentsUpdate } = props;
   const [selectedStudent, setSelectedStudent] =
     useState<StudentResponse | null>(null);
 
   const [editingStudent, setEditingStudent] = useState<StudentResponse | null>(
-    null
+    null,
   );
-
+  /**
+   * 更新したい受講生の編集ボタン押下時に、押下された受講生に関する受講生詳細データをAPIから受け取りstateを更新する
+   */
   const handleUpdateClick = async (studentId: string) => {
-    try {
-      const results = await getFilterStudentList({ studentId });
-      if (results.length > 0) {
-        setEditingStudent(results[0]);
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        alert(`データ取得に失敗しました: ${err.message}`);
-      }
+    const results = await getFilterStudentList({ studentId });
+    if (results.length > 0) {
+      setEditingStudent(results[0]);
     }
   };
 
+  /**
+   * 編集モーダルにて更新ボタン押下時に更新情報を更新し、論理削除されていない受講生を再取得するAPI操作を行った結果の受講生詳細データでstateを更新する
+   */
   const handleUpdate = async (payload: UpdateStudentFormValues) => {
     await updateStudent(payload.student.studentId, payload);
     const updatedList = await getFilterStudentList({ studentIsDeleted: false });
     onStudentsUpdate(updatedList);
   };
 
+  /**
+   * 受講生詳細リストにおいて削除ボタン押下時に、論理削除フラグをtrueに更新して一覧を再取得するAPI処理を行った結果の受講生詳細データでsstateを更新する
+   */
   const handleDeleteClick = async (studentId: string) => {
     if (!window.confirm("本当に削除しますか？")) {
       return;
@@ -157,14 +168,23 @@ export const StudentsTable = (props: StudentsTableProps) => {
     }
   };
 
+  /**
+   * 一覧の受講生の名前を押下した際の該当の受講生に関する受講生詳細データでstateを更新する
+   */
   const handleNameClick = (student: StudentResponse) => {
     setSelectedStudent(student);
   };
 
+  /**
+   * 受講生詳細モーダルの閉じるボタンを押下した際にstateを更新する
+   */
   const handleCloseDetailModal = () => {
     setSelectedStudent(null);
   };
 
+  /**
+   * 受講生更新モーダルの閉じるボタンを押下した際にstateを更新する
+   */
   const handleCloseUpdateModal = () => {
     setEditingStudent(null);
   };

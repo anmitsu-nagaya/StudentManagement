@@ -1,10 +1,25 @@
 import * as FaIcons from "react-icons/fa";
 
 type HeaderProps = {
+  /**
+   * 受講生テーブルとコーステーブルのうち、表示中のテーブルを示しているタブを管理する
+   */
   activeTab: "students" | "courses";
+  /**
+   * 表示中のテーブルをタブで切り替えるためのコールバック関数
+   */
   onTabChange: (tab: "students" | "courses") => void;
+  /**
+   * 登録ボタンの押下によりモーダルを開くためのコールバック関数
+   */
   onRegisterClick: () => void;
+  /**
+   * フィルターボタンの押下によりモーダルを開くためのコールバック関数
+   */
   onFilterClick: () => void;
+  /**
+   * フィルター解除ボタンの押下によりフィルターを解除するためのコールバック関数
+   */
   onClearFilterClick: () => void;
 };
 
@@ -101,6 +116,9 @@ const styles = {
   },
 };
 
+/**
+ * ヘッダーを管理するコンポーネント
+ */
 export const Header = (props: HeaderProps) => {
   const {
     activeTab,
