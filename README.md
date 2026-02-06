@@ -46,12 +46,28 @@ IT技術を教える学校が受講生の情報を保持・分析するための
 ![badge](https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react&logoColor=#61DAFB)
 ![badge](https://img.shields.io/badge/vite-7.2.2-646CFF?logo=vite&logoColor=#646CFF)
 
-
-### データベース・O/Rマッパー
-![badge](https://img.shields.io/badge/MySQL-%234479A1?logo=mysql&logoColor=white)
-![badge](https://img.shields.io/badge/MyBatis-%23DC382D?logoColor=white)
+### データベース
+![badge](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white)
 ![badge](https://img.shields.io/badge/H2%20Database-09476B?logo=h2database&logoColor=white)
 
+### 使用ライブラリ・仕様技術
+![badge](https://img.shields.io/badge/Spring%20Validation-6DB33F?logo=spring&logoColor=white)
+![badge](https://img.shields.io/badge/MyBatis-DC382D?logo=mybatis&logoColor=white)
+![badge](https://img.shields.io/badge/MySQL%20Connector-4479A1?logo=mysql&logoColor=white)
+![badge](https://img.shields.io/badge/Springdoc%20OpenAPI-85EA2D?logo=swagger&logoColor=white)
+![badge](https://img.shields.io/badge/Lombok-EA5A47?logo=lombok&logoColor=white)
+![badge](https://img.shields.io/badge/React%20Router-CA4245?logo=reactrouter&logoColor=white)
+![badge](https://img.shields.io/badge/React%20Icons-61DAFB?logo=react&logoColor=black)
+
+### インフラ / CI・CD
+![badge](https://img.shields.io/badge/AWS-232F3E?logo=amazonaws&logoColor=white)
+![badge](https://img.shields.io/badge/EC2-FF9900?logo=amazonec2&logoColor=white)
+![badge](https://img.shields.io/badge/RDS-527FFF?logo=amazonrds&logoColor=white)
+![badge](https://img.shields.io/badge/S3-569A31?logo=amazons3&logoColor=white)
+![badge](https://img.shields.io/badge/CloudFront-8C4FFF?logo=amazoncloudfront&logoColor=white)
+![badge](https://img.shields.io/badge/Route53-8C4FFF?logo=amazonroute53&logoColor=white)
+![badge](https://img.shields.io/badge/ACM-red?logo=amazonaws&logoColor=white)
+![badge](https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)
 
 ### 使用ツール
 ![badge](https://img.shields.io/badge/Junit5-%2325A162?logo=junit5&logoColor=white)
@@ -64,7 +80,6 @@ IT技術を教える学校が受講生の情報を保持・分析するための
 ![badge](https://img.shields.io/badge/GitHub-%23181717?logo=github&logoColor=white)
 ![badge](https://img.shields.io/badge/-IntelliJ%20IDEA-000.svg?logo=intellij-idea&style=flat)
 ![badge](https://img.shields.io/badge/VS%20Code-007ACC?logo=visualstudiocode&logoColor=fff)
-
 
 # 3. 機能一覧
 
@@ -477,6 +492,7 @@ https://app.mitsuyonagaya-dev.com/
 
 
 [目次に戻る](#目次)
+
 
 
 
