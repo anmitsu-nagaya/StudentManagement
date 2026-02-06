@@ -19,7 +19,7 @@ https://app.mitsuyonagaya-dev.com/
   - [5-4. 処理設計：シーケンス図](#5-4-処理設計シーケンス図)
 - [6. 開発・実行方法](#6-開発実行方法)
   - [6-1. 環境構築・起動方法](#6-1-環境構築起動方法)
-  - [6-2. 使用ライブラリとその選定理由](#6-2-使用ライブラリとその選定理由)
+  - [6-2. 外部ライブラリとその選定理由](#6-2-外部ライブラリとその選定理由)
 - [7. テスト](#7-テスト)
 - [8. インフラ構成図](#8-インフラ構成図)
 - [9. 工夫した点・力を入れた点](#9-工夫した点力を入れた点)
@@ -363,7 +363,7 @@ npm run build
 
 [目次に戻る](#目次)
 
-## 6-2. 使用ライブラリとその選定理由
+## 6-2. 外部ライブラリとその選定理由
 
 ### Backend
 
@@ -373,10 +373,14 @@ npm run build
 | Spring Validation | リクエストパラメータ・リクエストボディの入力検証を行うため    |
 | MyBatis           | SQL を明示的に管理し、複雑な検索条件にも柔軟に対応するため  |
 | MySQL Connector   | MySQL データベースと接続するため              |
-| H2 Database       | テスト・ローカル検証用のインメモリ DB として利用するため   |
 | Springdoc OpenAPI | API 仕様を自動生成し、フロントエンドとの連携を容易にするため |
+|Apache Commons Lang|文字列操作やユーティリティ機能を利用するため|
 | Lombok            | getter / setter などの定型コードを書く量を減らすため      |
-
+| Spring Boot Starter Tomcat | アプリケーションサーバー（Tomcat）として動作させるため |
+| Spring Boot Starter Test | Spring Boot アプリケーションのテストを行うため |
+| MyBatis Spring Boot Starter Test | MyBatis を用いたリポジトリ層のテストを行うため |
+| JUnit Platform Launcher | JUnit テストを実行するため |
+| H2 Database       | テスト・ローカル検証用のインメモリ DB として利用するため   |
 
 
 ### Frontend
@@ -492,6 +496,7 @@ https://app.mitsuyonagaya-dev.com/
 
 
 [目次に戻る](#目次)
+
 
 
 
