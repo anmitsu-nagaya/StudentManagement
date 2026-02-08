@@ -35,7 +35,9 @@ import raisetech.student.management.service.StudentService;
 /**
  * 受講生の検索や登録、更新などを行うREST APIとして受け付けるControllerです。
  */
-@CrossOrigin(origins = "https://app.mitsuyonagaya-dev.com")
+@CrossOrigin(originPatterns = {
+    "https://app.mitsuyonagaya-dev.com",
+    "http://localhost:*"})
 @Validated
 @RestController
 public class StudentController {
