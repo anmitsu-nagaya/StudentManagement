@@ -18,9 +18,7 @@ https://app.mitsuyonagaya-dev.com/
   - [5-4. 処理設計：シーケンス図](#5-4-処理設計シーケンス図)
 - [6. テスト（バックエンド）](#6-テストバックエンド)
 - [7. インフラ構成図](#7-インフラ構成図)
-- [8. 開発・実行方法](#8-開発実行方法)
-  - [8-1. 環境構築・起動方法](#8-1-環境構築起動方法)
-  - [8-2. 外部ライブラリ・フレームワークとその選定理由](#8-2-外部ライブラリフレームワークとその選定理由)
+- [8. 環境構築・起動方法](#8-環境構築起動方法)
 - [9. 工夫した点・力を入れた点](#9-工夫した点力を入れた点)
 - [10. レビューで得た指摘と修正内容](#10-レビューで得た指摘と修正内容)
 - [11. 今後の展望](#11-今後の展望)
@@ -94,7 +92,7 @@ IT技術を教える学校が受講生の情報を保持・分析するための
 - **更新用受講生詳細**：更新時のリクエストボディ
 </details>
 
-[目次に戻る](#目次)
+
 
 # 4. 画面・操作イメージ
 ## 4-1. 受講生一覧画面（赤字：ボタン押下による実行内容）
@@ -120,8 +118,6 @@ https://github.com/user-attachments/assets/6401f9d6-a052-4b8a-818b-4fb44914e7cd
  
 https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 </details>
-
-[目次に戻る](#目次)
 
 # 5. システム設計
 
@@ -151,7 +147,7 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
          └─ exceptionhandler/       # 例外ハンドリング
 ```
 
-[目次に戻る](#目次)
+
 
 ## 5-2. API設計
 
@@ -189,9 +185,10 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 | PUT           | /api/students                           | 受講生詳細の更新                              |
 
 
-[目次に戻る](#目次)
 
 ## 5-3. データ設計：ER図
+
+<details><summary>ER図</summary>
 
 ```mermaid
 erDiagram
@@ -228,12 +225,13 @@ erDiagram
     timestamp course_completed_at "受講終了日（予定日）"
   }
 ```
-
-[目次に戻る](#目次)
+</details>
 
 ## 5-4. 処理設計：シーケンス図
 
-#### 受講生の条件検索フロー
+
+<details><summary>受講生の条件検索フロー</summary>
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -251,8 +249,10 @@ sequenceDiagram
         API -->> User: 200 受講生詳細
     end
 ```
+</details>
 
-#### 受講生詳細の登録フロー
+<details><summary>受講生詳細の登録フロー</summary>
+  
 ```mermaid
 sequenceDiagram
     actor User
@@ -281,8 +281,10 @@ sequenceDiagram
     
     deactivate API
 ```
+</details>
 
-#### 受講生詳細の更新フロー
+<details><summary>受講生詳細の更新フロー</summary>
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -326,29 +328,28 @@ sequenceDiagram
 
 ```
 
-[目次に戻る](#目次)
-
-
+</details>
 
 # 6. テスト（バックエンド）
 以下のテストをJUnit5で実装し、動作を検証しています。<br>
+<details><summary>テストレポートはこちら</summary>
+  
 ![testreport](https://github.com/user-attachments/assets/e775bbc0-7f9f-47aa-be10-ce927b3c67dc)
-
-[目次に戻る](#目次)
+</details>
 
 # 7. インフラ構成図
+<details><summary>インフラ構成図</summary>
+  
 <img width="947" height="826" alt="インフラ構成図" src="https://github.com/user-attachments/assets/14526694-4f46-4577-8983-f9269d26b277" />
 
 ▶ デモサイト
 https://app.mitsuyonagaya-dev.com/
+</details>
 
 
-[目次に戻る](#目次)
 
+# 8. 環境構築・起動方法
 
-# 8. 開発・実行方法
-
-## 8-1. 環境構築・起動方法
 
 ### 前提条件
 - Node.js v24 以上
@@ -373,44 +374,6 @@ npm run dev
 ```bash
 npm run build
 ```
-
-[目次に戻る](#目次)
-
-## 8-2. 外部ライブラリ・フレームワークとその選定理由
-
-### Backend
-
-| 技術             | 目的                               |
-| ----------------- | -------------------------------- |
-| Spring Boot       | REST API を迅速に構築するため              |
-| Spring Validation | リクエストパラメータ・リクエストボディの入力検証を行うため    |
-| MyBatis           | SQL を明示的に管理し、複雑な検索条件にも柔軟に対応するため  |
-| MySQL Connector   | MySQL データベースと接続するため              |
-| Springdoc OpenAPI | API 仕様を自動生成し、フロントエンドとの連携を容易にするため |
-|Apache Commons Lang|文字列操作やユーティリティ機能を利用するため|
-| Lombok            | getter / setter などの定型コードを書く量を減らすため      |
-| Spring Boot Starter Tomcat | アプリケーションサーバー（Tomcat）として動作させるため |
-| Spring Boot Starter Test | Spring Boot アプリケーションのテストを行うため |
-| MyBatis Spring Boot Starter Test | MyBatis を用いたリポジトリ層のテストを行うため |
-| JUnit Platform Launcher | JUnit テストを実行するため |
-| H2 Database       | テスト・ローカル検証用のインメモリ DB として利用するため   |
-
-
-### Frontend
-
-
-| 技術               | 目的                                    |
-| ------------------- | ------------------------------------- |
-| React               | UI をコンポーネント単位で管理し、再利用性・保守性を高めるため      |
-| React Router DOM    | 画面遷移を URL ベースで管理し、SPA としての操作性を向上させるため |
-| React Icons         | アイコンをコンポーネントとして扱い、UI の視認性を向上させるため     |
-| TypeScript          | 型安全性を確保し、バグの早期発見と保守性向上を図るため           |
-| Vite                | 開発サーバー起動およびビルドを高速化するため                |
-| ESLint              | コードの静的解析を行い、品質を一定に保つため                |
-| Prettier（ESLint 経由） | コードフォーマットを統一するため                      |
-
-
-[目次に戻る](#目次)
 
 # 9. 工夫した点・力を入れた点
 ## 🔶1. 要件定義の見直し：将来のデータ利活用と拡張性に耐えうるデータ構造の設計
@@ -490,7 +453,7 @@ npm run build
   - 「AIに一行ずつ説明を求める」「盲信せず自分の目で検証する」という、AI時代に必要なエンジニアの責務を痛感しました。
 
 
-[目次に戻る](#目次)
+
 
 # 10. レビューで得た指摘と修正内容
 - **REST API設計の標準化**
@@ -505,7 +468,6 @@ npm run build
 - **開発プロセスとコード品質の改善**
   - テスト用アノテーションの適正化や不要なコメントの削除に加え、1PRあたりの変更粒度を小さく保ちましょうと指摘を受け、レビューの質と開発効率を高める習慣を導入しました。
 
-[目次に戻る](#目次)
 
 # 11. 今後の展望
 - 全体に関わる改修
@@ -530,8 +492,6 @@ npm run build
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
 
-
-[目次に戻る](#目次)
 
 
 
