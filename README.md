@@ -187,6 +187,7 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 
 
 ## 5-3. データ設計：ER図
+以下のER図を設計し、実装しました。
 
 <details><summary>ER図</summary>
 
@@ -228,7 +229,7 @@ erDiagram
 </details>
 
 ## 5-4. 処理設計：シーケンス図
-
+以下のAPI処理の流れを設計し、実装しました。
 
 <details><summary>受講生の条件検索フロー</summary>
 
@@ -338,6 +339,7 @@ sequenceDiagram
 </details>
 
 # 7. インフラ構成図
+以下の構成でインフラを構築しました。
 <details><summary>インフラ構成図</summary>
   
 <img width="947" height="826" alt="インフラ構成図" src="https://github.com/user-attachments/assets/14526694-4f46-4577-8983-f9269d26b277" />
@@ -491,6 +493,7 @@ npm run build
     - コンポーネント設計の見直し（再利用性・保守性の向上）
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
+
 
 
 
