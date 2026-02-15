@@ -128,7 +128,7 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 ├─ frontend/                    # フロントエンド（React）
 │  └─ src/
 │     ├─ api/                       # API通信処理
-│     ├─ components/                # 再利用可能なUIコンポーネント
+│     ├─ components/                # モーダルコンポーネント
 │     ├─ pages/                     # 画面単位のコンポーネント
 │     ├─ types/                     # 型定義
 │     ├─ App.tsx
@@ -493,6 +493,7 @@ npm run build
     - コンポーネント設計の見直し（再利用性・保守性の向上）
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
+
 
 
 
