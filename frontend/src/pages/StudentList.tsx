@@ -58,7 +58,6 @@ export const StudentList = () => {
 
   /**
    * フィルター解除ボタン押下時に、論理削除されていない受講生一覧を取得します。
-   * UI の表示切り替えのみを行い、データ操作は行いません。
    */
   const handleClearFilterClick = async () => {
     const data = await getFilterStudentList({ studentIsDeleted: false });
