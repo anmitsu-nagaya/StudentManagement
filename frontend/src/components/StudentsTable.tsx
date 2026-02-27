@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { StudentResponse } from "../types/StudentResponce";
+import type { StudentResponse } from "../types/StudentResponse";
 import * as FaIcons from "react-icons/fa";
 //import { useNavigate } from "react-router-dom";
 import { StudentDetailModal } from "./StudentDetailModal";

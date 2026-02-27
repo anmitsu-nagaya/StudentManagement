@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { StudentResponse } from "../types/StudentResponce";
+import type { StudentResponse } from "../types/StudentResponse";
 import { getFilterStudentList, registerStudent } from "../api/student";
 import { StudentsTable } from "../components/StudentsTable";
 import { Header } from "../components/StudentListHeader";

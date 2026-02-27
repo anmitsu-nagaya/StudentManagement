@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { StudentResponse } from "../types/StudentResponce";
+import type { StudentResponse } from "../types/StudentResponse";
 import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 import type { CourseStatus } from "../types/CourseStatus";
 import * as FaIcons from "react-icons/fa";
