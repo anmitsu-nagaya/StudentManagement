@@ -117,15 +117,16 @@ export const StudentsTable = (props: StudentsTableProps) => {
     }
 
     try {
-      const results = await getFilterStudentList({ studentId: studentId });
+      const studentDetail = students.find(
+        (s) => s.student.studentId === studentId,
+      );
 
-      if (results.length === 0) {
+      if (!studentDetail) {
         alert("受講生が見つかりませんでした");
         return;
       }
 
-      const studentDetail = results[0];
-      const courses = results[0].courseList;
+      const courses = studentDetail.courseList;
 
       const updatePayload: UpdateStudentFormValues = {
         student: {
