@@ -203,26 +203,34 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const payload: NewStudentFormValues = {
-      student: {
-        studentFullName: formData.studentFullName,
-        studentFurigana: formData.studentFurigana,
-        studentNickname: formData.studentNickname || undefined,
-        email: formData.email,
-        prefecture: formData.prefecture || undefined,
-        city: formData.city || undefined,
-        age: formData.age ? parseInt(formData.age) : undefined,
-        gender: formData.gender || undefined,
-        studentRemark: formData.studentRemark || undefined,
-      },
-      courseList: [{ course: course }],
-    };
-    await onRegister(payload);
-    alert("登録しました");
-    onClose();
-    setIsSubmitting(false);
+    try {
+      const payload: NewStudentFormValues = {
+        student: {
+          studentFullName: formData.studentFullName,
+          studentFurigana: formData.studentFurigana,
+          studentNickname: formData.studentNickname || undefined,
+          email: formData.email,
+          prefecture: formData.prefecture || undefined,
+          city: formData.city || undefined,
+          age: formData.age ? parseInt(formData.age) : undefined,
+          gender: formData.gender || undefined,
+          studentRemark: formData.studentRemark || undefined,
+        },
+        courseList: [{ course: course }],
+      };
+      await onRegister(payload);
+      alert("登録しました");
+      onClose();
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        alert(`登録に失敗しました: ${err.message}`);
+      } else {
+        alert("登録に失敗しました");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
-
   /**
    * モーダル外をクリックしたときにモーダルを閉じる処理
    */
