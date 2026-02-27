@@ -1,4 +1,4 @@
-import type { StudentResponse } from "../types/StudentResponce";
+import type { StudentResponse } from "../types/StudentResponse";
 import * as FaIcons from "react-icons/fa";
 
 type StudentDetailModalProps = {

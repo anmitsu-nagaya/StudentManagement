@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { StudentResponse } from "../types/StudentResponce";
+import type { StudentResponse } from "../types/StudentResponse";
 import * as FaIcons from "react-icons/fa";
 //import { useNavigate } from "react-router-dom";
 import { StudentDetailModal } from "./StudentDetailModal";
@@ -117,15 +117,16 @@ export const StudentsTable = (props: StudentsTableProps) => {
     }
 
     try {
-      const results = await getFilterStudentList({ studentId: studentId });
+      const studentDetail = students.find(
+        (s) => s.student.studentId === studentId,
+      );
 
-      if (results.length === 0) {
+      if (!studentDetail) {
         alert("受講生が見つかりませんでした");
         return;
       }
 
-      const studentDetail = results[0];
-      const courses = results[0].courseList;
+      const courses = studentDetail.courseList;
 
       const updatePayload: UpdateStudentFormValues = {
         student: {

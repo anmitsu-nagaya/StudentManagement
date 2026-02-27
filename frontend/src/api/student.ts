@@ -1,4 +1,4 @@
-import type { StudentResponse } from "../types/StudentResponce";
+import type { StudentResponse } from "../types/StudentResponse";
 import type { NewStudentFormValues } from "../types/NewStudentFormValues";
 import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 

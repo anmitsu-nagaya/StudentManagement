@@ -1,4 +1,4 @@
-import type { CourseResponse } from "./CourseResponce";
+import type { CourseResponse } from "./CourseResponse";
 
 /**
  * 受講生詳細／一覧取得APIから返却されるレスポンスの型。
