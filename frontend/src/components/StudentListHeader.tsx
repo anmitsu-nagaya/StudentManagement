@@ -1,14 +1,12 @@
 import * as FaIcons from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
   /**
    * 受講生テーブルとコーステーブルのうち、表示中のテーブルを示しているタブを管理する
    */
   activeTab: "students" | "courses";
-  /**
-   * 表示中のテーブルをタブで切り替えるためのコールバック関数
-   */
-  onTabChange: (tab: "students" | "courses") => void;
+
   /**
    * 登録ボタンの押下によりモーダルを開くためのコールバック関数
    */
@@ -120,14 +118,9 @@ const styles = {
  * ヘッダーを管理するコンポーネント
  */
 export const Header = (props: HeaderProps) => {
-  const {
-    activeTab,
-    onTabChange,
-    onRegisterClick,
-    onFilterClick,
-    onClearFilterClick,
-  } = props;
-
+  const { activeTab, onRegisterClick, onFilterClick, onClearFilterClick } =
+    props;
+  const navigate = useNavigate();
   return (
     <div style={styles.headerContainer}>
       <div style={styles.leftSection}>
@@ -135,13 +128,13 @@ export const Header = (props: HeaderProps) => {
         <div style={styles.tabs}>
           <button
             style={activeTab === "students" ? styles.tabActive : styles.tab}
-            onClick={() => onTabChange("students")}
+            onClick={() => navigate("/students")}
           >
             受講生一覧
           </button>
           <button
             style={activeTab === "courses" ? styles.tabActive : styles.tab}
-            onClick={() => onTabChange("courses")}
+            onClick={() => navigate("/courses")}
           >
             コース一覧
           </button>

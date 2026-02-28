@@ -10,9 +10,6 @@ import { StudentFilterModal } from "../components/StudentFilterModal";
 export const StudentList = () => {
   const [students, setStudents] = useState<StudentResponse[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"students" | "courses">(
-    "students",
-  );
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
 
@@ -106,8 +103,7 @@ export const StudentList = () => {
   return (
     <div>
       <Header
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
+        activeTab="students"
         onRegisterClick={handleRegisterClick}
         onFilterClick={handleFilterClick}
         onClearFilterClick={handleClearFilterClick}
