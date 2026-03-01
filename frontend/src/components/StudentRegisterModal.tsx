@@ -4,11 +4,12 @@ import * as FaIcons from "react-icons/fa";
 
 type StudentRegisterModalProps = {
   /**
-   * モーダルを閉じるためのコールバック関数
+   * モーダルを閉じるためのコールバック関数です。
    */
   onClose: () => void;
   /**
-   * モーダルに入力された新規登録受講生データを渡すためのコールバック関数
+   * 登録ボタン押下時に呼ばれる関数です。
+   * フォームの入力値（payload）を受け取り、API登録処理を実行します。
    */
   onRegister: (payload: NewStudentFormValues) => Promise<void>;
 };
@@ -154,7 +155,7 @@ const styles = {
 };
 
 /**
- * 受講生新規登録モーダルを管理するコンポーネント
+ * 受講生新規登録モーダルを管理するコンポーネントです。
  */
 export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
   const { onClose, onRegister } = props;
@@ -178,8 +179,8 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   /**
-   * 登録項目の入力状態に変更があったらStateを更新する。
-   * すべての登録項目に入力されるわけではないため、スプレッド構文を使用して入力された登録項目のみstateを更新する。
+   * 登録項目の入力状態に変更があったらStateを更新します。
+   * すべての登録項目に入力されるわけではないため、スプレッド構文を使用して入力された登録項目のみstateを更新します。
    */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -189,7 +190,7 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
   };
 
   /**
-   * コース名の入力状態に変更があったらstateを更新する。
+   * コース名の入力状態に変更があったらstateを更新します。
    * @param value コース名
    */
   const handleCourseChange = (value: string) => {
@@ -197,8 +198,8 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
   };
 
   /**
-   * 登録フォーム送信時の処理。
-   * 現在の登録上表を親コンポーネントに渡し、その後モーダルを閉じる。
+   * 登録フォーム送信時の処理です。
+   *フォームに入力された登録データで登録処理を実行し、モーダルを閉じます。
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -231,8 +232,9 @@ export const StudentRegisterModal = (props: StudentRegisterModalProps) => {
       setIsSubmitting(false);
     }
   };
+
   /**
-   * モーダル外をクリックしたときにモーダルを閉じる処理
+   * モーダル外をクリックしたときにモーダルを閉じる処理です。
    */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {

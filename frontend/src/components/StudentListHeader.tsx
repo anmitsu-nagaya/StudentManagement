@@ -3,20 +3,20 @@ import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
   /**
-   * 受講生テーブルとコーステーブルのうち、表示中のテーブルを示しているタブを管理する
+   * 受講生テーブルとコーステーブルのうち、表示中のテーブルを示しているタブを管理します。
    */
   activeTab: "students" | "courses";
 
   /**
-   * 登録ボタンの押下によりモーダルを開くためのコールバック関数
+   * 登録ボタンの押下によりモーダルを開くためのコールバック関数です。
    */
   onRegisterClick: () => void;
   /**
-   * フィルターボタンの押下によりモーダルを開くためのコールバック関数
+   * フィルターボタンの押下によりモーダルを開くためのコールバック関数です。
    */
   onFilterClick: () => void;
   /**
-   * フィルター解除ボタンの押下によりフィルターを解除するためのコールバック関数
+   * フィルター解除ボタンの押下によりフィルターを解除するためのコールバック関数です。
    */
   onClearFilterClick: () => void;
 };
@@ -115,7 +115,7 @@ const styles = {
 };
 
 /**
- * ヘッダーを管理するコンポーネント
+ * ヘッダーを管理するコンポーネントです。
  */
 export const Header = (props: HeaderProps) => {
   const { activeTab, onRegisterClick, onFilterClick, onClearFilterClick } =
@@ -141,7 +141,6 @@ export const Header = (props: HeaderProps) => {
         </div>
       </div>
 
-      {/* ← ここに移動 */}
       <div style={styles.headerActions}>
         <button style={styles.iconButton} onClick={onRegisterClick}>
           <FaIcons.FaPlus />

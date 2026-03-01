@@ -1,11 +1,5 @@
-import { useState } from "react";
 import type { StudentResponse } from "../types/StudentResponse";
 import * as FaIcons from "react-icons/fa";
-//import { useNavigate } from "react-router-dom";
-import { StudentDetailModal } from "./StudentDetailModal";
-import { getFilterStudentList, updateStudent } from "../api/student";
-import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
-import { StudentUpdateModal } from "./StudentUpdateModal";
 
 const styles = {
   tableContainer: {
@@ -69,127 +63,28 @@ const styles = {
 
 type StudentsTableProps = {
   /**
-   * APIから受け取る受講生詳細データ型
+   * StudentListから渡される受講生詳細データの一覧です。
    */
   students: StudentResponse[];
   /**
-   * 更新された受講生詳細データを渡すコールバック関数
+   * 名前ボタンの押下により、詳細表示対象の受講生情報を初期値として詳細表示モーダルを開く関数です。
    */
-  onStudentsUpdate: (students: StudentResponse[]) => void;
+  onNameClick: (student: StudentResponse) => void;
+  /**
+   * 更新ボタンの押下により、更新対象の受講生情報を初期値として更新モーダルを開く関数です。
+   */
+  onUpdateClick: (studentId: string) => void;
+  /**
+   * 削除ボタンの押下により、論理削除処理を実行する関数です。
+   */
+  onDelete: (studentId: string) => Promise<void>;
 };
 
 /**
- * 受講生詳細リストテーブルの表示・動作を管理するコンポーネント
+ * 受講生テーブルを管理するコンポーネントです。
  */
 export const StudentsTable = (props: StudentsTableProps) => {
-  const { students, onStudentsUpdate } = props;
-  const [selectedStudent, setSelectedStudent] =
-    useState<StudentResponse | null>(null);
-
-  const [editingStudent, setEditingStudent] = useState<StudentResponse | null>(
-    null,
-  );
-  /**
-   * 更新したい受講生の編集ボタン押下時に、押下された受講生に関する受講生詳細データをAPIから受け取りstateを更新する
-   */
-  const handleUpdateClick = async (studentId: string) => {
-    const results = await getFilterStudentList({ studentId });
-    if (results.length > 0) {
-      setEditingStudent(results[0]);
-    }
-  };
-
-  /**
-   * 編集モーダルにて更新ボタン押下時に更新情報を更新し、論理削除されていない受講生を再取得するAPI操作を行った結果の受講生詳細データでstateを更新する
-   */
-  const handleUpdate = async (payload: UpdateStudentFormValues) => {
-    await updateStudent(payload.student.studentId, payload);
-    const updatedList = await getFilterStudentList({ studentIsDeleted: false });
-    onStudentsUpdate(updatedList);
-  };
-
-  /**
-   * 受講生詳細リストにおいて削除ボタン押下時に、論理削除フラグをtrueに更新して一覧を再取得するAPI処理を行った結果の受講生詳細データでsstateを更新する
-   */
-  const handleDeleteClick = async (studentId: string) => {
-    if (!window.confirm("本当に削除しますか？")) {
-      return;
-    }
-
-    try {
-      const studentDetail = students.find(
-        (s) => s.student.studentId === studentId,
-      );
-
-      if (!studentDetail) {
-        alert("受講生が見つかりませんでした");
-        return;
-      }
-
-      const courses = studentDetail.courseList;
-
-      const updatePayload: UpdateStudentFormValues = {
-        student: {
-          studentId: studentDetail.student.studentId,
-          studentFullName: studentDetail.student.studentFullName,
-          studentFurigana: studentDetail.student.studentFurigana,
-          studentNickname: studentDetail.student.studentNickname,
-          email: studentDetail.student.email,
-          prefecture: studentDetail.student.prefecture,
-          city: studentDetail.student.city,
-          age: studentDetail.student.age,
-          gender: studentDetail.student.gender,
-          studentRemark: studentDetail.student.studentRemark,
-          studentIsDeleted: true, // ← trueに設定
-        },
-        courseList: courses.map((course) => ({
-          status: {
-            statusId: course.status.statusId,
-            courseId: course.status.courseId,
-            status: course.status.status,
-          },
-        })),
-      };
-
-      await updateStudent(updatePayload.student.studentId, updatePayload);
-
-      alert("削除しました");
-
-      // 一覧を再取得
-      const updatedList = await getFilterStudentList({
-        studentIsDeleted: false,
-      });
-      onStudentsUpdate(updatedList);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        alert(`削除に失敗しました: ${err.message}`);
-      } else {
-        alert("削除に失敗しました");
-      }
-    }
-  };
-
-  /**
-   * 一覧の受講生の名前を押下した際の該当の受講生に関する受講生詳細データでstateを更新する
-   */
-  const handleNameClick = (student: StudentResponse) => {
-    setSelectedStudent(student);
-  };
-
-  /**
-   * 受講生詳細モーダルの閉じるボタンを押下した際にstateを更新する
-   */
-  const handleCloseDetailModal = () => {
-    setSelectedStudent(null);
-  };
-
-  /**
-   * 受講生更新モーダルの閉じるボタンを押下した際にstateを更新する
-   */
-  const handleCloseUpdateModal = () => {
-    setEditingStudent(null);
-  };
-
+  const { students, onNameClick, onUpdateClick, onDelete } = props;
   return (
     <>
       <div style={styles.tableContainer}>
@@ -223,7 +118,7 @@ export const StudentsTable = (props: StudentsTableProps) => {
               >
                 <td style={styles.td}>
                   <button
-                    onClick={() => handleNameClick(studentDetail)}
+                    onClick={() => onNameClick(studentDetail)}
                     style={{
                       ...styles.link,
                       background: "none",
@@ -263,16 +158,14 @@ export const StudentsTable = (props: StudentsTableProps) => {
                   <button
                     style={styles.iconButton}
                     onClick={() =>
-                      handleUpdateClick(studentDetail.student.studentId)
+                      onUpdateClick(studentDetail.student.studentId)
                     }
                   >
                     <FaIcons.FaPen />
                   </button>
                   <button
                     style={styles.deleteButton}
-                    onClick={() =>
-                      handleDeleteClick(studentDetail.student.studentId)
-                    }
+                    onClick={() => onDelete(studentDetail.student.studentId)}
                   >
                     <FaIcons.FaTrash />
                   </button>
@@ -282,21 +175,6 @@ export const StudentsTable = (props: StudentsTableProps) => {
           </tbody>
         </table>
       </div>
-
-      {selectedStudent && (
-        <StudentDetailModal
-          student={selectedStudent}
-          onClose={handleCloseDetailModal}
-        />
-      )}
-
-      {editingStudent && (
-        <StudentUpdateModal
-          student={editingStudent}
-          onClose={handleCloseUpdateModal}
-          onUpdate={handleUpdate}
-        />
-      )}
     </>
   );
 };

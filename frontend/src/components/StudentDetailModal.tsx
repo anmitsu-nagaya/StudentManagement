@@ -1,13 +1,14 @@
 import type { StudentResponse } from "../types/StudentResponse";
+import { formatDate } from "../utils/formatDate";
 import * as FaIcons from "react-icons/fa";
 
 type StudentDetailModalProps = {
   /**
-   * 受講生詳細／一覧取得APIから返却されるレスポンスデータ
+   * 詳細表示対象の受講生詳細データです。
    */
   student: StudentResponse;
   /**
-   * モーダルを閉じるためのコールバック関数
+   * モーダルを閉じるためのコールバック関数です。
    */
   onClose: () => void;
 };
@@ -95,7 +96,7 @@ const styles = {
 };
 
 /**
- * 受講生詳細モーダルの表示・動作を管理するコンポーネント
+ * 受講生詳細モーダルの表示・動作を管理するコンポーネントです。
  * @param props student onClose
  * @returns
  */
@@ -103,7 +104,7 @@ export const StudentDetailModal = (props: StudentDetailModalProps) => {
   const { student, onClose } = props;
 
   /**
-   * モーダル外をクリックしたときにモーダルを閉じる処理
+   * モーダル外をクリックしたときにモーダルを閉じます。
    */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -172,22 +173,25 @@ export const StudentDetailModal = (props: StudentDetailModalProps) => {
 
                   <span style={styles.label}>仮申込日:</span>
                   <span style={styles.value}>
-                    {courseDetail.status.temporaryAppliedAt}
+                    {formatDate(courseDetail.status.temporaryAppliedAt)}
                   </span>
 
                   <span style={styles.label}>本申込日:</span>
                   <span style={styles.value}>
-                    {courseDetail.status.officialAppliedAt ?? "-"}
+                    {formatDate(courseDetail.status.officialAppliedAt)}
                   </span>
 
                   <span style={styles.label}>受講開始日:</span>
                   <span style={styles.value}>
-                    {courseDetail.status.courseStartedAt ?? "-"}
+                    {formatDate(courseDetail.status.courseStartedAt)}
                   </span>
 
-                  <span style={styles.label}>受講終了日:</span>
+                  <span style={styles.label}>
+                    受講終了日
+                    {courseDetail.status.status === "受講中" ? "（予定）" : ""}:
+                  </span>
                   <span style={styles.value}>
-                    {courseDetail.status.courseCompletedAt ?? "-"}
+                    {formatDate(courseDetail.status.courseCompletedAt)}
                   </span>
                 </div>
               </div>
