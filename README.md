@@ -43,7 +43,7 @@ IT技術を教える学校が受講生の情報を保持・分析するための
 ![badge](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white)
 ![badge](https://img.shields.io/badge/H2%20Database-09476B?logo=h2database&logoColor=white)
 
-### 使用ライブラリ・仕様技術
+### 使用ライブラリ・使用技術
 ![badge](https://img.shields.io/badge/Spring%20Validation-6DB33F?logo=spring&logoColor=white)
 ![badge](https://img.shields.io/badge/MyBatis-DC382D?logo=mybatis&logoColor=white)
 ![badge](https://img.shields.io/badge/MySQL%20Connector-4479A1?logo=mysql&logoColor=white)
@@ -128,9 +128,11 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 ├─ frontend/                    # フロントエンド（React）
 │  └─ src/
 │     ├─ api/                       # API通信処理
-│     ├─ components/                # モーダルコンポーネント
+│     ├─ components/                # UIコンポーネント
+│     ├─ hooks/                     # カスタムフック
 │     ├─ pages/                     # 画面単位のコンポーネント
 │     ├─ types/                     # 型定義
+│     ├─ utils/                     # 共通処理
 │     ├─ App.tsx
 │     ├─ main.tsx
 │     └─ main.css
@@ -182,7 +184,7 @@ https://github.com/user-attachments/assets/c69faf30-0bcd-451a-93c8-c3c86382eb62
 |---------------|-------------------------------------|---------------------------------------|
 | GET           | /api/students                           | 受講生詳細の取得　クエリパラメータで条件の指定が可能です | 
 | POST          | /api/students                           | 新規受講生と新規受講コースの登録               |
-| PUT           | /api/students                           | 受講生詳細の更新                              |
+| PUT           | /api/students/{studentId}               | 受講生詳細の更新                              |
 
 
 
@@ -490,16 +492,20 @@ npm run build
     - Docker導入
 
 - バックエンドの修正
+  - GET /students/{id} の単一取得エンドポイント追加
   - 認証機能の実装
   - エラーハンドリングの見直し
 
 - フロントエンドの修正
   - コース一覧画面の追加
   - ログイン画面の追加
+  - フロントエンドのテスト追加
   - リファクタリングが必要
     - コンポーネント設計の見直し（再利用性・保守性の向上）
     - 命名規則の統一とコードの整理
     - 状態管理の最適化
+    - utils/に共通関数を切り出す
+
 
 
 
