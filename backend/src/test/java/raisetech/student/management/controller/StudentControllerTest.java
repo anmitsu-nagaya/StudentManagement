@@ -176,7 +176,9 @@ class StudentControllerTest {
                     """
             ))
         .andExpect(status().isOk());
-    verify(service, times(1)).updateStudentDetailList(any());
+    verify(converter, times(1)).toStudentDetailfromUpdateStudentDetail(any());
+    verify(service, times(1)).updateStudentDetailList(student.getStudentId(), any());
+
   }
 
   /**

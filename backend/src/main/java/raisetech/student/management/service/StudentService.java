@@ -126,8 +126,9 @@ public class StudentService {
    * @param studentDetail 更新内容を所持する受講生詳細
    */
   @Transactional
-  public void updateStudentDetailList(StudentDetail studentDetail) {
+  public void updateStudentDetailList(String studentId, StudentDetail studentDetail) {
 
+    studentDetail.getStudent().setStudentId(studentId);
     repository.updateStudent(studentDetail.getStudent());
 
     studentDetail.getCourseList().forEach(courseDetail -> {

@@ -254,7 +254,7 @@ public class StudentController {
 
     StudentDetail studentDetail = converter.toStudentDetailfromUpdateStudentDetail(request);
 
-    service.updateStudentDetailList(studentDetail);
+    service.updateStudentDetailList(studentId, studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
   }
 

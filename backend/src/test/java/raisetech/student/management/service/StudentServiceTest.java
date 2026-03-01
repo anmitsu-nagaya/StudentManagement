@@ -255,7 +255,7 @@ class StudentServiceTest {
     updateExtracted();
     when(repository.searchStudentCourseStatus(any(Integer.class))).thenReturn(studentCourseStatus);
 
-    sut.updateStudentDetailList(studentDetail);
+    sut.updateStudentDetailList(student.getStudentId(), studentDetail);
 
     verify(repository, times(1)).updateStudent(any(Student.class));
     verify(repository, times(1)).updateStudentCourse(any(StudentCourse.class));
@@ -270,7 +270,7 @@ class StudentServiceTest {
     studentCourseStatus.setCourseId(3);
     when(repository.searchStudentCourseStatus(3)).thenReturn(studentCourseStatus);
 
-    sut.updateStudentDetailList(studentDetail);
+    sut.updateStudentDetailList(student.getStudentId(), studentDetail);
 
     verify(repository, times(1)).updateStudentCourse(courseCaptor.capture());
     verify(repository, times(2)).searchStudentCourseStatus(3);
