@@ -62,12 +62,27 @@ const styles = {
 };
 
 type StudentsTableProps = {
+  /**
+   * StudentListから渡される受講生詳細データの一覧です。
+   */
   students: StudentResponse[];
+  /**
+   * 名前ボタンの押下により、詳細表示対象の受講生情報を初期値として詳細表示モーダルを開く関数です。
+   */
   onNameClick: (student: StudentResponse) => void;
+  /**
+   * 更新ボタンの押下により、更新対象の受講生情報を初期値として更新モーダルを開く関数です。
+   */
   onUpdateClick: (studentId: string) => void;
+  /**
+   * 削除ボタンの押下により、論理削除処理を実行する関数です。
+   */
   onDelete: (studentId: string) => Promise<void>;
 };
 
+/**
+ * 受講生テーブルを管理するコンポーネントです。
+ */
 export const StudentsTable = (props: StudentsTableProps) => {
   const { students, onNameClick, onUpdateClick, onDelete } = props;
   return (

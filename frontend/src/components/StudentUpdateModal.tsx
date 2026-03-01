@@ -6,15 +6,18 @@ import * as FaIcons from "react-icons/fa";
 
 type StudentUpdateModalProps = {
   /**
-   * APIから受け取る受講生詳細型
+   * 更新対象の受講生詳細データです。
+   * フォームの初期値として使用します。
    */
   student: StudentResponse;
   /**
-   * モーダルを閉じるためのコールバック
+   * モーダルを閉じるためのコールバック関数です。
+   * ×ボタン押下時に呼ばれます。
    */
   onClose: () => void;
   /**
-   * モーダルで入力された受講生更新情報を渡すためのコールバック関数
+   * 更新ボタン押下時に呼ばれる関数です。
+   * フォームの入力値（payload）を受け取り、API更新処理を実行します。
    */
   onUpdate: (payload: UpdateStudentFormValues) => Promise<void>;
 };
@@ -157,7 +160,7 @@ const styles = {
 };
 
 /**
- * 受講生更新モーダルの表示・動作を管理するコンポーネント
+ * 受講生更新モーダルの表示・動作を管理するコンポーネントです。
  */
 export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
   const { student, onClose, onUpdate } = props;
@@ -187,7 +190,7 @@ export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   /**
-   * 入力状態に変化があった際にその情報を保持してstateを更新する
+   * 入力状態に変化があった際にその情報を保持してstateを更新します。
    */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -197,7 +200,7 @@ export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
   };
 
   /**
-   * コース情報が新しく更新された際にその譲歩を保持してstateを更新する
+   * コース情報が新しく更新された際にその情報を保持してstateを更新します。
    */
   const handleStatusChange = (index: number, newStatus: CourseStatus) => {
     setCourseStatuses((prev) =>
@@ -208,9 +211,8 @@ export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
   };
 
   /**
-   * 更新フォーム送信時の処理。
-   * 現在の更新情報を親コンポーネントに渡し、その後モーダルを閉じる。
-   * @param e
+   * 更新フォーム送信時の処理です。
+   * 現在の更新情報で関数を実行し、その後モーダルを閉じます。
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -255,7 +257,7 @@ export const StudentUpdateModal = (props: StudentUpdateModalProps) => {
   };
 
   /**
-   * モーダル外を押下した際にモーダルを閉じる
+   * モーダル外を押下した際にモーダルを閉じます。
    */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {

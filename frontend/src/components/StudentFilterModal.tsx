@@ -3,8 +3,8 @@ import type { CourseStatus } from "../types/CourseStatus";
 import * as FaIcons from "react-icons/fa";
 
 /**
- * 受講生検索モーダルで使用する検索条件の入力値。
- * 各項目は部分一致検索や範囲検索のため文字列で保持する。
+ * 受講生検索モーダルで使用する検索条件の入力値です。
+ * 各項目は部分一致検索や範囲検索のため文字列で保持します。
  */
 type FilterFormValues = {
   studentFullName: string;
@@ -22,13 +22,15 @@ type FilterFormValues = {
 
 type StudentFilterModalProps = {
   /**
-   * モーダルを閉じるためのコールバック関数
+   * モーダルを閉じるためのコールバック関数です。
    */
   onClose: () => void;
 
   /**
-   * モーダルに入力された検索条件を渡すためのコールバック関数
-   * @param filters 入力された検索条件
+   * 送信ボタン押下時に呼ばれる関数です。
+   * フォームの入力値（payload）を引数としてAPIが実行されます。
+   * @param filters
+   * @returns
    */
   onSearch: (filters: FilterFormValues) => void;
 };
@@ -143,17 +145,14 @@ const styles = {
 };
 
 /**
- * 受講生詳細検索が入力されるモーダルの動作を管理するコンポーネント。
- *
- * @param props onClose onSearch
- * @returns モーダルHTML
+ * 受講生詳細検索が入力されるモーダルの動作を管理するコンポーネントです。
  */
 export const StudentFilterModal = (props: StudentFilterModalProps) => {
   const { onClose, onSearch } = props;
 
   /**
-   * 検索フォームの入力状態を管理するstate。
-   * 入力途中の値を保持し、確定後にonSerchの引数として親コンポーネントに渡る。
+   * 検索フォームの入力状態を管理するstateです。
+   * 入力途中の値を保持し、確定後にこれを引数にして検索処理が実行されます。
    */
   const [formData, setFormData] = useState<FilterFormValues>({
     studentFullName: "",
@@ -170,8 +169,8 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
   });
 
   /**
-   * 検索項目の入力状態に変更があったらStateを更新する。
-   * すべての検索項目に入力されるわけではないため、スプレッド構文を使用して入力された検索項目のみstateを更新する。
+   * 検索項目の入力状態に変更があったらStateを更新します。
+   * すべての検索項目に入力されるわけではないため、スプレッド構文を使用して入力された検索項目のみstateを更新します。
    */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -181,7 +180,7 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
   };
 
   /**
-   * 全項目を未入力の状態でstateを更新する。
+   * 全項目を未入力の状態でstateを更新します。
    */
   const handleClear = () => {
     setFormData({
@@ -200,8 +199,8 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
   };
 
   /**
-   * 検索フォーム送信時の処理。
-   * 現在の検索条件を親コンポーネントに渡し、その後モーダルを閉じる。
+   * 検索フォーム送信時の処理です。
+   * フォームに入力された条件データで検索処理を実行し、モーダルを閉じます。
    */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -210,7 +209,7 @@ export const StudentFilterModal = (props: StudentFilterModalProps) => {
   };
 
   /**
-   * モーダル外をクリックしたときにモーダルを閉じる処理
+   * モーダル外をクリックしたときにモーダルを閉じる処理です。
    */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {

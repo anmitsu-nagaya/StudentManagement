@@ -3,14 +3,14 @@ import type { NewStudentFormValues } from "../types/NewStudentFormValues";
 import type { UpdateStudentFormValues } from "../types/UpdateStudentFormValues";
 
 /**
- * API のベースURL。
- * Vite の環境変数（.env）から取得する。
+ * API のベースURLです。
+ * Vite の環境変数（.env）から取得します。
  */
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 /**
- * 受講生一覧の条件検索で使用するクエリパラメータの型。
- * 未指定の項目はクエリに含めない。
+ * 受講生一覧の条件検索で使用するクエリパラメータの型です。
+ * 未指定の項目はクエリに含まれません。
  */
 type FilterParams = {
   studentId?: string;
@@ -30,7 +30,7 @@ type FilterParams = {
 };
 
 /**
- * 条件を指定して受講生一覧を取得する。
+ * 条件を指定して受講生一覧を取得します。
  *
  * 指定された検索条件をクエリパラメータに変換し、
  * 受講生一覧取得APIを呼び出します。
@@ -72,7 +72,7 @@ export const filterStudentApi = async (
 };
 
 /**
- * バリデーションエラーの詳細情報を表す型。
+ * バリデーションエラーの詳細情報を表す型です。
  */
 type ValidationError = {
   field: string;
@@ -80,7 +80,7 @@ type ValidationError = {
 };
 
 /**
- * バリデーションエラー発生時のAPIレスポンス型。
+ * バリデーションエラー発生時のAPIレスポンス型です。
  */
 type ErrorResponse = {
   error: string;
@@ -88,7 +88,7 @@ type ErrorResponse = {
 };
 
 /**
- * 新規受講生を登録する。
+ * 新規受講生を登録します。
  *
  * フォームで入力された受講生情報をもとに、
  * 新規受講生登録APIを呼び出します。
@@ -130,10 +130,10 @@ export const registerStudentApi = async (
 };
 
 /**
- * 既存の受講生情報を更新する。
+ * 既存の受講生情報を更新します。
  *
  * 指定された受講生IDに対して、
- * 編集後の受講生情報およびコース情報を更新します。
+ * フォームで入力された受講生情報をもとに更新APIを呼び出します。
  *
  * @param studentId 更新対象の受講生ID
  * @param payload 受講生更新用のリクエストボディ

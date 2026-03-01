@@ -4,11 +4,11 @@ import * as FaIcons from "react-icons/fa";
 
 type StudentDetailModalProps = {
   /**
-   * 受講生詳細／一覧取得APIから返却されるレスポンスデータ
+   * 詳細表示対象の受講生詳細データです。
    */
   student: StudentResponse;
   /**
-   * モーダルを閉じるためのコールバック関数
+   * モーダルを閉じるためのコールバック関数です。
    */
   onClose: () => void;
 };
@@ -96,7 +96,7 @@ const styles = {
 };
 
 /**
- * 受講生詳細モーダルの表示・動作を管理するコンポーネント
+ * 受講生詳細モーダルの表示・動作を管理するコンポーネントです。
  * @param props student onClose
  * @returns
  */
@@ -104,7 +104,7 @@ export const StudentDetailModal = (props: StudentDetailModalProps) => {
   const { student, onClose } = props;
 
   /**
-   * モーダル外をクリックしたときにモーダルを閉じる処理
+   * モーダル外をクリックしたときにモーダルを閉じます。
    */
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {

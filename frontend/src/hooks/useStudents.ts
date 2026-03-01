@@ -36,7 +36,10 @@ export const useStudents = () => {
   const [students, setStudents] = useState<StudentResponse[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 共通の一覧取得処理
+  /**
+   * 一覧取得APIを実行してstateを更新します。
+   * @param filters 指定された条件
+   */
   const fetchStudents = async (filters?: FilterParams) => {
     const data = await filterStudentApi({
       ...filters,
@@ -45,7 +48,9 @@ export const useStudents = () => {
     setStudents(data);
   };
 
-  // 初回のみ取得
+  /**
+   * studentsが空配列のときにデータ取得中の状態を示すフラグです。
+   */
   useEffect(() => {
     const load = async () => {
       await fetchStudents();
@@ -54,13 +59,20 @@ export const useStudents = () => {
     load();
   }, []);
 
-  // 新規登録 → 一覧を再取得
+  /**
+   * 新規登録APIを実行して一覧を再取得します。
+   * @param payload 登録モーダルに入力されたデータ
+   */
   const handleRegister = async (payload: NewStudentFormValues) => {
     await registerStudentApi(payload);
     await fetchStudents();
   };
 
-  // 更新 → 一覧を再取得
+  /**
+   * 更新APIを実行して一覧を再取得します。
+   * @param studentId 更新の対象の受講生ID
+   * @param payload 更新モーダルに入力されたデータ
+   */
   const handleUpdate = async (
     studentId: string,
     payload: UpdateStudentFormValues,
@@ -69,7 +81,10 @@ export const useStudents = () => {
     await fetchStudents();
   };
 
-  // 削除（論理削除）→ 一覧を再取得
+  /**
+   * 更新APIを実行して論理削除を行い、一覧を再取得します。
+   * @param studentId 論理削除対象の受講生ID
+   */
   const handleDelete = async (studentId: string) => {
     if (!window.confirm("本当に削除しますか？")) return;
 
@@ -108,6 +123,10 @@ export const useStudents = () => {
     }
   };
 
+  /**
+   * 指定した条件を引数にして一覧取得APIを実行します。
+   * @param filters 検索条件
+   */
   const handleSearch = async (filters: {
     studentFullName: string;
     studentFurigana: string;

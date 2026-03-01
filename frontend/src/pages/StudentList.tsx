@@ -4,40 +4,51 @@ import { StudentsTable } from "../components/StudentsTable";
 import { Header } from "../components/StudentListHeader";
 import { StudentRegisterModal } from "../components/StudentRegisterModal";
 import { StudentFilterModal } from "../components/StudentFilterModal";
-import { StudentDetailModal } from "../components/StudentDetailModal"; // 追加
-import { StudentUpdateModal } from "../components/StudentUpdateModal"; // 追加
+import { StudentDetailModal } from "../components/StudentDetailModal";
+import { StudentUpdateModal } from "../components/StudentUpdateModal";
 import type { StudentResponse } from "../types/StudentResponse";
 
 export const StudentList = () => {
+  /**
+   * 受講生に関するstateとAPI処理をまとめたカスタムフックです。
+   * students・loadingはstate、それ以外はAPI処理を行う関数です。
+   */
   const {
-    students,
-    loading,
-    fetchStudents,
-    handleRegister,
-    handleUpdate,
-    handleDelete,
-    handleSearch,
+    students, // 受講生詳細データの一覧（state）。レンダリング時に一覧取得APIが実行されます。
+    loading, // データ取得中かどうかを示すフラグです。
+    fetchStudents, // 受講生一覧を取得する関数です。条件指定が可能です。
+    handleRegister, // 新規受講生を登録する関数です。
+    handleUpdate, // 受講生情報を更新する関数です。
+    handleDelete, // 受講生を論理削除する関数です。
+    handleSearch, // 条件検索を行う関数です。
   } = useStudents();
 
-  // モーダルのstate管理を全てここに集約
+  /**
+   * モーダルのstateを管理します
+   */
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
-  const [selectedStudent, setSelectedStudent] =
+  const [showDetailModal, setshowDetailModal] =
     useState<StudentResponse | null>(null);
-  const [editingStudent, setEditingStudent] = useState<StudentResponse | null>(
-    null,
-  );
+  const [showUpdateModal, setshowUpdateModal] =
+    useState<StudentResponse | null>(null);
 
-  // 名前クリック → 詳細モーダル表示
+  /**
+   * 名前を押下した時、詳細モーダルを表示します。
+   * @param student
+   */
   const handleNameClick = (student: StudentResponse) => {
-    setSelectedStudent(student);
+    setshowDetailModal(student);
   };
 
-  // 鉛筆クリック → 該当受講生をstudentsから探して更新モーダル表示
+  /**
+   * 鉛筆ボタンを押下した時、該当受講生をstudentsから探して更新モーダルに表示します。
+   * @param studentId 押下された受講生の受講生ID
+   */
   const handleUpdateClick = (studentId: string) => {
     const student = students.find((s) => s.student.studentId === studentId);
     if (student) {
-      setEditingStudent(student);
+      setshowUpdateModal(student);
     }
   };
 
@@ -75,18 +86,18 @@ export const StudentList = () => {
       )}
 
       {/* 詳細モーダル */}
-      {selectedStudent && (
+      {showDetailModal && (
         <StudentDetailModal
-          student={selectedStudent}
-          onClose={() => setSelectedStudent(null)}
+          student={showDetailModal}
+          onClose={() => setshowDetailModal(null)}
         />
       )}
 
       {/* 更新モーダル */}
-      {editingStudent && (
+      {showUpdateModal && (
         <StudentUpdateModal
-          student={editingStudent}
-          onClose={() => setEditingStudent(null)}
+          student={showUpdateModal}
+          onClose={() => setshowUpdateModal(null)}
           onUpdate={(payload) =>
             handleUpdate(payload.student.studentId, payload)
           }
