@@ -1,4 +1,5 @@
 import type { StudentResponse } from "../types/StudentResponse";
+import { formatDate } from "../utils/formatDate";
 import * as FaIcons from "react-icons/fa";
 
 type StudentDetailModalProps = {
@@ -172,22 +173,25 @@ export const StudentDetailModal = (props: StudentDetailModalProps) => {
 
                   <span style={styles.label}>仮申込日:</span>
                   <span style={styles.value}>
-                    {courseDetail.status.temporaryAppliedAt}
+                    {formatDate(courseDetail.status.temporaryAppliedAt)}
                   </span>
 
                   <span style={styles.label}>本申込日:</span>
                   <span style={styles.value}>
-                    {courseDetail.status.officialAppliedAt ?? "-"}
+                    {formatDate(courseDetail.status.officialAppliedAt)}
                   </span>
 
                   <span style={styles.label}>受講開始日:</span>
                   <span style={styles.value}>
-                    {courseDetail.status.courseStartedAt ?? "-"}
+                    {formatDate(courseDetail.status.courseStartedAt)}
                   </span>
 
-                  <span style={styles.label}>受講終了日:</span>
+                  <span style={styles.label}>
+                    受講終了日
+                    {courseDetail.status.status === "受講中" ? "（予定）" : ""}:
+                  </span>
                   <span style={styles.value}>
-                    {courseDetail.status.courseCompletedAt ?? "-"}
+                    {formatDate(courseDetail.status.courseCompletedAt)}
                   </span>
                 </div>
               </div>

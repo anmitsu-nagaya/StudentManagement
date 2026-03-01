@@ -38,7 +38,7 @@ type FilterParams = {
  * @param params 検索条件（未指定の項目は無視される）
  * @returns 条件に一致した受講生一覧
  */
-export const getFilterStudentList = async (
+export const filterStudentApi = async (
   params: FilterParams,
 ): Promise<StudentResponse[]> => {
   const queryParams = new URLSearchParams();
@@ -95,7 +95,7 @@ type ErrorResponse = {
  *
  * @param payload 新規受講生登録用のリクエストボディ
  */
-export const registerStudent = async (
+export const registerStudentApi = async (
   payload: NewStudentFormValues,
 ): Promise<void> => {
   const res = await fetch(`${BASE_URL}/students`, {
@@ -138,7 +138,7 @@ export const registerStudent = async (
  * @param studentId 更新対象の受講生ID
  * @param payload 受講生更新用のリクエストボディ
  */
-export const updateStudent = async (
+export const updateStudentApi = async (
   studentId: string,
   payload: UpdateStudentFormValues,
 ): Promise<void> => {

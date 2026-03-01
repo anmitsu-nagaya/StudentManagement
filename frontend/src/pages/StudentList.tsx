@@ -1,101 +1,44 @@
-import { useEffect, useState } from "react";
-import type { StudentResponse } from "../types/StudentResponse";
-import { getFilterStudentList, registerStudent } from "../api/student";
+import { useState } from "react";
+import { useStudents } from "../hooks/useStudents";
 import { StudentsTable } from "../components/StudentsTable";
 import { Header } from "../components/StudentListHeader";
-import type { NewStudentFormValues } from "../types/NewStudentFormValues";
 import { StudentRegisterModal } from "../components/StudentRegisterModal";
 import { StudentFilterModal } from "../components/StudentFilterModal";
+import { StudentDetailModal } from "../components/StudentDetailModal"; // 追加
+import { StudentUpdateModal } from "../components/StudentUpdateModal"; // 追加
+import type { StudentResponse } from "../types/StudentResponse";
 
 export const StudentList = () => {
-  const [students, setStudents] = useState<StudentResponse[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    students,
+    loading,
+    fetchStudents,
+    handleRegister,
+    handleUpdate,
+    handleDelete,
+    handleSearch,
+  } = useStudents();
+
+  // モーダルのstate管理を全てここに集約
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
+  const [selectedStudent, setSelectedStudent] =
+    useState<StudentResponse | null>(null);
+  const [editingStudent, setEditingStudent] = useState<StudentResponse | null>(
+    null,
+  );
 
-  /**
-   * 初回表示時に、APIのGET処理で論理削除されていない受講生一覧を取得し state に反映します。
-   * 一覧画面では再取得を行わない設計のため、依存配列は空にしています。
-   */
-  useEffect(() => {
-    const fetchStudents = async () => {
-      const data = await getFilterStudentList({ studentIsDeleted: false });
-      setStudents(data);
-      setLoading(false);
-    };
-    fetchStudents();
-  }, []);
-
-  /**
-   * 新規登録された受講生を反映するため、登録処理後に受講生一覧を再取得するAPI処理を行い、 state を更新します。
-   * 一覧は論理削除されていない受講生のみを対象とします。
-   * @param payload 新規受講生の入力値
-   */
-  const handleRegister = async (payload: NewStudentFormValues) => {
-    await registerStudent(payload);
-    const updatedList = await getFilterStudentList({ studentIsDeleted: false });
-    setStudents(updatedList);
+  // 名前クリック → 詳細モーダル表示
+  const handleNameClick = (student: StudentResponse) => {
+    setSelectedStudent(student);
   };
 
-  /**
-   * 登録ボタン押下時に、新規登録用モーダルを表示します。
-   * UI の表示切り替えのみを行い、データ操作は行いません。
-   */
-  const handleRegisterClick = () => {
-    setShowRegisterModal(true);
-  };
-
-  /**
-   * 編集ボタン押下時に、編集用モーダルを表示します。
-   * UI の表示切り替えのみを行い、データ操作は行いません。
-   */
-  const handleFilterClick = () => {
-    setShowFilterModal(true);
-  };
-
-  /**
-   * フィルター解除ボタン押下時に、論理削除されていない受講生一覧を取得します。
-   */
-  const handleClearFilterClick = async () => {
-    const data = await getFilterStudentList({ studentIsDeleted: false });
-    setStudents(data);
-    setLoading(false);
-  };
-
-  /**
-   * 検索モーダルで確定した検索条件を受け取り、API 経由で条件に一致する受講生一覧を取得して state を更新します。
-   * @param filters 検索モーダルで入力・確定された検索条件
-   */
-  const handleSearch = async (filters: {
-    studentFullName: string;
-    studentFurigana: string;
-    studentNickname: string;
-    email: string;
-    prefecture: string;
-    city: string;
-    ageFrom: string;
-    ageTo: string;
-    gender: string;
-    courseName: string;
-    status: string;
-  }) => {
-    setLoading(true);
-    const params = {
-      studentFullName: filters.studentFullName || undefined,
-      studentFurigana: filters.studentFurigana || undefined,
-      studentNickname: filters.studentNickname || undefined,
-      email: filters.email || undefined,
-      prefecture: filters.prefecture || undefined,
-      city: filters.city || undefined,
-      ageFrom: filters.ageFrom ? parseInt(filters.ageFrom) : undefined,
-      ageTo: filters.ageTo ? parseInt(filters.ageTo) : undefined,
-      gender: filters.gender || undefined,
-      courseName: filters.courseName || undefined,
-      status: filters.status || undefined,
-    };
-    const results = await getFilterStudentList(params);
-    setStudents(results);
-    setLoading(false);
+  // 鉛筆クリック → 該当受講生をstudentsから探して更新モーダル表示
+  const handleUpdateClick = (studentId: string) => {
+    const student = students.find((s) => s.student.studentId === studentId);
+    if (student) {
+      setEditingStudent(student);
+    }
   };
 
   if (loading) return <div>読み込み中...</div>;
@@ -104,11 +47,18 @@ export const StudentList = () => {
     <div>
       <Header
         activeTab="students"
-        onRegisterClick={handleRegisterClick}
-        onFilterClick={handleFilterClick}
-        onClearFilterClick={handleClearFilterClick}
+        onRegisterClick={() => setShowRegisterModal(true)}
+        onFilterClick={() => setShowFilterModal(true)}
+        onClearFilterClick={() => fetchStudents()}
       />
-      <StudentsTable students={students} onStudentsUpdate={setStudents} />
+      <StudentsTable
+        students={students}
+        onNameClick={handleNameClick}
+        onUpdateClick={handleUpdateClick}
+        onDelete={handleDelete}
+      />
+
+      {/* 登録モーダル */}
       {showRegisterModal && (
         <StudentRegisterModal
           onClose={() => setShowRegisterModal(false)}
@@ -116,10 +66,30 @@ export const StudentList = () => {
         />
       )}
 
+      {/* 検索モーダル */}
       {showFilterModal && (
         <StudentFilterModal
           onClose={() => setShowFilterModal(false)}
           onSearch={handleSearch}
+        />
+      )}
+
+      {/* 詳細モーダル */}
+      {selectedStudent && (
+        <StudentDetailModal
+          student={selectedStudent}
+          onClose={() => setSelectedStudent(null)}
+        />
+      )}
+
+      {/* 更新モーダル */}
+      {editingStudent && (
+        <StudentUpdateModal
+          student={editingStudent}
+          onClose={() => setEditingStudent(null)}
+          onUpdate={(payload) =>
+            handleUpdate(payload.student.studentId, payload)
+          }
         />
       )}
     </div>
